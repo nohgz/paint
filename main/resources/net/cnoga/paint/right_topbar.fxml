@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.RightTopbarController">
+  <ToggleButton fx:id = "right_topbar_color_picker">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <image>
+          <Image url="@icons/menu/colorwheel_icon.png"/>
+        </image>
+      </ImageView>
+    </graphic>
+  </ToggleButton>
+
+  <ToggleButton fx:id = "right_topbar_tools">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <image>
+          <Image url="@icons/menu/tools_icon.png"/>
+        </image>
+      </ImageView>
+    </graphic>
+  </ToggleButton>
+
+  <ToggleButton fx:id = "right_topbar_layers">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <image>
+          <Image url="@icons/menu/layers_icon.png"/>
+        </image>
+      </ImageView>
+    </graphic>
+  </ToggleButton>
+
+  <Separator orientation="VERTICAL"/>
+
+  <Button fx:id = "right_topbar_settings">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <image>
+          <Image url="@icons/menu/settings_icon.png"/>
+        </image>
+      </ImageView>
+    </graphic>
+  </Button>
+
+  <MenuButton fx:id = "right_topbar_help">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <image>
+          <Image url="@icons/menu/help_icon.png"/>
+        </image>
+      </ImageView>
+
+    </graphic>
+
+  </MenuButton>
+</HBox>

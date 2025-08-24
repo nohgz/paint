@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.PaintGUIController">
+    <!--The items here are core functionality. Everything else can become
+     its own separate window or can be added with another class.-->
+    <top>
+        <VBox>
+            <!--Main Toolbars-->
+            <HBox>
+                <fx:include source="left_topbar.fxml" fx:id="leftTopbar"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <fx:include source="right_topbar.fxml" fx:id="rightTopbar"/>
+            </HBox>
+
+            <!--Shortcuts-->
+            <fx:include source="shortcut_bar.fxml" fx:id="shortcutBar"/>
+
+            <!--Tool Info-->
+            <HBox>
+                <Label text="Tool info will be placed here. Coming soon!"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Canvas -->
+    <center>
+        <fx:include source="canvas.fxml" fx:id="canvas"/>
+    </center>
+
+    <!-- Info Logging -->
+    <bottom>
+        <Label text="Hello THING!"/>
+    </bottom>
+
+</BorderPane>

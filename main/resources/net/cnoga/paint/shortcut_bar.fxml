@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.ShortcutBarController">
+  <Button fx:id = "shortcut_bar_new" onAction="#onNewFile">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <image>
+          <Image url="@icons/menu/new_icon.png"/>
+        </image>
+      </ImageView>
+    </graphic>
+  </Button>
+
+  <Button fx:id = "shortcut_bar_open" onAction="#onOpenFile">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <image>
+          <Image url="@icons/menu/open_icon.png"/>
+        </image>
+      </ImageView>
+    </graphic>
+  </Button>
+
+  <Button fx:id = "shortcut_bar_save" onAction="#onFileSave">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <image>
+          <Image url="@icons/menu/save_icon.png"/>
+        </image>
+      </ImageView>
+    </graphic>
+  </Button>
+</HBox>
