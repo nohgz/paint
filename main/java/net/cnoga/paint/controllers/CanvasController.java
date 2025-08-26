@@ -5,11 +5,12 @@ import javafx.scene.layout.StackPane;
 import net.cnoga.paint.bus.EventBus;
 import net.cnoga.paint.services.CanvasService;
 
-public class CanvasController extends AbstractIOProvider {
+public class CanvasController {
   @FXML
   public StackPane main_stackpane;
 
-  public void initCanvasService(EventBus bus) {
-    new CanvasService(bus, main_stackpane);
+  @FXML
+  public CanvasService initCanvasService() {
+    return new CanvasService(main_stackpane);
   }
 }

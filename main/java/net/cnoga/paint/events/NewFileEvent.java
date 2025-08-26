@@ -1,5 +1,5 @@
 package net.cnoga.paint.events;
 
 public record NewFileEvent() {
-
+  // Left empty.
 }

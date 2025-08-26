@@ -1,6 +1,7 @@
 package net.cnoga.paint.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
 import net.cnoga.paint.services.CanvasService;
@@ -24,20 +25,28 @@ public class MainGUIController {
 
   private CanvasService canvasService;
   private FileIOService fileIOService;
+  private TextService textService;
 
   public void init(Stage primaryStage) {
+    // FIXME: There is a conglomeration of different ways to do things and register
+    // them to the event bus based on what they do. I don't like this.
+
     // Custom piping stuff
     EventBus bus = new EventBus();
 
     // The services the program runs
     fileIOService = new FileIOService(bus, primaryStage);
-    new TextService(bus);
+    textService = new TextService();
 
-    canvasController.initCanvasService(bus);
+    // Initialize. These methods are not tied to the service but instead
+    // act was ways for fxml to communicate with the controllers.
+    shortcutBarController.initFileIOService(fileIOService);
+    leftTopbarController.initFileIOService(fileIOService);
 
-    // IO Aware stuff
-    shortcutBarController.setFileIOService(fileIOService);
-    leftTopbarController.setFileIOService(fileIOService);
+    canvasService = canvasController.initCanvasService();
 
+    // Then register each of these events and services to the bus.
+    bus.register(textService);
+    bus.register(canvasService);
   }
 }

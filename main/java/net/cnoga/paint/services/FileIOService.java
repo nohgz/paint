@@ -11,7 +11,7 @@ import net.cnoga.paint.events.ImageOpenEvent;
 import net.cnoga.paint.events.FileSaveEvent;
 import net.cnoga.paint.events.NewFileEvent;
 
-public class FileIOService extends EventBusAware {
+public class FileIOService extends EventBusProvider {
 
   private Stage stage;
 
@@ -38,10 +38,10 @@ public class FileIOService extends EventBusAware {
     chooser.setTitle("Open");
     File selectedFile = chooser.showOpenDialog(stage);
     if (selectedFile != null) {
-      System.out.println("Opened file: " + selectedFile.getAbsolutePath() + ".");
+      System.out.println("[FileIOService] Opened file: " + selectedFile.getAbsolutePath() + ".");
       openFile(new File(selectedFile.getAbsolutePath()));
     } else {
-      System.out.println("Did not open a file / File invalid.");
+      System.out.println("[FileIOService] Did not open a file / File invalid.");
     }
   }
 

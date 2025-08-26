@@ -1,36 +1,36 @@
 package net.cnoga.paint.services;
 
 
+import javafx.event.Event;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import net.cnoga.paint.bus.EventBus;
+import net.cnoga.paint.bus.EventBusSubscriber;
+import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.ImageOpenEvent;
 import net.cnoga.paint.events.FileSaveEvent;
 import net.cnoga.paint.events.NewFileEvent;
 
-public class CanvasService extends EventBusAware {
+@EventBusSubscriber
+public class CanvasService {
 
   // TODO:
   // The one canvas right now is good for Friday's sprint, but I want to modify
   // this guy to be able to hold multiple images/tabs. Then maybe another class
-  // that makes a canvas that holds layers. That's a later problem.
+  // that makes a canvas that holds layers. tbh that's a later problem.
 
-  private final StackPane mainStackPane;
+  private StackPane mainStackPane;
 
-  public CanvasService(EventBus bus, StackPane mainStackPane) {
-    super(bus);
-    this.mainStackPane = mainStackPane;
-    bus.subscribe(ImageOpenEvent.class, this::onFileOpened);
-    bus.subscribe(FileSaveEvent.class, this::onImageSave);
-    bus.subscribe(NewFileEvent.class, this::newFile);
+  public CanvasService(StackPane stackPane) {
+    this.mainStackPane = stackPane;
   }
 
+  @SubscribeEvent
   private void onFileOpened(ImageOpenEvent event) {
     System.out.println(
-      "I'M THE CANVAS SERVICE AND I SEE AN IMAGE " + event.image().getHeight() + " COMING MY WAY");
-
+      "CanvasService sees image: " + event.image().getWidth());
     Image img = event.image();
 
     // Create a new Canvas matching the image size
@@ -47,12 +47,14 @@ public class CanvasService extends EventBusAware {
     mainStackPane.getChildren().add(canvas);
   }
 
+  @SubscribeEvent
   private void newFile(NewFileEvent event) {
-    System.out.println("NEW FILE LIL BRO!!!!");
+    System.out.println("CanvasService sees NewFileEvent!");
     mainStackPane.getChildren().add(new Canvas());
   }
 
+  @SubscribeEvent
   private void onImageSave(FileSaveEvent event) {
-    System.out.println("SAVE TWIN");
+    System.out.println("CanvasService sees FileSaveEvent!");
   }
 }

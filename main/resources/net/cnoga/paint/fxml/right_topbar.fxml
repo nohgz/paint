@@ -7,6 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Tooltip?>
 <HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.RightTopbarController">
 
   <ToggleButton fx:id = "right_topbar_color_picker" onAction="#onOpenColorPicker">
@@ -15,6 +16,10 @@
         <Image url="@../icons/menu/colorwheel_icon.png"/>
       </ImageView>
     </graphic>
+
+    <tooltip>
+      <Tooltip text="Show Color Picker" showDelay="0.5s"/>
+    </tooltip>
   </ToggleButton>
 
   <ToggleButton fx:id = "right_topbar_tools" onAction="#onOpenTools">
@@ -23,6 +28,9 @@
         <Image url="@../icons/menu/tools_icon.png"/>
       </ImageView>
     </graphic>
+    <tooltip>
+      <Tooltip text="Show Tools" showDelay="0.5s"/>
+    </tooltip>
   </ToggleButton>
 
   <ToggleButton fx:id = "right_topbar_layers" onAction="#onOpenLayers">
@@ -31,6 +39,9 @@
         <Image url="@../icons/menu/layers_icon.png"/>
       </ImageView>
     </graphic>
+    <tooltip>
+      <Tooltip text="Show Layers" showDelay="0.5s"/>
+    </tooltip>
   </ToggleButton>
 
   <ToggleButton fx:id = "right_topbar_history" onAction="#onOpenHistory">
@@ -39,6 +50,9 @@
         <Image url="@../icons/menu/history_icon.png"/>
       </ImageView>
     </graphic>
+    <tooltip>
+      <Tooltip text="Show History" showDelay="0.5s"/>
+    </tooltip>
   </ToggleButton>
 
   <Separator orientation="VERTICAL"/>

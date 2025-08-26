@@ -5,7 +5,7 @@ import net.cnoga.paint.services.FileIOService;
 public abstract class AbstractIOProvider {
   protected FileIOService fileIOService;
 
-  public void setFileIOService(FileIOService fileIOService) {
+  public void initFileIOService(FileIOService fileIOService) {
     this.fileIOService = fileIOService;
   }
 }
