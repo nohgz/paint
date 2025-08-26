@@ -1,61 +1,51 @@
 package net.cnoga.paint.services;
 
 import java.io.File;
-import javafx.scene.image.WritableImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import net.cnoga.paint.bus.EventBus;
+import net.cnoga.paint.events.ImageOpenEvent;
+import net.cnoga.paint.events.FileSaveEvent;
+import net.cnoga.paint.events.NewFileEvent;
 
-/**
- * FileIOService handles the actual functionality of the calls from controllers.
- */
-public class FileIOService  {
+public class FileIOService extends EventBusAware {
 
-  private final Stage primaryStage;
-  // create a "file-to-save" parameter here
-  private WritableImage image;
+  private Stage stage;
 
-  public FileIOService(Stage stage) {
-    System.out.println("I AM BEING MADE!!!!!!");
-    this.primaryStage = stage;
-  }
-
-  /**
-   * This is a unified way to open files utilizing the parent scene.
-   * @return selectedFile
-   */
-  public File openFile() {
-    FileChooser chooser = new FileChooser();
-    chooser.setTitle("Open");
-    File selectedFile = chooser.showOpenDialog(primaryStage);
-    if (selectedFile != null) {
-      System.out.println("Opened file: " + selectedFile.getAbsolutePath());
-    }
-
-
-    return selectedFile;
-  }
-
-  public void saveFile(File file) {
-    System.out.println("TODO: Save file!");
-    // TODO: Full Save Logic
-  }
-
-  /**
-   * This effectively acts like a glorified save dialog opener.
-   * @param file
-   */
-  public void saveFileAs(File file) {
-    FileChooser chooser = new FileChooser();
-    chooser.setTitle("Save File As");
-    File selectedFile = chooser.showSaveDialog(primaryStage);
-
-    if (selectedFile != null) {
-      System.out.println("Saving file as: " + selectedFile.getAbsolutePath());
-    }
+  public FileIOService(EventBus bus, Stage stage) {
+    super(bus);
+    this.stage = stage;
   }
 
   public void newFile() {
-    System.out.println("TODO: New file opened!");
+    bus.post(new NewFileEvent());
   }
 
+  public void saveFile() {
+    bus.post(new FileSaveEvent());
+  }
+
+  public void openFile(File file) throws IOException {
+    Image image = new Image(new FileInputStream(file));
+    bus.post(new ImageOpenEvent(image));
+  }
+
+  public void openFile() throws IOException {
+    FileChooser chooser = new FileChooser();
+    chooser.setTitle("Open");
+    File selectedFile = chooser.showOpenDialog(stage);
+    if (selectedFile != null) {
+      System.out.println("Opened file: " + selectedFile.getAbsolutePath() + ".");
+      openFile(new File(selectedFile.getAbsolutePath()));
+    } else {
+      System.out.println("Did not open a file / File invalid.");
+    }
+  }
+
+  public void closeProgram() {
+    this.stage.close();
+  }
 }

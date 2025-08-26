@@ -1,41 +1,69 @@
 package net.cnoga.paint.controllers;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
-import net.cnoga.paint.interfaces.FileIOAware;
-import net.cnoga.paint.interfaces.ProgramIOAware;
-import net.cnoga.paint.services.FileIOService;
-import net.cnoga.paint.services.ProgramIOService;
+import javafx.fxml.FXML;
+import javafx.scene.control.MenuItem;
 
-public class LeftTopbarController implements FileIOAware, ProgramIOAware {
+/**
+ * The left top bar is the File/Edit/View/Image bar.
+ *
+ * <p>This controller serves as an interface between
+ * `src/main/resources/net/cnoga/paint/fxml/left_topbar.fxml`
+ * and the backend services that implement the application's functionality.
+ *
+ * <p>Each {@link MenuItem} in the corresponding FXML file must have its
+ * {@code fx:id} property bound to the corresponding public field in this controller, and its
+ * {@code onAction} property bound to the appropriate handler method annotated with
+ * {@link FXML}.</p>
+ *
+ * <p>How an interaction should go:</p>
+ * <ol>
+ *   <li>User clicks "Open File" in the menu bar.</li>
+ *   <li>{@link #onOpenFile(ActionEvent)} is invoked.</li>
+ *   <li>The controller delegates the action to the backend service (e.g., FileService).</li>
+ *   <li>The service updates the application model (e.g., {@link net.cnoga.paint.model.FileHolder}).</li>
+ * </ol>
+ *
+ * <p>Controller Responsibilities:</p>
+ * <ul>
+ *   <li>Responding to menu item actions.</li>
+ *   <li>Delegating application logic to backend services.</li>
+ * </ul>
+ *
+ * @author cnoga
+ * @version 1.0
+ */
+public class LeftTopbarController extends AbstractIOProvider {
 
-  private FileIOService fileIOService;
-  private ProgramIOService programIOService;
+  public MenuItem left_topbar_new_file;
+  public MenuItem left_topbar_file_open;
+  public MenuItem left_topbar_file_save;
+  public MenuItem left_topbar_file_save_as;
+  public MenuItem left_topbar_exit;
 
-  @Override
-  public void setFileIOService(FileIOService fileIOService) {
-    this.fileIOService = fileIOService;
-  }
-  @Override
-  public void setProgramIOService(ProgramIOService programIOService) {
-    this.programIOService = programIOService;
-  }
+  @FXML
   public void onNewFile(ActionEvent actionEvent) {
     fileIOService.newFile();
   }
 
-  public void onOpenFile(ActionEvent actionEvent) {
+  @FXML
+  public void onOpenFile(ActionEvent actionEvent) throws IOException {
     fileIOService.openFile();
   }
 
+  @FXML
   public void onFileSave(ActionEvent actionEvent) {
-//    fileIOService.saveFile();
+    fileIOService.saveFile();
   }
 
+  @FXML
   public void onFileSaveAs(ActionEvent actionEvent) {
-//    fileIOService.saveFileAs();
+    fileIOService.saveFile();
   }
 
+  @FXML
   public void onAppExit(ActionEvent actionEvent) {
-    programIOService.closeApp();
+    fileIOService.closeProgram();
   }
 }

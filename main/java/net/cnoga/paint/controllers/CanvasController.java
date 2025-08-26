@@ -1,17 +1,15 @@
 package net.cnoga.paint.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
-import net.cnoga.paint.util.ImageHelper;
+import net.cnoga.paint.bus.EventBus;
+import net.cnoga.paint.services.CanvasService;
 
-public class CanvasController {
+public class CanvasController extends AbstractIOProvider {
+  @FXML
+  public StackPane main_stackpane;
 
-  @FXML private StackPane main_canvas;
-
-  public void addImage(String filePath) {
-    WritableImage writableImage = ImageHelper.loadWritableImage(filePath);
-    main_canvas.getChildren().add(new ImageView(writableImage));
+  public void initCanvasService(EventBus bus) {
+    new CanvasService(bus, main_stackpane);
   }
 }

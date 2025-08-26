@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.StackPane?>
 <StackPane xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
   fx:controller="net.cnoga.paint.controllers.CanvasController"
-  fx:id="main_canvas">
+  fx:id="main_stackpane">
 
 </StackPane>
 

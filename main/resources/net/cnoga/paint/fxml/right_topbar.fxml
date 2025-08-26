@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.RightTopbarController">
+
+  <ToggleButton fx:id = "right_topbar_color_picker" onAction="#onOpenColorPicker">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../icons/menu/colorwheel_icon.png"/>
+      </ImageView>
+    </graphic>
+  </ToggleButton>
+
+  <ToggleButton fx:id = "right_topbar_tools" onAction="#onOpenTools">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../icons/menu/tools_icon.png"/>
+      </ImageView>
+    </graphic>
+  </ToggleButton>
+
+  <ToggleButton fx:id = "right_topbar_layers" onAction="#onOpenLayers">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../icons/menu/layers_icon.png"/>
+      </ImageView>
+    </graphic>
+  </ToggleButton>
+
+  <ToggleButton fx:id = "right_topbar_history" onAction="#onOpenHistory">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../icons/menu/history_icon.png"/>
+      </ImageView>
+    </graphic>
+  </ToggleButton>
+
+  <Separator orientation="VERTICAL"/>
+
+  <Button fx:id = "right_topbar_settings" onAction="#onOpenSettings">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../icons/menu/settings_icon.png"/>
+      </ImageView>
+    </graphic>
+  </Button>
+
+  <MenuButton fx:id = "right_topbar_help" onAction="#onOpenHelp">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../icons/menu/help_icon.png"/>
+      </ImageView>
+    </graphic>
+  </MenuButton>
+
+</HBox>

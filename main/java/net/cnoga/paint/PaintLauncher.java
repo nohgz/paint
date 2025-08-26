@@ -6,10 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import net.cnoga.paint.controllers.PaintGUIController;
-import net.cnoga.paint.services.FileIOService;
+import net.cnoga.paint.controllers.MainGUIController;
 
-public class PaintApplicationLauncher extends Application {
+public class PaintLauncher extends Application {
 
   public static void main(String[] args) {
     launch(args);
@@ -22,15 +21,17 @@ public class PaintApplicationLauncher extends Application {
   public void start(Stage primaryStage) throws IOException {
     // Start with the fundamental stuff
     FXMLLoader mainFxmlLoader = new FXMLLoader(
-      PaintApplicationLauncher.class.getResource("paint_gui.fxml"));
+      PaintLauncher.class.getResource("fxml/main_gui.fxml"));
     Scene scene = new Scene(mainFxmlLoader.load(), 320, 240);
-    PaintGUIController mainController = mainFxmlLoader.getController();
+
+    // Initialize the ''brains'' of the whole operation
+    MainGUIController mainController = mainFxmlLoader.getController();
     mainController.init(primaryStage);
 
     // Then the cosmetics
     try {
       primaryStage.getIcons().add(new Image(
-        PaintApplicationLauncher.class.getResourceAsStream("icons/paint_icon.png")));
+        PaintLauncher.class.getResourceAsStream("icons/paint_icon.png")));
     } catch (NullPointerException nullPointerException) {
       System.err.println("Cannot find icon from path specified.");
     }
