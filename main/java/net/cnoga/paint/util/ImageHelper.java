@@ -5,7 +5,11 @@ import java.io.FileNotFoundException;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
+/**
+ * Doesn't do anything at the moment. But will prove useful as a organizational tool later.
+ */
 public class ImageHelper {
+
 
   public static Image loadImage(String filePath) {
     try {

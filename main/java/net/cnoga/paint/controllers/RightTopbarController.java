@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ToggleButton;
+import net.cnoga.paint.services.FileIOPublisher;
+import net.cnoga.paint.services.ThemePublisher;
 
 
 /**
@@ -24,7 +26,7 @@ import javafx.scene.control.ToggleButton;
  *   <li>User clicks on the "color picker" icon in the menu bar.</li>
  *   <li>{@link #onOpenColorPicker(ActionEvent)} is invoked.</li>
  *   <li>The controller delegates the action to the backend service (e.g., FileService).</li>
- *   <li>The service updates the application model (e.g., {@link net.cnoga.paint.services.FileIOService}).</li>
+ *   <li>The service updates the application model (e.g., {@link FileIOPublisher}).</li>
  * </ol>
  *
  * <p>Controller Responsibilities:</p>
@@ -44,6 +46,12 @@ public class RightTopbarController {
   public ToggleButton right_topbar_layers;
   public Button right_topbar_settings;
   public MenuButton right_topbar_help;
+
+  private ThemePublisher themePublisher;
+
+  public void initThemePublisher(ThemePublisher themePublisher) {
+    this.themePublisher = themePublisher;
+  }
 
   public void onOpenColorPicker(ActionEvent actionEvent) {
     // TODO: actually make this thing open a window for the color picker
@@ -89,4 +97,8 @@ public class RightTopbarController {
     // TODO: Will have help, documentation, and
   }
 
+  public void onOpenThemes(ActionEvent actionEvent) {
+    System.out.println("TRYING OPEN THEMES");
+    themePublisher.changeTheme();
+  }
 }

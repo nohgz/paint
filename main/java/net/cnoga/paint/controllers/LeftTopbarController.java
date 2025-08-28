@@ -1,6 +1,5 @@
 package net.cnoga.paint.controllers;
 
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -34,7 +33,7 @@ import javafx.scene.control.MenuItem;
  * @author cnoga
  * @version 1.0
  */
-public class LeftTopbarController extends AbstractIOProvider {
+public class LeftTopbarController extends AbstractIOController {
 
   public MenuItem left_topbar_new_file;
   public MenuItem left_topbar_file_open;
@@ -43,27 +42,7 @@ public class LeftTopbarController extends AbstractIOProvider {
   public MenuItem left_topbar_exit;
 
   @FXML
-  public void onNewFile(ActionEvent actionEvent) {
-    fileIOService.newFile();
-  }
-
-  @FXML
-  public void onOpenFile(ActionEvent actionEvent) throws IOException {
-    fileIOService.openFile();
-  }
-
-  @FXML
-  public void onFileSave(ActionEvent actionEvent) {
-    fileIOService.saveFile();
-  }
-
-  @FXML
-  public void onFileSaveAs(ActionEvent actionEvent) {
-    fileIOService.saveFile();
-  }
-
-  @FXML
   public void onAppExit(ActionEvent actionEvent) {
-    fileIOService.closeProgram();
+    fileIOPublisher.closeProgram();
   }
 }

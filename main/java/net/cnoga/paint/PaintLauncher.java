@@ -5,8 +5,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import net.cnoga.paint.controllers.MainGUIController;
+import net.cnoga.paint.controllers.MainController;
 
 public class PaintLauncher extends Application {
 
@@ -25,8 +26,8 @@ public class PaintLauncher extends Application {
     Scene scene = new Scene(mainFxmlLoader.load(), 320, 240);
 
     // Initialize the ''brains'' of the whole operation
-    MainGUIController mainController = mainFxmlLoader.getController();
-    mainController.init(primaryStage);
+    MainController mainController = mainFxmlLoader.getController();
+    mainController.init(primaryStage, scene);
 
     // Then the cosmetics
     try {

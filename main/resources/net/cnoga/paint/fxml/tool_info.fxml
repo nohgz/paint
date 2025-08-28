@@ -4,5 +4,5 @@
 <?import javafx.scene.layout.HBox?>
 
 <HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.ToolInfoController">
-  <Label text="Selected tool info will be placed here. Coming Soon!"/>
+  <Label text="Selected tool info will be placed here. Coming Soon!" fx:id="toolInfoCaption"/>
 </HBox>

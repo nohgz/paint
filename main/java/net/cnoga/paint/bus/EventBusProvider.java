@@ -1,10 +1,7 @@
-package net.cnoga.paint.services;
-
-import net.cnoga.paint.bus.EventBus;
+package net.cnoga.paint.bus;
 
 public abstract class EventBusProvider {
   protected final EventBus bus;
-
   public EventBusProvider(EventBus bus) {
     this.bus = bus;
   }
