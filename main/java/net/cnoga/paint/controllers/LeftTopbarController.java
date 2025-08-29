@@ -20,8 +20,8 @@ import javafx.scene.control.MenuItem;
  * <ol>
  *   <li>User clicks "Open File" in the menu bar.</li>
  *   <li>{@link #onOpenFile(ActionEvent)} is invoked.</li>
- *   <li>The controller delegates the action to the backend service (e.g., FileService).</li>
- *   <li>The service updates the application model (e.g., {@link net.cnoga.paint.model.FileHolder}).</li>
+ *   <li>The controller delegates the action to the backend service (e.g., {@link net.cnoga.paint.publisher.FileIOPublisher}).</li>
+ *   <li>The service updates the application model (e.g., {@link net.cnoga.paint.listener.WorkspaceListener}).</li>
  * </ol>
  *
  * <p>Controller Responsibilities:</p>

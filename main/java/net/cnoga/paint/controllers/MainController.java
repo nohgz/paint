@@ -28,6 +28,9 @@ import net.cnoga.paint.publisher.FileIOPublisher;
  * controller wiring, and event-bus registration) and may be
  * refactored into a cleaner separation of responsibilities.
  * </p>
+ *
+ * @author cnoga
+ * @version 1.0
  */
 public class MainController {
   @FXML
@@ -72,6 +75,5 @@ public class MainController {
     // Then register each of these events and services to the bus.
     // I might make when you create a listener, it will immediately register.
     bus.register(workspaceListener);
-
   }
 }

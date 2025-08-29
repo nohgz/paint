@@ -78,6 +78,7 @@ public class WorkspaceListener {
    */
   @SubscribeEvent
   private void newFile(NewFileEvent newFileEvent) {
+    currentFile = null;
     loadCanvas(1000, 700, gc -> {
       gc.setFill(Color.WHITE);
       gc.fillRect(0, 0, 1000, 700);

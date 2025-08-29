@@ -2,8 +2,15 @@ package net.cnoga.paint.controllers;
 
 import javafx.scene.control.Label;
 
+/**
+ * Controller for the bottom information panel.
+ * <p>
+ * Displays contextual information about the canvas, such as its size,
+ * the currently selected tool, cursor position, and zoom level.
+ * @author cnoga
+ * @version 1.0
+ */
 public class BottomInfoController {
-  // The point of the bottom info controller is to display canvas info (e.g. size), tool info, mouse cursor position, and zoom level
   public Label textStatus;
 
 }
