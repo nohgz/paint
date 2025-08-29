@@ -1,9 +1,7 @@
 package net.cnoga.paint.publisher;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
@@ -13,6 +11,18 @@ import net.cnoga.paint.events.FileSaveAsEvent;
 import net.cnoga.paint.events.FileSaveEvent;
 import net.cnoga.paint.events.NewFileEvent;
 
+/**
+ * Publishes file I/O–related actions to the application's {@link EventBus}.
+ * <p>
+ * This class connects JavaFX controller actions (e.g., "New", "Open", "Save")
+ * with the event-driven backend by posting corresponding events. It also provides
+ * simple integration with the JavaFX {@link FileChooser} for file selection
+ * and with the {@link Stage} for closing the application.
+ * </p>
+ *
+ * @author cnoga
+ * @version 1.0
+ */
 public class FileIOPublisher extends EventBusProvider {
 
   private Stage stage;

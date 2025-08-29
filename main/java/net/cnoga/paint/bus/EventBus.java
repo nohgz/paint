@@ -31,7 +31,7 @@ public class EventBus {
 
     // Enforce class level annotations, as it doesn't make
     // sense for a SubscribeEvent method to not be subscribed
-    // to the event bus
+    // to the event bus. Should I make this automatic?
     if (!clazz.isAnnotationPresent(EventBusSubscriber.class)) {
       throw new IllegalArgumentException(
         "Class " + clazz.getName() + " must be annotated with @EventBusSubscriber"

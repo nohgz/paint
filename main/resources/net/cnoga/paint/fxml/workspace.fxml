@@ -4,7 +4,11 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.Group?>
-<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:id="workspaceScrollPane" pannable="true" fx:controller="net.cnoga.paint.controllers.WorkspaceController">
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            pannable="true"
+            style="-fx-background: #d6d6d6"
+            fx:id="workspaceScrollPane"
+            fx:controller="net.cnoga.paint.controllers.WorkspaceController">
   <StackPane fx:id="workspaceStackPane" minWidth="0" minHeight="0">
     <Group fx:id="workspaceCanvasGroup"/>
   </StackPane>

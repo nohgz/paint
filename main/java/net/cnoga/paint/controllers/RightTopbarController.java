@@ -83,14 +83,14 @@ public class RightTopbarController {
   }
 
   public void onOpenSettings(ActionEvent actionEvent) {
-    // TODO: make this guy open the settings window
+    // TODO: Will open settings window
   }
 
   public void onOpenHelp(ActionEvent actionEvent) {
-    // TODO: Will have help, documentation, and
+    // TODO: Will have help, documentation, and patch notes.
   }
 
   public void onOpenThemes(ActionEvent actionEvent) {
-    System.out.println("TRYING OPEN THEMES");
+    // TODO: Will open the themes window
   }
 }

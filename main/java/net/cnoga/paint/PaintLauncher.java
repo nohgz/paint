@@ -5,19 +5,31 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import net.cnoga.paint.controllers.MainController;
 
+/**
+ * The main launcher for the Paint(t) application.
+ * <p>
+ * Initializes the JavaFX runtime, loads the primary FXML layout,
+ * sets up the main controller, and displays the primary stage.
+ * Also sets application icons and initial window properties.
+ * </p>
+ *
+ * <p>
+ * Note: This class is the entry point for the application and should
+ * not contain business logic beyond JavaFX initialization.
+ * </p>
+ *
+ * @author cnoga
+ * @version 1.0
+ */
 public class PaintLauncher extends Application {
 
   public static void main(String[] args) {
     launch(args);
   }
 
-  /**
-   * The Launcher for my Pain(t).
-   */
   @Override
   public void start(Stage primaryStage) throws IOException {
     // Start with the fundamental stuff
