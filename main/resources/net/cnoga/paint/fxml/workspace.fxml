@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.Group?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:id="workspaceScrollPane" pannable="true" fx:controller="net.cnoga.paint.controllers.WorkspaceController">
+  <StackPane fx:id="workspaceStackPane" minWidth="0" minHeight="0">
+    <Group fx:id="workspaceCanvasGroup"/>
+  </StackPane>
+</ScrollPane>

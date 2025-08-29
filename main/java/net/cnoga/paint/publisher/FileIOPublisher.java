@@ -1,4 +1,4 @@
-package net.cnoga.paint.services;
+package net.cnoga.paint.publisher;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,9 +8,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
 import net.cnoga.paint.bus.EventBusProvider;
-import net.cnoga.paint.events.ImageOpenEvent;
-import net.cnoga.paint.events.ImageSaveEvent;
-import net.cnoga.paint.events.NewImageEvent;
+import net.cnoga.paint.events.FileOpenEvent;
+import net.cnoga.paint.events.FileSaveAsEvent;
+import net.cnoga.paint.events.FileSaveEvent;
+import net.cnoga.paint.events.NewFileEvent;
 
 public class FileIOPublisher extends EventBusProvider {
 
@@ -21,30 +22,28 @@ public class FileIOPublisher extends EventBusProvider {
     this.stage = stage;
   }
 
-  public void newImage() {
-    bus.post(new NewImageEvent());
+  public void newFile() {
+    bus.post(new NewFileEvent());
   }
 
-  public void saveImage() {
-    bus.post(new ImageSaveEvent());
+  public void saveFile() {
+    bus.post(new FileSaveEvent());
   }
 
-  public void saveImageAs() {
-    bus.post(new ImageSaveEvent());
+  public void saveFileAs() {
+    bus.post(new FileSaveAsEvent());
   }
 
-  public void openImage(File file) throws IOException {
-    Image image = new Image(new FileInputStream(file));
-    bus.post(new ImageOpenEvent(image));
+  public void openFile(File file) {
+    bus.post(new FileOpenEvent(file));
   }
 
-  public void openImage() throws IOException {
+  public void openFile() throws IOException {
     FileChooser chooser = new FileChooser();
     chooser.setTitle("Open");
     File selectedFile = chooser.showOpenDialog(stage);
     if (selectedFile != null) {
-      System.out.println("[FileIOService] Opened file: " + selectedFile.getAbsolutePath() + ".");
-      openImage(new File(selectedFile.getAbsolutePath()));
+      openFile(new File(selectedFile.getAbsolutePath()));
     } else {
       System.out.println("[FileIOService] Did not open a file / File invalid.");
     }

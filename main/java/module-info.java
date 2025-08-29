@@ -1,6 +1,7 @@
 module net.cnoga.paint {
   requires javafx.controls;
   requires javafx.fxml;
+  requires javafx.swing;
 
   opens net.cnoga.paint to javafx.fxml;
   exports net.cnoga.paint;

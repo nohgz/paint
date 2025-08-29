@@ -60,7 +60,7 @@
   <Button fx:id = "right_topbar_theme" onAction="#onOpenThemes">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../icons/menu/settings_icon.png"/>
+        <Image url="@../icons/menu/themes_icon.png"/>
       </ImageView>
     </graphic>
   </Button>

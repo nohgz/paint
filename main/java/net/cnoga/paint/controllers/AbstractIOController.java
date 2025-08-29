@@ -2,7 +2,7 @@ package net.cnoga.paint.controllers;
 
 import java.io.IOException;
 import javafx.event.ActionEvent;
-import net.cnoga.paint.services.FileIOPublisher;
+import net.cnoga.paint.publisher.FileIOPublisher;
 
 public abstract class AbstractIOController {
   // classes that inherit this guy are capable of basic IO
@@ -14,18 +14,18 @@ public abstract class AbstractIOController {
   }
 
   public void onNewFile(ActionEvent actionEvent) {
-    fileIOPublisher.newImage();
+    fileIOPublisher.newFile();
   }
 
   public void onOpenFile(ActionEvent actionEvent) throws IOException {
-    fileIOPublisher.openImage();
+    fileIOPublisher.openFile();
   }
 
   public void onFileSave(ActionEvent actionEvent) {
-    fileIOPublisher.saveImage();
+    fileIOPublisher.saveFile();
   }
 
   public void onFileSaveAs(ActionEvent actionEvent) {
-    fileIOPublisher.saveImage();
+    fileIOPublisher.saveFileAs();
   }
 }

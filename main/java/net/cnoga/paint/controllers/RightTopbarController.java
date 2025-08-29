@@ -5,8 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ToggleButton;
-import net.cnoga.paint.services.FileIOPublisher;
-import net.cnoga.paint.services.ThemePublisher;
+import net.cnoga.paint.publisher.FileIOPublisher;
 
 
 /**
@@ -46,12 +45,6 @@ public class RightTopbarController {
   public ToggleButton right_topbar_layers;
   public Button right_topbar_settings;
   public MenuButton right_topbar_help;
-
-  private ThemePublisher themePublisher;
-
-  public void initThemePublisher(ThemePublisher themePublisher) {
-    this.themePublisher = themePublisher;
-  }
 
   public void onOpenColorPicker(ActionEvent actionEvent) {
     // TODO: actually make this thing open a window for the color picker
@@ -99,6 +92,5 @@ public class RightTopbarController {
 
   public void onOpenThemes(ActionEvent actionEvent) {
     System.out.println("TRYING OPEN THEMES");
-    themePublisher.changeTheme();
   }
 }

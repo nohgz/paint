@@ -2,12 +2,12 @@ package net.cnoga.paint.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
-import net.cnoga.paint.services.CanvasListener;
-import net.cnoga.paint.services.FileIOPublisher;
-import net.cnoga.paint.services.TextListener;
-import net.cnoga.paint.services.ThemePublisher;
+import net.cnoga.paint.events.FileOpenEvent;
+import net.cnoga.paint.listener.WorkspaceListener;
+import net.cnoga.paint.publisher.FileIOPublisher;
 
 public class MainController {
 
@@ -22,12 +22,10 @@ public class MainController {
   @FXML
   private RightTopbarController rightTopbarController;
   @FXML
-  private CanvasController canvasController;
+  private WorkspaceController workspaceController;
 
-  private CanvasListener canvasListener;
+  private WorkspaceListener workspaceListener;
   private FileIOPublisher fileIOPublisher;
-  private TextListener textListener;
-  private ThemePublisher themePublisher;
 
   public void init(Stage primaryStage, Scene primaryScene) {
     // FIXME: There is a conglomeration of different ways to do things and register
@@ -39,20 +37,16 @@ public class MainController {
 
     // The services the program runs
     fileIOPublisher = new FileIOPublisher(bus, primaryStage);
-    themePublisher = new ThemePublisher(bus);
-    textListener = new TextListener();
-
-    canvasListener = canvasController.initCanvasService();
+    workspaceListener = workspaceController.initWorkspaceListener();
 
     // Initialize. These methods are not tied to the service but instead
     // act was ways for fxml to communicate with the controllers.
     shortcutBarController.initFileIOPublisher(fileIOPublisher);
     leftTopbarController.initFileIOPublisher(fileIOPublisher);
-    rightTopbarController.initThemePublisher(themePublisher);
 
     // Then register each of these events and services to the bus.
-    // I might make when you create a bus enabled service, it will immediately register.
-    bus.register(textListener);
-    bus.register(canvasListener);
+    // I might make when you create a listener, it will immediately register.
+    bus.register(workspaceListener);
+
   }
 }
