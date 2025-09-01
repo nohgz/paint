@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * Event signaling that a file has been opened for editing or display.
  * <p>
- * Typically posted by the {@link net.cnoga.paint.publisher.FileIOPublisher} when "Save As" is chosen.
+ * Typically posted by the {@link net.cnoga.paint.publisher.FileIOPublisher} when "Open File" is chosen.
  * Listeners should respond by loading its contents into the active workspace.
  * <p>
  * See {@link net.cnoga.paint.listener.WorkspaceListener}

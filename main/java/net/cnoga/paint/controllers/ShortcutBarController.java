@@ -1,6 +1,7 @@
 package net.cnoga.paint.controllers;
 
 import javafx.scene.control.Button;
+import net.cnoga.paint.controllers.AbstractIOController;
 
 /**
  * Controller for the shortcut bar.

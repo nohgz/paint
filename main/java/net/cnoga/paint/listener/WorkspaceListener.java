@@ -151,6 +151,13 @@ public class WorkspaceListener {
     fileChooser.getExtensionFilters().add(
       new FileChooser.ExtensionFilter("PNG Image", "*.png")
     );
+    fileChooser.getExtensionFilters().add(
+      new FileChooser.ExtensionFilter("BMP Image", "*.bmp")
+    );
+    fileChooser.getExtensionFilters().add(
+      new FileChooser.ExtensionFilter("BMP Image", "*.bmp")
+    );
+
     File file = fileChooser.showSaveDialog(scrollPane.getScene().getWindow());
     if (file != null) {
       saveCanvasToFile(canvas, file);

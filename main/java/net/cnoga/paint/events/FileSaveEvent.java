@@ -4,7 +4,7 @@ package net.cnoga.paint.events;
  * Event signaling that the current workspace should be saved to its
  * associated file location.
  * <p>
- * Typically posted by the {@link net.cnoga.paint.publisher.FileIOPublisher} when "New File" is chosen.
+ * Typically posted by the {@link net.cnoga.paint.publisher.FileIOPublisher} when "Save" is chosen.
  * <p>
  * If no file is currently associated, a {@link FileSaveAsEvent} should be
  * triggered instead.

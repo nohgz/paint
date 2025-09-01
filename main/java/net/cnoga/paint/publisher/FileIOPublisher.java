@@ -60,6 +60,8 @@ public class FileIOPublisher extends EventBusProvider {
   }
 
   public void closeProgram() {
+    // FIXME: This is a violation of my principle that publishers send events, and listeners handle them.
+    // I have to make a program Publisher / Listener... but doing that adds a lot of annoying boilerplate.
     this.stage.close();
   }
 }

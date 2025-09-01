@@ -4,8 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
+import net.cnoga.paint.listener.SubwindowListener;
 import net.cnoga.paint.listener.WorkspaceListener;
 import net.cnoga.paint.publisher.FileIOPublisher;
+import net.cnoga.paint.publisher.SubwindowPublisher;
 
 /**
  * The root JavaFX controller for the application.
@@ -48,6 +50,8 @@ public class MainController {
 
   private WorkspaceListener workspaceListener;
   private FileIOPublisher fileIOPublisher;
+  private SubwindowPublisher subwindowPublisher;
+  private SubwindowListener subwindowListener;
 
   /**
    * Initializes the main controller and wires up the application.
@@ -65,15 +69,26 @@ public class MainController {
 
     // The services the program runs
     workspaceListener = workspaceController.initWorkspaceListener();
+    subwindowListener = new SubwindowListener(primaryStage);
 
     // Initialize. These methods are not tied to the service but instead
     // act was ways for fxml to communicate with the controllers.
     fileIOPublisher = new FileIOPublisher(bus, primaryStage);
+    subwindowPublisher = new SubwindowPublisher(bus);
+
     shortcutBarController.initFileIOPublisher(fileIOPublisher);
     leftTopbarController.initFileIOPublisher(fileIOPublisher);
+    rightTopbarController.initSubWindowPublisher(subwindowPublisher);
 
     // Then register each of these events and services to the bus.
     // I might make when you create a listener, it will immediately register.
     bus.register(workspaceListener);
+    bus.register(subwindowListener);
+
+    // intercept the main close request
+    primaryStage.setOnCloseRequest(windowEvent -> {
+      windowEvent.consume();
+      fileIOPublisher.closeProgram();
+    });
   }
 }

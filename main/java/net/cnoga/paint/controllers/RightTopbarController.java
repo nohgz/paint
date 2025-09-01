@@ -5,7 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ToggleButton;
+import net.cnoga.paint.listener.SubwindowListener;
 import net.cnoga.paint.publisher.FileIOPublisher;
+import net.cnoga.paint.publisher.SubwindowPublisher;
 
 
 /**
@@ -46,39 +48,45 @@ public class RightTopbarController {
   public Button right_topbar_settings;
   public MenuButton right_topbar_help;
 
+  private SubwindowPublisher subwindowPublisher;
+
+  public void initSubWindowPublisher(SubwindowPublisher subwindowPublisher) {
+    this.subwindowPublisher = subwindowPublisher;
+  }
+
   public void onOpenColorPicker(ActionEvent actionEvent) {
     // TODO: actually make this thing open a window for the color picker
     if (right_topbar_color_picker.isSelected()) {
-      System.out.println("COLOR PICKER ON");
+      subwindowPublisher.toggleColorPickerWindow(true);
     } else {
-      System.out.println("COLOR PICKER OFF");
+      subwindowPublisher.toggleColorPickerWindow(false);
     }
   }
 
   public void onOpenTools(ActionEvent actionEvent) {
     // TODO: make this thing open the tools window
     if (right_topbar_tools.isSelected()) {
-      System.out.println("TOOLS ON");
+      subwindowPublisher.toggleToolsWindow(true);
     } else {
-      System.out.println("TOOLS OFF");
+      subwindowPublisher.toggleToolsWindow(false);
     }
   }
 
   public void onOpenLayers(ActionEvent actionEvent) {
     // TODO: make this guy open the canvas layers window
     if (right_topbar_layers.isSelected()) {
-      System.out.println("LAYERS ON");
+      subwindowPublisher.toggleLayersWindow(true);
     } else {
-      System.out.println("LAYERS OFF");
+      subwindowPublisher.toggleLayersWindow(false);
     }
   }
 
   public void onOpenHistory(ActionEvent actionEvent) {
     // TODO: make this guy open the history window
     if (right_topbar_layers.isSelected()) {
-      System.out.println("LAYERS ON");
+      subwindowPublisher.toggleHistoryWindow(true);
     } else {
-      System.out.println("LAYERS OFF");
+      subwindowPublisher.toggleHistoryWindow(false);
     }
   }
 
