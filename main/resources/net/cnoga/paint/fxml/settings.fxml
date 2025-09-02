@@ -4,6 +4,6 @@
 
 <GridPane xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.controllers.ToolsController"
-  prefHeight="300.0" prefWidth="60.0">
+  fx:controller="net.cnoga.paint.controllers.SettingsController"
+  prefHeight="400.0" prefWidth="600.0">
 </GridPane>

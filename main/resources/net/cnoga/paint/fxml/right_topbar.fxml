@@ -55,23 +55,15 @@
     </tooltip>
   </ToggleButton>
 
-  <Separator orientation="VERTICAL"/>
-
-  <Button fx:id = "right_topbar_theme" onAction="#onOpenThemes">
-    <graphic>
-      <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../icons/menu/themes_icon.png"/>
-      </ImageView>
-    </graphic>
-  </Button>
-
-  <Button fx:id = "right_topbar_settings" onAction="#onOpenSettings">
+  <ToggleButton fx:id = "right_topbar_settings" onAction="#onOpenSettings">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../icons/menu/settings_icon.png"/>
       </ImageView>
     </graphic>
-  </Button>
+  </ToggleButton>
+
+  <Separator orientation="VERTICAL"/>
 
   <MenuButton fx:id = "right_topbar_help" onAction="#onOpenHelp">
     <graphic>

@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.WritableImage;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.imageio.ImageIO;
@@ -39,7 +40,7 @@ public class PaintUtil {
     }
   }
 
-  public static Stage createSubwindow(String title, String fxmlPath, Stage mainStage, Double x, Double y) {
+  public static Stage createSubwindow(String title, String fxmlPath, Stage mainStage, Boolean resizable, Double x, Double y) {
     URL fxmlUrl = PaintUtil.class.getResource(fxmlPath);
     if (fxmlUrl == null) {
       throw new IllegalArgumentException(
@@ -55,7 +56,7 @@ public class PaintUtil {
       sub.setTitle(title);
       sub.setScene(scene);
       sub.initStyle(StageStyle.UTILITY);
-
+      sub.setResizable(resizable);
       sub.initOwner(mainStage);
       sub.initModality(Modality.NONE);
 
@@ -68,7 +69,7 @@ public class PaintUtil {
       });
 
       // Mirror minimize/restore behavior
-      mainStage.iconifiedProperty().addListener((obs, was, is) -> sub.setIconified(is));
+//      mainStage.iconifiedProperty().addListener((obs, was, is) -> sub.setIconified(is));
 
       return sub;
     } catch (IOException e) {
@@ -78,17 +79,96 @@ public class PaintUtil {
     }
   }
 
-  public static Stage createToggledSubwindow(String title, String fxmlPath, Stage mainStage, Double x, Double y, ToggleButton toggleButton) {
-    Stage subwindow = createSubwindow(title, fxmlPath, mainStage, x, y);
+  public static Stage createToggledSubwindow(String title, String fxmlPath, Stage mainStage, Boolean resizable, Double x, Double y, ToggleButton toggleButton) {
+    Stage subwindow = createSubwindow(title, fxmlPath, mainStage, resizable, x, y);
 
     subwindow.setOnCloseRequest(windowEvent -> {
       try {
         toggleButton.fire();
       } catch (NullPointerException e) {
-        System.err.println("The button you have is null and can't be toggled!");
+        System.err.println("The button provided is null and can't be toggled!");
       }
     });
 
     return subwindow;
   }
+  public static void setSubwindowSpawnPoint(Stage subStage, Stage mainStage, AnchorTypes anchorType) {
+    subStage.setOnShown(e -> {
+      // The magic numbers here are to account for the size of the other bars
+      // so that the subwindows are opened over the main canvas.
+      double x = mainStage.getX();
+      double y = mainStage.getY() + 100;
+
+      double mainWidth = mainStage.getWidth();
+      double mainHeight = mainStage.getHeight()-120;
+      double subWidth = subStage.getWidth();
+      double subHeight = subStage.getHeight();
+
+      // Default positions
+      double targetX = x;
+      double targetY = y;
+
+      switch (anchorType) {
+        case TOP_LEFT:
+          // Default already fine
+          break;
+
+        case TOP_CENTER:
+          targetX += (mainWidth - subWidth) / 2;
+          break;
+
+        case TOP_RIGHT:
+          targetX += mainWidth - subWidth;
+          break;
+
+        case MIDDLE_LEFT:
+          targetY += (mainHeight - subHeight) / 2;
+          break;
+
+        case MIDDLE_CENTER:
+          targetX += (mainWidth - subWidth) / 2;
+          targetY += (mainHeight - subHeight) / 2;
+          break;
+
+        case MIDDLE_RIGHT:
+          targetX += mainWidth - subWidth;
+          targetY += (mainHeight - subHeight) / 2;
+          break;
+
+        case BOTTOM_LEFT:
+          targetY += mainHeight - subHeight;
+          break;
+
+        case BOTTOM_CENTER:
+          targetX += (mainWidth - subWidth) / 2;
+          targetY += mainHeight - subHeight;
+          break;
+
+        case BOTTOM_RIGHT:
+          targetX += mainWidth - subWidth;
+          targetY += mainHeight - subHeight;
+          break;
+      }
+
+      //FIXME: This logic is fucking dogshit. I need to fix it.
+      if (subWidth > mainWidth) {
+        if (anchorType.toString().contains("LEFT")) {
+          targetX = x - subWidth; // push left of main
+        } else if (anchorType.toString().contains("RIGHT")) {
+          System.out.println("PUSH RIGHT OF MAIN");
+          targetX = x + mainWidth + subWidth; // push right of main
+        } else {
+          // center anchors default to right, fallback to left if no room
+          targetX = x + mainWidth + subWidth;
+          if (targetX + subWidth > Screen.getPrimary().getBounds().getMaxX()) {
+            targetX = x - subWidth;
+          }
+        }
+      }
+
+      subStage.setX(targetX);
+      subStage.setY(targetY);
+    });
+  }
+
 }

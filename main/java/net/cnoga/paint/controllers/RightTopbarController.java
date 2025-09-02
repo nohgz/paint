@@ -2,7 +2,6 @@ package net.cnoga.paint.controllers;
 
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ToggleButton;
 import net.cnoga.paint.listener.SubWindowListener;
@@ -46,7 +45,7 @@ public class RightTopbarController {
   public ToggleButton right_topbar_tools;
   public ToggleButton right_topbar_layers;
   public ToggleButton right_topbar_history;
-  public Button right_topbar_settings;
+  public ToggleButton right_topbar_settings;
   public MenuButton right_topbar_help;
 
   private SubwindowPublisher subWindowPublisher;
@@ -54,39 +53,33 @@ public class RightTopbarController {
   public void initSubWindowPublisher(SubwindowPublisher subwindowPublisher) {
     this.subWindowPublisher = subwindowPublisher;
   }
+
+  // The reason that I need a listener here is for the toggling of respective buttons when they close
   public SubWindowListener initSubWindowListener(){
-    return new SubWindowListener(right_topbar_history, right_topbar_tools, right_topbar_layers, right_topbar_color_picker);
+    return new SubWindowListener(right_topbar_history, right_topbar_tools, right_topbar_layers, right_topbar_color_picker, right_topbar_settings);
   }
 
   public void onOpenColorPicker(ActionEvent actionEvent) {
-    // TODO: actually make this thing open a window for the color picker
     subWindowPublisher.toggleColorPickerWindow();
   }
 
   public void onOpenTools(ActionEvent actionEvent) {
-    // TODO: make this thing open the tools window
     subWindowPublisher.toggleToolsWindow();
   }
 
   public void onOpenLayers(ActionEvent actionEvent) {
-    // TODO: make this guy open the canvas layers window
     subWindowPublisher.toggleLayersWindow();
   }
 
   public void onOpenHistory(ActionEvent actionEvent) {
-    // TODO: make this guy open the history window
     subWindowPublisher.toggleHistoryWindow();
   }
 
   public void onOpenSettings(ActionEvent actionEvent) {
-    // TODO: Will open settings window
+    subWindowPublisher.toggleSettingsWindow();
   }
 
   public void onOpenHelp(ActionEvent actionEvent) {
     // TODO: Will have help, documentation, and patch notes.
-  }
-
-  public void onOpenThemes(ActionEvent actionEvent) {
-    // TODO: Will open the themes window
   }
 }

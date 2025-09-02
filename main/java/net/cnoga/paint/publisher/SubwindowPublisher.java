@@ -2,10 +2,11 @@ package net.cnoga.paint.publisher;
 
 import net.cnoga.paint.bus.EventBus;
 import net.cnoga.paint.bus.EventBusProvider;
-import net.cnoga.paint.events.ToggleColorPickerEvent;
-import net.cnoga.paint.events.ToggleHistoryEvent;
-import net.cnoga.paint.events.ToggleLayersEvent;
-import net.cnoga.paint.events.ToggleToolsEvent;
+import net.cnoga.paint.events.ClickColorPickerEvent;
+import net.cnoga.paint.events.ClickHistoryEvent;
+import net.cnoga.paint.events.ClickLayersEvent;
+import net.cnoga.paint.events.ClickSettingsEvent;
+import net.cnoga.paint.events.ClickToolsEvent;
 
 public class SubwindowPublisher extends EventBusProvider {
 
@@ -14,18 +15,22 @@ public class SubwindowPublisher extends EventBusProvider {
   }
 
   public void toggleToolsWindow() {
-    bus.post(new ToggleToolsEvent());
+    bus.post(new ClickToolsEvent());
   }
 
   public void toggleLayersWindow() {
-    bus.post(new ToggleLayersEvent());
+    bus.post(new ClickLayersEvent());
   }
 
   public void toggleColorPickerWindow() {
-    bus.post(new ToggleColorPickerEvent());
+    bus.post(new ClickColorPickerEvent());
   }
 
   public void toggleHistoryWindow() {
-    bus.post(new ToggleHistoryEvent());
+    bus.post(new ClickHistoryEvent());
+  }
+
+  public void toggleSettingsWindow() {
+    bus.post(new ClickSettingsEvent());
   }
 }
