@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ToggleButton;
-import net.cnoga.paint.listener.SubwindowListener;
+import net.cnoga.paint.listener.SubWindowListener;
 import net.cnoga.paint.publisher.FileIOPublisher;
 import net.cnoga.paint.publisher.SubwindowPublisher;
 
@@ -45,49 +45,37 @@ public class RightTopbarController {
   public ToggleButton right_topbar_color_picker;
   public ToggleButton right_topbar_tools;
   public ToggleButton right_topbar_layers;
+  public ToggleButton right_topbar_history;
   public Button right_topbar_settings;
   public MenuButton right_topbar_help;
 
-  private SubwindowPublisher subwindowPublisher;
+  private SubwindowPublisher subWindowPublisher;
 
   public void initSubWindowPublisher(SubwindowPublisher subwindowPublisher) {
-    this.subwindowPublisher = subwindowPublisher;
+    this.subWindowPublisher = subwindowPublisher;
+  }
+  public SubWindowListener initSubWindowListener(){
+    return new SubWindowListener(right_topbar_history, right_topbar_tools, right_topbar_layers, right_topbar_color_picker);
   }
 
   public void onOpenColorPicker(ActionEvent actionEvent) {
     // TODO: actually make this thing open a window for the color picker
-    if (right_topbar_color_picker.isSelected()) {
-      subwindowPublisher.toggleColorPickerWindow(true);
-    } else {
-      subwindowPublisher.toggleColorPickerWindow(false);
-    }
+    subWindowPublisher.toggleColorPickerWindow();
   }
 
   public void onOpenTools(ActionEvent actionEvent) {
     // TODO: make this thing open the tools window
-    if (right_topbar_tools.isSelected()) {
-      subwindowPublisher.toggleToolsWindow(true);
-    } else {
-      subwindowPublisher.toggleToolsWindow(false);
-    }
+    subWindowPublisher.toggleToolsWindow();
   }
 
   public void onOpenLayers(ActionEvent actionEvent) {
     // TODO: make this guy open the canvas layers window
-    if (right_topbar_layers.isSelected()) {
-      subwindowPublisher.toggleLayersWindow(true);
-    } else {
-      subwindowPublisher.toggleLayersWindow(false);
-    }
+    subWindowPublisher.toggleLayersWindow();
   }
 
   public void onOpenHistory(ActionEvent actionEvent) {
     // TODO: make this guy open the history window
-    if (right_topbar_layers.isSelected()) {
-      subwindowPublisher.toggleHistoryWindow(true);
-    } else {
-      subwindowPublisher.toggleHistoryWindow(false);
-    }
+    subWindowPublisher.toggleHistoryWindow();
   }
 
   public void onOpenSettings(ActionEvent actionEvent) {

@@ -7,6 +7,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.WritableImage;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -14,7 +15,7 @@ import javafx.stage.StageStyle;
 import javax.imageio.ImageIO;
 
 /**
- * Utility class providing helper methods for working with JavaFX painting components.
+ * Utility class providing helper methods for Paint(t).
  * @author cnoga
  * @version 1.0
  */
@@ -38,7 +39,7 @@ public class PaintUtil {
     }
   }
 
-  public static Stage createSubwindow(String title, String fxmlPath, Stage mainStage) {
+  public static Stage createSubwindow(String title, String fxmlPath, Stage mainStage, Double x, Double y) {
     URL fxmlUrl = PaintUtil.class.getResource(fxmlPath);
     if (fxmlUrl == null) {
       throw new IllegalArgumentException(
@@ -50,21 +51,44 @@ public class PaintUtil {
       FXMLLoader loader = new FXMLLoader(fxmlUrl);
       Scene scene = new Scene(loader.load());
 
-      Stage stage = new Stage();
-      stage.setTitle(title);
-      stage.setScene(scene);
-      stage.initStyle(StageStyle.UTILITY);
+      Stage sub = new Stage();
+      sub.setTitle(title);
+      sub.setScene(scene);
+      sub.initStyle(StageStyle.UTILITY);
 
-      stage.initOwner(mainStage);
-      stage.initModality(Modality.NONE);
-      stage.setAlwaysOnTop(true);
+      sub.initOwner(mainStage);
+      sub.initModality(Modality.NONE);
 
-      return stage;
+      sub.setX(x);
+      sub.setY(y);
+
+      // Keep palette above the main window only while app is focused
+      mainStage.focusedProperty().addListener((obs, was, is) -> {
+        sub.setAlwaysOnTop(is);   // on when app focused, off when not
+      });
+
+      // Mirror minimize/restore behavior
+      mainStage.iconifiedProperty().addListener((obs, was, is) -> sub.setIconified(is));
+
+      return sub;
     } catch (IOException e) {
       System.err.println("Failed to load FXML: " + fxmlPath);
       e.printStackTrace();
       return null;
     }
   }
-}
 
+  public static Stage createToggledSubwindow(String title, String fxmlPath, Stage mainStage, Double x, Double y, ToggleButton toggleButton) {
+    Stage subwindow = createSubwindow(title, fxmlPath, mainStage, x, y);
+
+    subwindow.setOnCloseRequest(windowEvent -> {
+      try {
+        toggleButton.fire();
+      } catch (NullPointerException e) {
+        System.err.println("The button you have is null and can't be toggled!");
+      }
+    });
+
+    return subwindow;
+  }
+}

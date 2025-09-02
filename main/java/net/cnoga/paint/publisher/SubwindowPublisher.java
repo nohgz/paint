@@ -13,19 +13,19 @@ public class SubwindowPublisher extends EventBusProvider {
     super(bus);
   }
 
-  public void toggleToolsWindow(Boolean state) {
-    bus.post(new ToggleToolsEvent(state));
+  public void toggleToolsWindow() {
+    bus.post(new ToggleToolsEvent());
   }
 
-  public void toggleLayersWindow(Boolean state) {
-    bus.post(new ToggleLayersEvent(state));
+  public void toggleLayersWindow() {
+    bus.post(new ToggleLayersEvent());
   }
 
-  public void toggleColorPickerWindow(Boolean state) {
-    bus.post(new ToggleColorPickerEvent(state));
+  public void toggleColorPickerWindow() {
+    bus.post(new ToggleColorPickerEvent());
   }
 
-  public void toggleHistoryWindow(Boolean state) {
-    bus.post(new ToggleHistoryEvent(state));
+  public void toggleHistoryWindow() {
+    bus.post(new ToggleHistoryEvent());
   }
 }

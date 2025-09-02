@@ -25,7 +25,7 @@ import net.cnoga.paint.events.NewFileEvent;
  */
 public class FileIOPublisher extends EventBusProvider {
 
-  private Stage stage;
+  private final Stage stage;
 
   public FileIOPublisher(EventBus bus, Stage stage) {
     super(bus);

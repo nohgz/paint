@@ -155,7 +155,7 @@ public class WorkspaceListener {
       new FileChooser.ExtensionFilter("BMP Image", "*.bmp")
     );
     fileChooser.getExtensionFilters().add(
-      new FileChooser.ExtensionFilter("BMP Image", "*.bmp")
+      new FileChooser.ExtensionFilter("JPG Image", "*.jpg")
     );
 
     File file = fileChooser.showSaveDialog(scrollPane.getScene().getWindow());

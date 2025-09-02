@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
-import net.cnoga.paint.listener.SubwindowListener;
+import net.cnoga.paint.listener.SubWindowListener;
 import net.cnoga.paint.listener.WorkspaceListener;
 import net.cnoga.paint.publisher.FileIOPublisher;
 import net.cnoga.paint.publisher.SubwindowPublisher;
@@ -51,7 +51,7 @@ public class MainController {
   private WorkspaceListener workspaceListener;
   private FileIOPublisher fileIOPublisher;
   private SubwindowPublisher subwindowPublisher;
-  private SubwindowListener subwindowListener;
+  private SubWindowListener subwindowListener;
 
   /**
    * Initializes the main controller and wires up the application.
@@ -69,8 +69,9 @@ public class MainController {
 
     // The services the program runs
     workspaceListener = workspaceController.initWorkspaceListener();
-    subwindowListener = new SubwindowListener(primaryStage);
+    subwindowListener = rightTopbarController.initSubWindowListener();
 
+    subwindowListener.initSubwindowListener(primaryStage);
     // Initialize. These methods are not tied to the service but instead
     // act was ways for fxml to communicate with the controllers.
     fileIOPublisher = new FileIOPublisher(bus, primaryStage);
