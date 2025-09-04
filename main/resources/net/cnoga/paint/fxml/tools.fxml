@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
 
 <GridPane xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
   fx:controller="net.cnoga.paint.controllers.ToolsController"
-  prefHeight="300.0" prefWidth="60.0">
+  fx:id="toolGrid"
+  prefWidth="60" prefHeight="200">
 </GridPane>

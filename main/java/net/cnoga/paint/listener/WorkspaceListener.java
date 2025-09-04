@@ -11,6 +11,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -20,6 +22,7 @@ import net.cnoga.paint.events.FileOpenEvent;
 import net.cnoga.paint.events.FileSaveAsEvent;
 import net.cnoga.paint.events.FileSaveEvent;
 import net.cnoga.paint.events.NewFileEvent;
+import net.cnoga.paint.tool.Tool;
 
 /**
  * Listens for file and workspace-related events on the application event bus and
@@ -51,6 +54,8 @@ public class WorkspaceListener {
   private Group canvasGroup;
   private Canvas canvas;
   private File currentFile;
+  private Double zoomFactor;
+  private Tool currentTool;
 
   public WorkspaceListener(ScrollPane scrollPane, StackPane stackPane, Group canvasGroup) {
     this.scrollPane = scrollPane;
@@ -128,15 +133,44 @@ public class WorkspaceListener {
     gc.setImageSmoothing(false);
     artist.accept(gc);
 
-    // Add canvas to Group
+    // Clear and reuse the FXML-defined group + stackpane
     canvasGroup.getChildren().clear();
     canvasGroup.getChildren().add(canvas);
+    scrollPane.setContent(stackPane);
 
-    // Set StackPane size to match image
-    stackPane.setPrefWidth(width);
-    stackPane.setPrefHeight(height);
+    // Reset zoom
+    zoomFactor = 1.0;
 
-    scrollPane.layout();
+    // Zoom handler
+    scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+      if (event.isControlDown()) {
+        double oldZoom = zoomFactor;
+
+        if (event.getDeltaY() > 0) {
+          zoomFactor *= 2;
+        } else {
+          zoomFactor /= 2;
+        }
+
+        zoomFactor = Math.max(0.125, Math.min(zoomFactor, 1));
+        System.out.println("zF:" + zoomFactor);
+
+        // Apply scale to the group
+        canvasGroup.setScaleX(zoomFactor);
+        canvasGroup.setScaleY(zoomFactor);
+
+        // Optional: keep zoom centered
+        double mouseX = event.getX();
+        double mouseY = event.getY();
+        double adjustmentX = (mouseX + scrollPane.getHvalue() * scrollPane.getContent().getBoundsInLocal().getWidth()) * (zoomFactor / oldZoom - 1);
+        double adjustmentY = (mouseY + scrollPane.getVvalue() * scrollPane.getContent().getBoundsInLocal().getHeight()) * (zoomFactor / oldZoom - 1);
+
+        scrollPane.setHvalue(scrollPane.getHvalue() + adjustmentX / scrollPane.getContent().getBoundsInLocal().getWidth());
+        scrollPane.setVvalue(scrollPane.getVvalue() + adjustmentY / scrollPane.getContent().getBoundsInLocal().getHeight());
+
+        event.consume();
+      }
+    });
   }
 
   /**
@@ -163,5 +197,16 @@ public class WorkspaceListener {
       saveCanvasToFile(canvas, file);
       currentFile = file;
     }
+  }
+
+  private void initCanvasCapability(Canvas canvas, GraphicsContext gc) {
+    canvas.addEventHandler(MouseEvent.MOUSE_PRESSED,
+      e -> currentTool.onMousePressed(gc ,e.getX(), e.getY()));
+
+    canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
+      e -> currentTool.onMouseDragged(gc, e.getX(), e.getY()));
+
+    canvas.addEventHandler(MouseEvent.MOUSE_RELEASED,
+      e -> currentTool.onMouseReleased(gc, e.getX(), e.getY()));
   }
 }
