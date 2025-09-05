@@ -6,6 +6,18 @@ import java.nio.file.Path;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
+/**
+ * JavaFX controller for the "Changelog" dialog.
+ *
+ * <p>Loads and displays the release changelog from
+ * {@code /net/cnoga/paint/text/ChangelogText.txt} into the UI text area.</p>
+ *
+ * <p>This controller is automatically initialized by the FXML loader
+ * when the "Changelog" dialog view is created.</p>
+ *
+ * @author cnoga
+ * @version 1.0
+ */
 public class ChangelogController {
 
   @FXML

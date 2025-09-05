@@ -19,6 +19,24 @@ import net.cnoga.paint.events.request.OpenSettingsRequest;
 import net.cnoga.paint.events.request.OpenToolsRequest;
 import net.cnoga.paint.util.AnchorTypes;
 
+/**
+ * Service responsible for creating and managing all auxiliary subwindows in the application (e.g.,
+ * History, Layers, Tools, Settings, About, Help, Changelog).
+ *
+ * <p>This service subscribes to UI interaction events and toggles the corresponding
+ * subwindows. Each subwindow is lazily created on first use, positioned relative to the main
+ * application stage, and either shown, hidden, or brought to the front depending on the current
+ * state.</p>
+ *
+ * <p>Responsibilities:</p>
+ * <ul>
+ *   <li>Managing the lifecycle of subwindows (creation, showing, hiding).</li>
+ *   <li>Synchronizing toggle button states with subwindow visibility.</li>
+ *   <li>Ensuring subwindows are consistently spawned at predefined anchor points
+ *       relative to the main stage.</li>
+ *   <li>Handling modal and non-modal subwindows appropriately.</li>
+ * </ul>
+ */
 @EventBusSubscriber
 public class SubWindowService extends EventBusPublisher {
 

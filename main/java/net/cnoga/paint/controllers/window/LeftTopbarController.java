@@ -4,38 +4,34 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import net.cnoga.paint.bus.EventBusPublisher;
+import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.events.request.FileOpenRequest;
 import net.cnoga.paint.events.request.FileSaveAsRequest;
 import net.cnoga.paint.events.request.FileSaveRequest;
-import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.events.request.NewFileRequest;
 
 /**
- * The left top bar is the File/Edit/View/Image bar.
+ * Controller for the left top bar, which contains the File/Edit/View/Image menus.
  *
- * <p>This controller serves as an interface between
- * `src/main/resources/net/cnoga/paint/fxml/left_topbar.fxml`
- * and the backend services that implement the application's functionality.
+ * <p>Acts as the bridge between {@code left_topbar.fxml} and the backend services.
+ * Each menu item is wired via {@code fx:id} and {@code onAction} to this controller,
+ * which then posts the corresponding request to the {@link net.cnoga.paint.bus.EventBus}.</p>
  *
- * <p>Each {@link MenuItem} in the corresponding FXML file must have its
- * {@code fx:id} property bound to the corresponding public field in this controller, and its
- * {@code onAction} property bound to the appropriate handler method annotated with
- * {@link FXML}.</p>
- *
- * <p>How an interaction should go:</p>
+ * <h3>Typical Flow:</h3>
  * <ol>
- *   <li>User clicks "Open File" in the menu bar.</li>
- *   <li>The controller publishes the OpenFileEvent to the Event bus.</li>
+ *   <li>User selects a menu item (e.g., "Open File").</li>
+ *   <li>The corresponding handler posts an event such as {@link FileOpenRequest}.</li>
+ *   <li>Subscribed services react to the event and perform the actual work.</li>
  * </ol>
  *
- * <p>Controller Responsibilities:</p>
+ * <h3>Responsibilities:</h3>
  * <ul>
- *   <li>Responding to menu item actions.</li>
- *   <li>Delegating application logic to backend services.</li>
+ *   <li>Listen for menu item actions.</li>
+ *   <li>Post appropriate file- and app-related events.</li>
  * </ul>
  *
  * @author cnoga
- * @version 1.0
+ * @version 1.1
  */
 
 public class LeftTopbarController extends EventBusPublisher {

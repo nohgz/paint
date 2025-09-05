@@ -1,5 +1,15 @@
 package net.cnoga.paint.tool;
 
+/**
+ * Utility class providing access to all built-in paint tools.
+ *
+ * <p>This class registers and exposes the application's core tools,
+ * including {@link BrushTool}, {@link LineTool}, and {@link PanTool}.
+ * After registration, the {@link ToolRegistry} is locked to prevent
+ * further modifications.</p>
+ *
+ * <p>Designed as a static holder class with no instances.</p>
+ */
 public final class PaintTools {
   public static final Tool BRUSH = new BrushTool();
   public static final Tool LINE = new LineTool();

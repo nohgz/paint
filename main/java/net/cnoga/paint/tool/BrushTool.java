@@ -11,7 +11,12 @@ import net.cnoga.paint.events.request.ToolWidthChangeRequest;
 
 /**
  * A simple freehand paintbrush tool that draws continuous strokes
- * in the current color.
+ * following the mouse cursor, using the currently selected color and width.
+ *
+ * <p>Brush strokes are rendered as connected circles to create smooth lines.</p>
+ *
+ * <p>Listens to {@link ToolColorChangeRequest} and {@link ToolWidthChangeRequest}
+ * events on the event bus to update its color and stroke width dynamically.</p>
  */
 @EventBusSubscriber
 public class BrushTool extends Tool {

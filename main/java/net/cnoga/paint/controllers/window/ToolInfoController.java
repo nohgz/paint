@@ -18,10 +18,26 @@ import net.cnoga.paint.events.request.ToolWidthChangeRequest;
 import net.cnoga.paint.events.response.ToolChangedEvent;
 
 /**
- * Controller for the tool info panel.
- * <p>
- * Displays information about the currently selected tool and may
- * provide an interactable interface for configuring the tool.
+ * Controller for the tool information panel.
+ *
+ * <p>This panel displays information about the currently selected tool,
+ * including its icon, caption, and configurable options such as color
+ * and stroke width. It also provides interactive controls that allow
+ * the user to customize the tool's behavior.</p>
+ *
+ * <p>The controller listens for {@link ToolChangedEvent} messages on the
+ * event bus and updates its UI accordingly. It also publishes requests
+ * (e.g., {@link ToolColorChangeRequest}, {@link ToolWidthChangeRequest})
+ * when the user modifies tool parameters.</p>
+ *
+ * <p>Responsibilities:</p>
+ * <ul>
+ *   <li>Displaying the currently selected tool's icon and caption.</li>
+ *   <li>Providing a color picker for tool color customization.</li>
+ *   <li>Providing a slider for tool width customization (if applicable).</li>
+ *   <li>Responding to tool change events and updating the UI dynamically.</li>
+ *   <li>Publishing configuration changes via the event bus.</li>
+ * </ul>
  */
 @EventBusSubscriber
 public class ToolInfoController extends EventBusPublisher {

@@ -163,5 +163,4 @@ public class PaintUtil {
       System.err.println("Desktop browsing not supported.");
     }
   }
-
 }

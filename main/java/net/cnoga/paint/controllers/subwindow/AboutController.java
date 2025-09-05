@@ -6,6 +6,18 @@ import java.nio.file.Path;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
+/**
+ * JavaFX controller for the "About" dialog.
+ *
+ * <p>Loads and displays static information about the application from
+ * {@code /net/cnoga/paint/text/AboutText.txt} into the UI text area.</p>
+ *
+ * <p>This controller is automatically initialized by the FXML loader
+ * when the "About" dialog view is created.</p>
+ *
+ * @author cnoga
+ * @version 1.0
+ */
 public class AboutController {
 
   @FXML
@@ -17,5 +29,4 @@ public class AboutController {
       Files.readString(Path.of("src/main/resources/net/cnoga/paint/text/AboutText.txt"))
     );
   }
-
 }

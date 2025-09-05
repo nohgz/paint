@@ -8,6 +8,16 @@ import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.ToolColorChangeRequest;
 import net.cnoga.paint.events.request.ToolWidthChangeRequest;
 
+/**
+ * A tool for drawing straight lines between two points.
+ *
+ * <p>The user clicks to define the starting point and releases the mouse
+ * to define the ending point. The line is drawn with the currently
+ * selected color and width.</p>
+ *
+ * <p>Listens to {@link ToolColorChangeRequest} and {@link ToolWidthChangeRequest}
+ * events on the event bus to update its color and stroke width dynamically.</p>
+ */
 @EventBusSubscriber
 public class LineTool extends Tool {
 

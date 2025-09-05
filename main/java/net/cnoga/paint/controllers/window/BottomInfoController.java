@@ -1,6 +1,5 @@
 package net.cnoga.paint.controllers.window;
 
-import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import net.cnoga.paint.bus.EventBusPublisher;
@@ -9,12 +8,20 @@ import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.response.FileOpenedEvent;
 
 /**
- * Controller for the bottom information panel.
- * <p>
- * Displays contextual information about the canvas, such as its size,
- * the currently selected tool, cursor position, and zoom level.
+ * Controller for the bottom information panel of the workspace UI.
+ *
+ * <p>Displays contextual information such as the current file name,
+ * canvas size, selected tool, cursor position, or zoom level. The
+ * panel updates reactively through events published on the global
+ * {@link net.cnoga.paint.bus.EventBus}.</p>
+ *
+ * <h3>Event Handling:</h3>
+ * <ul>
+ *   <li>{@link FileOpenedEvent} → Updates the panel to show the opened file name.</li>
+ * </ul>
+ *
  * @author cnoga
- * @version 1.0
+ * @version 1.1
  */
 @EventBusSubscriber
 public class BottomInfoController extends EventBusPublisher {

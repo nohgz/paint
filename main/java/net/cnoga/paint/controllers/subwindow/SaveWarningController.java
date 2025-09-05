@@ -11,6 +11,24 @@ import net.cnoga.paint.events.request.ForceCloseRequest;
 import net.cnoga.paint.events.request.InitSaveStageRequest;
 
 
+/**
+ * JavaFX controller for the "Save Before Exit" warning dialog.
+ *
+ * <p>This dialog appears when the user attempts to exit with unsaved changes.
+ * It provides options to save the current work, cancel the exit, or exit without saving.</p>
+ *
+ * <p>The controller integrates with the {@link net.cnoga.paint.bus.EventBus} to coordinate save
+ * and exit operations across the application.</p>
+ *
+ * <ul>
+ *   <li>{@link #onExitAnyway(ActionEvent)} posts a {@link ForceCloseRequest} to quit immediately.</li>
+ *   <li>{@link #onSave(ActionEvent)} posts a {@link FileSaveRequest} and closes the warning stage.</li>
+ *   <li>{@link #onCancel(ActionEvent)} dismisses the dialog without exiting.</li>
+ * </ul>
+ *
+ * @author cnoga
+ * @version 1.0
+ */
 @EventBusSubscriber
 public class SaveWarningController extends EventBusPublisher {
 

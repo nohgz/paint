@@ -22,19 +22,11 @@ import net.cnoga.paint.tool.Tool;
  * Responsibilities:
  * <ul>
  *   <li>Initializes subcontrollers injected from FXML.</li>
- *   <li>Creates and registers services such as {@link FileIOService}
- *       and {@link WorkspaceService}.</li>
- *   <li>Provides glue code between the UI and the event bus.</li>
+ *   <li>Creates and registers services such as {@link WorkspaceService}.</li>
  * </ul>
  *
- * <p>
- * Note: This class currently mixes concerns (service setup,
- * controller wiring, and event-bus registration) and may be
- * refactored into a cleaner separation of responsibilities.
- * </p>
- *
  * @author cnoga
- * @version 1.0
+ * @version 1.1
  */
 public class MainController extends EventBusPublisher {
   @FXML

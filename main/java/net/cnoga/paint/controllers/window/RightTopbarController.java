@@ -17,29 +17,19 @@ import net.cnoga.paint.events.request.OpenToolsRequest;
 
 
 /**
- * The right top bar holds the palette/tools/layers toggles, and settings/documentation.
+ * Controller for the right-side top bar of the application UI.
  *
- * <p>This controller serves as an interface between
- * `src/main/resources/net/cnoga/paint/fxml/right_topbar.fxml`
- * and the backend services that implement the application's functionality.
+ * <p>The right top bar provides quick access to tools, layers, history, settings, and help
+ * sections. This controller acts as the intermediary between the
+ * {@code right_topbar.fxml} layout and the backend services, ensuring that user
+ * interactions (button presses and menu selections) are properly dispatched
+ * as events.</p>
  *
- * <p>Each {@link javafx.scene.control.MenuItem} in the corresponding FXML file must have its
- * {@code fx:id} property bound to the corresponding public field in this controller, and its
- * {@code onAction} property bound to the appropriate handler method annotated with
- * {@link javafx.fxml.FXML}.</p>
- *
- * <p>How an interaction should go:</p>
- * <ol>
- *   <li>User clicks on the "color picker" icon in the menu bar.</li>
- *   <li>{@link #onOpenColorPicker(ActionEvent)} is invoked.</li>
- *   <li>The controller delegates the action to the backend service (e.g., FileService).</li>
- *   <li>The service updates the application model (e.g., {@link FileIOService}).</li>
- * </ol>
- *
- * <p>Controller Responsibilities:</p>
+ * <p>Responsibilities include:</p>
  * <ul>
- *   <li>Responding to menu item actions.</li>
- *   <li>Delegating application logic to backend services.</li>
+ *   <li>Handling user interactions with the top bar menu and toggle buttons.</li>
+ *   <li>Delegating application logic to backend services via an event bus.</li>
+ *   <li>Initializing sub-window services with UI component references.</li>
  * </ul>
  *
  * @author cnoga

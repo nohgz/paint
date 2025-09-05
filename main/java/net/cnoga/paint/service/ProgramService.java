@@ -18,6 +18,22 @@ import net.cnoga.paint.events.response.GetSaveStateEvent;
 import net.cnoga.paint.util.AnchorTypes;
 import net.cnoga.paint.util.PaintUtil;
 
+/**
+ * Service responsible for managing the overall lifecycle of the program.
+ *
+ * <p>This service acts as an event bus subscriber that listens for application-level
+ * events such as program close requests and GitHub link openings. It coordinates safe shutdown of
+ * the application by requesting a save state before closing and, if necessary, displaying a warning
+ * dialog when unsaved changes exist.</p>
+ *
+ * <p>Responsibilities:</p>
+ * <ul>
+ *   <li>Handling program close requests and ensuring unsaved changes are addressed.</li>
+ *   <li>Displaying a modal warning dialog when the user attempts to close with unsaved changes.</li>
+ *   <li>Forcing application shutdown when explicitly requested.</li>
+ *   <li>Opening external resources such as the GitHub project page.</li>
+ * </ul>
+ */
 @EventBusSubscriber
 public class ProgramService extends EventBusPublisher {
 
@@ -51,7 +67,6 @@ public class ProgramService extends EventBusPublisher {
         warningStage.toFront();
         warningStage.showAndWait();
       } catch (Exception e) {
-        System.out.println("FUCK!");
         throw new RuntimeException(e);
       }
     }

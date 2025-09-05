@@ -39,26 +39,35 @@ import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
 
 /**
- * Listens for file and workspace-related events on the application event bus and
- * updates the drawing canvas accordingly.
+ * Service responsible for managing the drawing workspace and connecting the
+ * event-driven backend with the JavaFX UI.
  *
- * <p>This class connects the event-driven backend logic to the JavaFX UI workspace.
- * It manages the lifecycle of the {@link Canvas}, including loading images into it,
- * creating new blank files, and handling save/save-as operations.</p>
+ * <p>This class acts as the central controller for the canvas lifecycle, including
+ * creation, modification, and persistence of images. It listens for events on the
+ * {@link net.cnoga.paint.bus.EventBus} and updates the workspace UI components
+ * accordingly.</p>
  *
- * <p>Main responsibilities:</p>
+ * <h2>Main Responsibilities:</h2>
  * <ul>
- *   <li>Responds to {@link FileOpenedEvent} by loading the selected image into a canvas.</li>
- *   <li>Responds to {@link NewFileRequest} by creating a new blank canvas with default content.</li>
- *   <li>Handles {@link FileSaveRequest} and {@link FileSaveAsRequest} by saving the current canvas
- *       to disk via a {@link FileChooser} or the existing file path.</li>
- *   <li>Ensuring the UI components ({@link ScrollPane}, {@link StackPane}, {@link Group})
- *       correctly reflect the current canvas state.</li>
+ *   <li>Initializing workspace UI components such as {@link ScrollPane},
+ *       {@link StackPane}, and {@link Group}.</li>
+ *   <li>Creating new blank canvases or loading existing image files.</li>
+ *   <li>Handling save and save-as operations, including format-specific logic
+ *       for PNG, BMP, and JPEG.</li>
+ *   <li>Managing the current drawing tool and its interaction with the canvas.</li>
+ *   <li>Tracking whether the canvas has unsaved modifications (the "dirty" flag).</li>
+ *   <li>Providing zooming and panning capabilities when the Pan tool is active.</li>
  * </ul>
- * </p>
+ *
+ * <p>Supported file formats:</p>
+ * <ul>
+ *   <li><b>PNG</b> — lossless with transparency.</li>
+ *   <li><b>BMP</b> — uncompressed bitmap format.</li>
+ *   <li><b>JPEG</b> — lossy, transparency automatically flattened to white.</li>
+ * </ul>
  *
  * @author cnoga
- * @version 1.0
+ * @version 1.1
  */
 @EventBusSubscriber
 public class WorkspaceService extends EventBusPublisher {
@@ -76,6 +85,12 @@ public class WorkspaceService extends EventBusPublisher {
     bus.register(this);
   }
 
+  /**
+   * Handles tool selection changes and enables/disables panning based on whether the active tool is
+   * {@code Pan}.
+   *
+   * @param event the {@link ToolChangedEvent} containing the newly selected tool
+   */
   @SubscribeEvent
   private void onToolSelected(ToolChangedEvent event) {
     this.currentTool = event.tool();
@@ -84,6 +99,12 @@ public class WorkspaceService extends EventBusPublisher {
     scrollPane.setPannable(Objects.equals(currentTool.getName(), "Pan") && canvasGroup != null);
   }
 
+  /**
+   * Initializes the workspace UI by linking this service to the FXML-defined {@link ScrollPane},
+   * {@link StackPane}, and {@link Group}.
+   *
+   * @param initWorkspaceRequest event providing the workspace nodes
+   */
   @SubscribeEvent
   private void onInitWorkspace(InitWorkspaceRequest initWorkspaceRequest) {
     this.canvasGroup = initWorkspaceRequest.workspaceCanvasGroup();
@@ -91,11 +112,12 @@ public class WorkspaceService extends EventBusPublisher {
     this.stackPane = initWorkspaceRequest.workspaceStackPane();
   }
 
+
   /**
-   * Handles opening an image file into the canvas.
+   * Loads an image file into the canvas and replaces the current canvas.
    *
    * @param fileOpenedEvent event containing the file to open
-   * @throws FileNotFoundException if the file cannot be read
+   * @throws FileNotFoundException if the file does not exist or cannot be read
    */
   @SubscribeEvent
   private void onFileOpened(FileOpenedEvent fileOpenedEvent) throws FileNotFoundException {
@@ -105,23 +127,25 @@ public class WorkspaceService extends EventBusPublisher {
   }
 
   /**
-   * Creates a new blank canvas with default placeholder content.
+   * Creates a new blank canvas with default dimensions (1000×700)
+   * and fills it with a white background.
    *
-   * @param newFileRequest event signaling the creation of a new file
+   * @param newFileRequest event signaling a new file creation
    */
   @SubscribeEvent
   private void newFile(NewFileRequest newFileRequest) {
     currentFile = null;
+    // The size is hardcoded right now. I might make an event that creates a popup
+    // that asks for the user's input.
     loadCanvas(1000, 700, gc -> {
       gc.setFill(Color.WHITE);
       gc.fillRect(0, 0, 1000, 700);
     });
   }
 
-
-
   /**
-   * Prompts the user to select a file path and saves the canvas there.
+   * Handles a "Save As" request by prompting the user for a file
+   * location and format via a {@link FileChooser}.
    *
    * @param fileSaveAsRequest event signaling a save-as operation
    */
@@ -130,13 +154,14 @@ public class WorkspaceService extends EventBusPublisher {
     saveCanvasAs();
   }
 
+
   /**
-   * Initializes and draws a new canvas of the specified size,
-   * then attaches it to the UI workspace.
+   * Replaces the current canvas with a new one of the given dimensions
+   * and draws initial content provided by the supplied artist function.
    *
-   * @param width width of the canvas in pixels
-   * @param height height of the canvas in pixels
-   * @param artist lambda to perform drawing operations on the new canvas
+   * @param width  width of the new canvas in pixels
+   * @param height height of the new canvas in pixels
+   * @param artist callback invoked with the {@link GraphicsContext} to perform initial drawing
    */
   private void loadCanvas(double width, double height, Consumer<GraphicsContext> artist) {
     // Create canvas
@@ -191,8 +216,8 @@ public class WorkspaceService extends EventBusPublisher {
   }
 
   /**
-   * Saves the current canvas to the last known file location,
-   * or prompts the user to choose a file if none exists.
+   * Saves the current canvas to the existing file path, or prompts
+   * the user to choose a file if no path is set.
    *
    * @param fileSaveRequest event signaling a save operation
    */
@@ -208,8 +233,8 @@ public class WorkspaceService extends EventBusPublisher {
   }
 
   /**
-   * Prompts the user to select a file path, saves the current canvas as PNG,
-   * and updates {@code currentFile}.
+   * Prompts the user to select a file path and saves the current canvas.
+   * <p>The chosen file extension determines the output format (PNG, BMP, JPEG).</p>
    */
   private void saveCanvasAs() {
     if (canvas == null) return;
@@ -231,12 +256,18 @@ public class WorkspaceService extends EventBusPublisher {
   }
 
   /**
-   * Saves the current contents of a JavaFX {@link javafx.scene.canvas.Canvas} to a file.
+   * Saves the contents of the given canvas to the specified file.
+   * <p>
+   * File format is determined from the file extension:
+   * <ul>
+   *   <li><b>PNG</b>: Preserves alpha transparency.</li>
+   *   <li><b>BMP</b>: Saved using Apache Commons Imaging.</li>
+   *   <li><b>JPEG</b>: Alpha is flattened to white before saving.</li>
+   * </ul>
+   * </p>
    *
-   * @param canvas the {@code Canvas} to save; must not be {@code null}
-   * @param file   the target {@code File} where the image will be written
-   * @implNote The snapshot uses the current size of the canvas (width × height as integers).
-   *           The output format is inferred from the file extension (png, bmp, jpg/jpeg).
+   * @param canvas the {@link Canvas} to save; must not be {@code null}
+   * @param file   the output file; extension determines format
    */
   public void saveCanvasToFile(Canvas canvas, File file) {
     if (canvas == null || file == null) return;
@@ -274,11 +305,27 @@ public class WorkspaceService extends EventBusPublisher {
     }
   }
 
+  /**
+   * Extracts the lowercase file extension (without dot) from a filename.
+   *
+   * @param filename the filename to inspect
+   * @return the file extension, or an empty string if none found
+   */
   private String getFileExtension(String filename) {
     int lastDot = filename.lastIndexOf('.');
     return (lastDot == -1) ? "" : filename.substring(lastDot + 1);
   }
 
+  /**
+   * Wires up mouse event handlers for the given canvas so that the active {@link Tool} can handle
+   * user drawing input.
+   *
+   * <p>If the current tool is not {@code Pan}, the canvas is marked
+   * as dirty when pressed or dragged.</p>
+   *
+   * @param canvas the {@link Canvas} to initialize
+   * @param gc     the {@link GraphicsContext} for drawing
+   */
   private void initCanvasCapability(Canvas canvas, GraphicsContext gc) {
     canvas.addEventHandler(MouseEvent.MOUSE_PRESSED,
       e -> {
@@ -300,6 +347,12 @@ public class WorkspaceService extends EventBusPublisher {
       e -> currentTool.onMouseReleased(gc, e.getX(), e.getY()));
   }
 
+  /**
+   * Handles requests for the current save state by publishing a {@link GetSaveStateEvent}
+   * containing the dirty flag.
+   *
+   * @param req the {@link SaveStateRequest} event
+   */
   @SubscribeEvent
   private void onSaveStateRequest(SaveStateRequest req) {
     bus.post(new GetSaveStateEvent(dirtyFlag));

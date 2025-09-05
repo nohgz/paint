@@ -2,6 +2,9 @@ package net.cnoga.paint.tool;
 
 import net.cnoga.paint.bus.EventBusSubscriber;
 
+/**
+ * A simple pan tool used for moving the canvas view.
+ */
 @EventBusSubscriber
 public class PanTool extends Tool {
   public PanTool() {

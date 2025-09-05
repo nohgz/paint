@@ -2,6 +2,15 @@ package net.cnoga.paint.util;
 
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * Utility class providing common drawing operations for shapes.
+ *
+ * <p>Currently includes helpers for rendering circles and smooth lines
+ * composed of connected circles, which are used by tools like the brush
+ * and line tool to achieve anti-aliased strokes.</p>
+ *
+ * <p>All methods are static and stateless.</p>
+ */
 public final class ShapeUtil {
 
   public static void drawCircle(GraphicsContext gc, double currentWidth, double x, double y) {
@@ -23,5 +32,4 @@ public final class ShapeUtil {
       drawCircle(gc, currentWidth, x, y);
     }
   }
-
 }

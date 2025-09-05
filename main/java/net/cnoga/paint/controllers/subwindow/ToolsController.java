@@ -12,6 +12,27 @@ import net.cnoga.paint.events.response.ToolChangedEvent;
 import net.cnoga.paint.tool.Tool;
 import net.cnoga.paint.tool.ToolRegistry;
 
+/**
+ * JavaFX controller for the tool palette in the main workspace.
+ *
+ * <p>This controller builds and manages the grid of available drawing tools,
+ * each represented by a toggle button with an icon. Selecting a tool posts a
+ * {@link ToolChangedEvent} to the application {@link net.cnoga.paint.bus.EventBus}, allowing the
+ * workspace to update its interaction mode accordingly.</p>
+ *
+ * <p>The grid is automatically populated at initialization based on all tools
+ * registered in {@link ToolRegistry}.</p>
+ *
+ * <h3>Layout:</h3>
+ * <ul>
+ *   <li>Two equal-width columns.</li>
+ *   <li>Six equal-height rows (for up to 12 tools).</li>
+ *   <li>Each cell contains a toggle button with the tool's icon.</li>
+ * </ul>
+ *
+ * @author cnoga
+ * @version 1.0
+ */
 public class ToolsController extends EventBusPublisher {
 
   @FXML
