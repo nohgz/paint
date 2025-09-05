@@ -2,7 +2,7 @@ package net.cnoga.paint.tool;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class LineTool extends Tool implements ToolCapabilities{
+public class LineTool extends Tool {
 
   private double startX, startY;
 

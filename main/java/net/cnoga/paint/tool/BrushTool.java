@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
  * A simple freehand paintbrush tool that draws continuous strokes
  * in the current color.
  */
-public class BrushTool extends Tool implements ToolCapabilities {
+public class BrushTool extends Tool {
 
   public BrushTool() {
     super.name = "Paintbrush";
@@ -17,6 +17,7 @@ public class BrushTool extends Tool implements ToolCapabilities {
 
   @Override
   public void onMousePressed(GraphicsContext gc, double x, double y) {
+    System.out.println("I am the brush and the mouse is pressed!");
     gc.setStroke(currentColor);
     gc.beginPath();
     gc.moveTo(x, y);

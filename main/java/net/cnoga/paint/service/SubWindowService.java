@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
+import net.cnoga.paint.events.request.InitSubWindowServiceRequest;
 import net.cnoga.paint.events.request.OpenSettingsRequest;
 import net.cnoga.paint.events.request.OpenColorPickerRequest;
 import net.cnoga.paint.events.request.OpenHistoryRequest;
@@ -44,6 +45,15 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
+  public void initSubWindowService(InitSubWindowServiceRequest req) {
+    this.historyButton = req.historyButton();
+    this.toolsButton = req.toolsButton();
+    this.layersButton = req.layersButton();
+    this.colorPickerButton = req.colorPickerButton();
+    this.settingsButton = req.settingsButton();
+  }
+
+  @SubscribeEvent
   public void onClickColorPicker(OpenColorPickerRequest event) {
     if (colorPickerStage == null) {
       colorPickerStage = createToggledSubwindow(
@@ -54,7 +64,6 @@ public class SubWindowService extends EventBusPublisher {
         0.0,
         0.0,
         colorPickerButton);
-
 
       setSubwindowSpawnPoint(colorPickerStage, mainStage, AnchorTypes.BOTTOM_LEFT);
     }

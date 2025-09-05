@@ -57,15 +57,12 @@ public class LeftTopbarController extends EventBusPublisher {
   private void onFileSave(ActionEvent event) {
     bus.post(new FileSaveRequest());
   }
-
   @FXML
   private void onFileSaveAs(ActionEvent event) {
     bus.post(new FileSaveAsRequest());
   }
-
   @FXML
   private void onAppExit(ActionEvent actionEvent) {
     bus.post(new CloseProgramRequest());
   }
-
 }

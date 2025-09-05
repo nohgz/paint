@@ -5,6 +5,7 @@ import static net.cnoga.paint.util.PaintUtil.saveCanvasToFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 import java.util.function.Consumer;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -24,7 +25,10 @@ import net.cnoga.paint.events.response.FileOpenedEvent;
 import net.cnoga.paint.events.request.FileSaveAsRequest;
 import net.cnoga.paint.events.request.FileSaveRequest;
 import net.cnoga.paint.events.request.NewFileRequest;
+import net.cnoga.paint.events.response.ToolChangedEvent;
+import net.cnoga.paint.tool.PanTool;
 import net.cnoga.paint.tool.Tool;
+import net.cnoga.paint.tool.PaintTools;
 
 /**
  * Listens for file and workspace-related events on the application event bus and
@@ -58,9 +62,18 @@ public class WorkspaceService extends EventBusPublisher {
   private File currentFile;
   private Double zoomFactor;
   private Tool currentTool;
+  private Boolean needsSave;
 
   public WorkspaceService() {
     bus.register(this);
+  }
+
+  @SubscribeEvent
+  private void onToolSelected(ToolChangedEvent event) {
+    this.currentTool = event.tool();
+
+    // enable panning and scrolling capability
+    scrollPane.setPannable(Objects.equals(currentTool.getName(), "Pan") && canvasGroup != null);
   }
 
   @SubscribeEvent
@@ -110,7 +123,6 @@ public class WorkspaceService extends EventBusPublisher {
     if (currentFile != null) {
       saveCanvasToFile(canvas, currentFile);
     } else {
-      System.out.println("ah shit !!!");
       saveCanvasAs();
     }
   }

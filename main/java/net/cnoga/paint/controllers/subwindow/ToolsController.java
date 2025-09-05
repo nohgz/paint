@@ -3,11 +3,12 @@ package net.cnoga.paint.controllers.subwindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import net.cnoga.paint.bus.EventBusPublisher;
-import net.cnoga.paint.service.ToolService;
+import net.cnoga.paint.events.response.ToolChangedEvent;
 import net.cnoga.paint.tool.Tool;
 import net.cnoga.paint.tool.ToolRegistry;
 
@@ -15,7 +16,6 @@ public class ToolsController extends EventBusPublisher {
 
   @FXML
   private GridPane toolGrid;
-  private ToolService toolPublisher;
   private final ToggleGroup toolGroup = new ToggleGroup();
 
   @FXML
@@ -40,24 +40,28 @@ public class ToolsController extends EventBusPublisher {
     }
   }
 
-
   private void populateTools() {
-
     int col = 0, row = 0;
+
     for (Tool tool : ToolRegistry.getAll().values()) {
-      ToggleButton btn = new ToggleButton(tool.getName());
-      btn.setGraphic(new javafx.scene.image.ImageView(tool.getIconPath()));
+      ToggleButton btn = new ToggleButton();
+
+      ImageView icon = new ImageView(tool.getIconPath());
+      icon.setFitHeight(20);
+      icon.setFitWidth(20);
+
+      btn.setGraphic(icon);
       btn.setToggleGroup(toolGroup);
 
       btn.setOnAction(e -> {
         if (btn.isSelected()) {
-          toolPublisher.selectTool(tool);
+          bus.post(new ToolChangedEvent(tool));
         }
       });
 
       toolGrid.add(btn, col, row);
       col++;
-      if (col >= 2) { // 2 columns
+      if (col >= 2) {
         col = 0;
         row++;
       }

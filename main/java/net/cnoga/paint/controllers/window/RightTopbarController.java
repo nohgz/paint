@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ToggleButton;
 import net.cnoga.paint.bus.EventBusPublisher;
+import net.cnoga.paint.events.request.InitSubWindowServiceRequest;
 import net.cnoga.paint.events.request.OpenSettingsRequest;
 import net.cnoga.paint.events.request.OpenColorPickerRequest;
 import net.cnoga.paint.events.request.OpenHistoryRequest;
@@ -41,7 +42,6 @@ import net.cnoga.paint.events.request.OpenToolsRequest;
  * @author cnoga
  * @version 1.0
  */
-
 public class RightTopbarController extends EventBusPublisher {
 
   public ToggleButton right_topbar_color_picker;
@@ -73,5 +73,9 @@ public class RightTopbarController extends EventBusPublisher {
 
   public void onOpenHelp(ActionEvent actionEvent) {
     // TODO: Will have help, documentation, and patch notes.
+  }
+
+  public void initSubWindowService() {
+    bus.post(new InitSubWindowServiceRequest(right_topbar_history, right_topbar_tools, right_topbar_layers, right_topbar_color_picker, right_topbar_settings));
   }
 }

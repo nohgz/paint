@@ -39,7 +39,7 @@ public class EventBus {
    */
   public void register(Object subscriber) {
     Class<?> clazz = subscriber.getClass();
-    System.out.println("BUS REGISTER:" + clazz);
+    System.out.println("[EventBus] Registered: " + clazz);
 
     // Enforce class level annotations, as it doesn't make
     // sense for a SubscribeEvent method to not be subscribed
