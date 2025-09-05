@@ -4,6 +4,6 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.controllers.LayersController"
+  fx:controller="net.cnoga.paint.controllers.subwindow.LayersController"
   prefHeight="300.0" prefWidth="400.0">
 </BorderPane>

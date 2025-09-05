@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Tooltip?>
-<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.RightTopbarController">
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.window.RightTopbarController">
 
   <ToggleButton fx:id = "right_topbar_color_picker" onAction="#onOpenColorPicker">
     <graphic>

@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import net.cnoga.paint.controllers.MainController;
+import net.cnoga.paint.controllers.window.MainController;
 
 /**
  * The main launcher for the Paint(t) application.
@@ -39,7 +39,7 @@ public class PaintLauncher extends Application {
 
     // Initialize the ''brains'' of the whole operation
     MainController mainController = mainFxmlLoader.getController();
-    mainController.init(primaryStage, scene);
+    mainController.init(primaryStage);
 
     // Then the cosmetics
     try {

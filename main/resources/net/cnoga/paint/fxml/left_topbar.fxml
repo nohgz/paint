@@ -6,9 +6,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <MenuBar xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.controllers.LeftTopbarController">
+  fx:controller="net.cnoga.paint.controllers.window.LeftTopbarController">
   <Menu text="File">
-    <MenuItem fx:id="left_topbar_new_file" text="New" onAction="#onNewFile">
+    <MenuItem fx:id="left_topbar_new_file" text="New" onAction="#onFileNew">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
           <Image url="@../icons/menu/new_icon.png"/>
@@ -16,7 +16,7 @@
       </graphic>
     </MenuItem>
 
-    <MenuItem fx:id="left_topbar_file_open" text="Open" onAction="#onOpenFile">
+    <MenuItem fx:id="left_topbar_file_open" text="Open" onAction="#onFileOpen">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
           <Image url="@../icons/menu/open_icon.png"/>

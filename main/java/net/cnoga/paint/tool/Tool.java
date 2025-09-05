@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
-import net.cnoga.paint.events.ColorChangeEvent;
+import net.cnoga.paint.events.response.ColorChangedEvent;
 
 @EventBusSubscriber
 public class Tool implements ToolCapabilities{
@@ -13,7 +13,7 @@ public class Tool implements ToolCapabilities{
   protected Color currentColor = Color.BLACK;
 
   @SubscribeEvent
-  protected void updateBrushColor(ColorChangeEvent event) {
+  protected void updateBrushColor(ColorChangedEvent event) {
     this.currentColor = event.color();
   }
 

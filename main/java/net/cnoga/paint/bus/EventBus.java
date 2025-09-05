@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-
 /**
  * A simple publish/subscribe event bus.
  * <p>
@@ -15,11 +14,23 @@ import java.util.function.Consumer;
  * publishers post events to be delivered to all matching subscribers.
  *
  * @author cnoga
- * @version 1.0
+ * @version 1.1
  */
 public class EventBus {
 
+  private static final EventBus INSTANCE = new EventBus();
+
   private final Map<Class<?>, List<Consumer<?>>> listeners = new ConcurrentHashMap<>();
+
+  // private constructor to enforce singleton
+  private EventBus() {}
+
+  /**
+   * Get the global singleton instance of the EventBus.
+   */
+  public static EventBus getInstance() {
+    return INSTANCE;
+  }
 
   /**
    * Register all @SubscribeEvent methods in a class marked @EventBusSubscriber.
@@ -28,10 +39,11 @@ public class EventBus {
    */
   public void register(Object subscriber) {
     Class<?> clazz = subscriber.getClass();
+    System.out.println("BUS REGISTER:" + clazz);
 
     // Enforce class level annotations, as it doesn't make
     // sense for a SubscribeEvent method to not be subscribed
-    // to the event bus. Should I make this automatic?
+    // to the event bus.
     if (!clazz.isAnnotationPresent(EventBusSubscriber.class)) {
       throw new IllegalArgumentException(
         "Class " + clazz.getName() + " must be annotated with @EventBusSubscriber"
@@ -67,6 +79,7 @@ public class EventBus {
           .computeIfAbsent(eventType, k -> new ArrayList<>())
           .add(consumer);
       }
+
     }
   }
 
