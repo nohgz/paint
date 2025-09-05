@@ -1,6 +1,7 @@
 package net.cnoga.paint.tool;
 
 import javafx.scene.canvas.GraphicsContext;
+import net.cnoga.paint.bus.EventBusSubscriber;
 
 /**
  * A simple freehand paintbrush tool that draws continuous strokes
@@ -17,7 +18,6 @@ public class BrushTool extends Tool {
 
   @Override
   public void onMousePressed(GraphicsContext gc, double x, double y) {
-    System.out.println("I am the brush and the mouse is pressed!");
     gc.setStroke(currentColor);
     gc.beginPath();
     gc.moveTo(x, y);

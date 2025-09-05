@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 public final class ToolRegistry {
-
   private static final Map<String, Tool> tools = new HashMap<>();
   private static boolean locked = false;
 

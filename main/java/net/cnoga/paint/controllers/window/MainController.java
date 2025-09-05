@@ -5,14 +5,10 @@ import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.events.request.CloseProgramRequest;
-import net.cnoga.paint.events.request.NewFileRequest;
-import net.cnoga.paint.events.request.OpenColorPickerRequest;
-import net.cnoga.paint.events.response.ToolChangedEvent;
 import net.cnoga.paint.service.FileIOService;
 import net.cnoga.paint.service.ProgramService;
 import net.cnoga.paint.service.SubWindowService;
 import net.cnoga.paint.service.WorkspaceService;
-import net.cnoga.paint.tool.PaintTools;
 
 /**
  * The root JavaFX controller for the application.
@@ -79,9 +75,6 @@ public class MainController extends EventBusPublisher {
     workspaceController.initWorkspaceService();
     rightTopbarController.initSubWindowService();
 
-    // Initial startup state
-    bus.post(new ToolChangedEvent(PaintTools.BRUSH));
-    bus.post(new NewFileRequest());
 
     // intercept the main close request
     primaryStage.setOnCloseRequest(windowEvent -> {

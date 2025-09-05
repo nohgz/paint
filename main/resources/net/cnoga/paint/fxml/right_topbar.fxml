@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.MenuItem?>
 <HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.window.RightTopbarController">
 
   <ToggleButton fx:id = "right_topbar_color_picker" onAction="#onOpenColorPicker">
@@ -65,12 +66,29 @@
 
   <Separator orientation="VERTICAL"/>
 
-  <MenuButton fx:id = "right_topbar_help" onAction="#onOpenHelp">
+  <MenuButton fx:id = "right_topbar_help">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../icons/menu/help_icon.png"/>
       </ImageView>
     </graphic>
+    <items>
+      <MenuItem text="Documentation" onAction="#onOpenDocumentation">
+        <graphic>
+          <ImageView fitHeight="16" fitWidth="16">
+            <Image url="@../icons/menu/documentation.png"/>
+          </ImageView>
+        </graphic>
+      </MenuItem>
+
+      <MenuItem text="Changelog" onAction="#onOpenChangelog">
+        <graphic>
+          <ImageView fitHeight="16" fitWidth="16">
+            <Image url="@../icons/menu/changelog.png"/>
+          </ImageView>
+        </graphic>
+      </MenuItem>
+    </items>
   </MenuButton>
 
 </HBox>

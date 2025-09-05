@@ -21,14 +21,14 @@ import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.InitWorkspaceRequest;
+import net.cnoga.paint.events.request.SaveStateRequest;
 import net.cnoga.paint.events.response.FileOpenedEvent;
 import net.cnoga.paint.events.request.FileSaveAsRequest;
 import net.cnoga.paint.events.request.FileSaveRequest;
 import net.cnoga.paint.events.request.NewFileRequest;
+import net.cnoga.paint.events.response.GetSaveStateEvent;
 import net.cnoga.paint.events.response.ToolChangedEvent;
-import net.cnoga.paint.tool.PanTool;
 import net.cnoga.paint.tool.Tool;
-import net.cnoga.paint.tool.PaintTools;
 
 /**
  * Listens for file and workspace-related events on the application event bus and
@@ -62,7 +62,7 @@ public class WorkspaceService extends EventBusPublisher {
   private File currentFile;
   private Double zoomFactor;
   private Tool currentTool;
-  private Boolean needsSave;
+  private Boolean dirtyFlag = false;
 
   public WorkspaceService() {
     bus.register(this);
@@ -152,6 +152,8 @@ public class WorkspaceService extends EventBusPublisher {
     gc.setImageSmoothing(false);
     artist.accept(gc);
 
+    initCanvasCapability(canvas, gc);
+
     // Clear and reuse the FXML-defined group + stackpane
     canvasGroup.getChildren().clear();
     canvasGroup.getChildren().add(canvas);
@@ -162,6 +164,9 @@ public class WorkspaceService extends EventBusPublisher {
 
     // Zoom handler
     scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+      if (!Objects.equals(currentTool.getName(), "Pan")) return;
+
+
       if (event.isControlDown()) {
         double oldZoom = zoomFactor;
 
@@ -227,5 +232,10 @@ public class WorkspaceService extends EventBusPublisher {
 
     canvas.addEventHandler(MouseEvent.MOUSE_RELEASED,
       e -> currentTool.onMouseReleased(gc, e.getX(), e.getY()));
+  }
+
+  @SubscribeEvent
+  private void onSaveStateRequest (SaveStateRequest req) {
+    bus.post(new GetSaveStateEvent(dirtyFlag));
   }
 }

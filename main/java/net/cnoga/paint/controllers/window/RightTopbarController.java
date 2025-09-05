@@ -71,11 +71,13 @@ public class RightTopbarController extends EventBusPublisher {
     bus.post(new OpenSettingsRequest());
   }
 
-  public void onOpenHelp(ActionEvent actionEvent) {
-    // TODO: Will have help, documentation, and patch notes.
-  }
-
   public void initSubWindowService() {
     bus.post(new InitSubWindowServiceRequest(right_topbar_history, right_topbar_tools, right_topbar_layers, right_topbar_color_picker, right_topbar_settings));
+  }
+
+  public void onOpenDocumentation(ActionEvent actionEvent) {
+  }
+
+  public void onOpenChangelog(ActionEvent actionEvent) {
   }
 }

@@ -70,10 +70,11 @@ public class SubWindowService extends EventBusPublisher {
 
     if (colorPickerOpen) {
       colorPickerStage.hide();
+      colorPickerButton.setSelected(false);
     } else {
       colorPickerStage.show();
       colorPickerStage.toFront();
-      new ColorPicker();
+      colorPickerButton.setSelected(true);
     }
 
     colorPickerOpen = !colorPickerOpen;
@@ -93,11 +94,14 @@ public class SubWindowService extends EventBusPublisher {
 
       setSubwindowSpawnPoint(historyStage, mainStage, AnchorTypes.TOP_RIGHT);
     }
+
     if (historyOpen) {
       historyStage.hide();
+      historyButton.setSelected(false);
     } else {
       historyStage.show();
       historyStage.toFront();
+      historyButton.setSelected(true);
     }
     historyOpen = !historyOpen;
   }
@@ -119,9 +123,11 @@ public class SubWindowService extends EventBusPublisher {
 
     if (layersOpen) {
       layersStage.hide();
+      layersButton.setSelected(false);
     } else {
       layersStage.show();
       layersStage.toFront();
+      layersButton.setSelected(true);
     }
 
     layersOpen = !layersOpen;
@@ -145,9 +151,11 @@ public class SubWindowService extends EventBusPublisher {
 
     if (toolsOpen) {
       toolsStage.hide();
+      toolsButton.setSelected(false);
     } else {
       toolsStage.show();
       toolsStage.toFront();
+      toolsButton.setSelected(true);
     }
     toolsOpen = !toolsOpen;
   }
@@ -168,9 +176,11 @@ public class SubWindowService extends EventBusPublisher {
 
     if (settingsOpen) {
       settingsStage.hide();
+      settingsButton.setSelected(false);
     } else {
       settingsStage.show();
       settingsStage.toFront();
+      settingsButton.setSelected(true);
     }
     settingsOpen = !settingsOpen;
   }

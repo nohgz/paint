@@ -6,7 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import net.cnoga.paint.bus.EventBus;
 import net.cnoga.paint.controllers.window.MainController;
+import net.cnoga.paint.events.request.NewFileRequest;
+import net.cnoga.paint.events.response.ToolChangedEvent;
+import net.cnoga.paint.tool.PaintTools;
 
 /**
  * The main launcher for the Paint(t) application.
@@ -41,6 +45,8 @@ public class PaintLauncher extends Application {
     MainController mainController = mainFxmlLoader.getController();
     mainController.init(primaryStage);
 
+    EventBus bus = EventBus.getInstance();
+
     // Then the cosmetics
     try {
       primaryStage.getIcons().add(new Image(
@@ -53,5 +59,9 @@ public class PaintLauncher extends Application {
     primaryStage.setScene(scene);
     primaryStage.setMaximized(true);
     primaryStage.show();
+
+    // Initial startup state
+    bus.post(new ToolChangedEvent(PaintTools.BRUSH));
+    bus.post(new NewFileRequest());
   }
 }
