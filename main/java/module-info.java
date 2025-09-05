@@ -2,6 +2,7 @@ module net.cnoga.paint {
   requires javafx.controls;
   requires javafx.fxml;
   requires javafx.swing;
+  requires org.apache.commons.imaging;
 
   opens net.cnoga.paint to javafx.fxml;
   opens net.cnoga.paint.bus to javafx.fxml;

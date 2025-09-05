@@ -11,7 +11,7 @@
     <MenuItem fx:id="left_topbar_new_file" text="New" onAction="#onFileNew">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
-          <Image url="@../icons/menu/new_icon.png"/>
+          <Image url="@../../icons/menu/new_icon.png"/>
         </ImageView>
       </graphic>
     </MenuItem>
@@ -19,7 +19,7 @@
     <MenuItem fx:id="left_topbar_file_open" text="Open" onAction="#onFileOpen">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
-          <Image url="@../icons/menu/open_icon.png"/>
+          <Image url="@../../icons/menu/open_icon.png"/>
         </ImageView>
       </graphic>
     </MenuItem>
@@ -27,7 +27,7 @@
     <MenuItem fx:id="left_topbar_file_save" text="Save" onAction="#onFileSave">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
-          <Image url="@../icons/menu/save_icon.png"/>
+          <Image url="@../../icons/menu/save_icon.png"/>
         </ImageView>
       </graphic>
     </MenuItem>
@@ -35,7 +35,7 @@
     <MenuItem fx:id="left_topbar_file_save_as" text="Save As" onAction="#onFileSaveAs">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
-          <Image url="@../icons/menu/save_as_icon.png"/>
+          <Image url="@../../icons/menu/save_as_icon.png"/>
         </ImageView>
       </graphic>
     </MenuItem>
@@ -43,7 +43,7 @@
     <MenuItem fx:id="left_topbar_exit" text="Exit Pain(t)" onAction="#onAppExit">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
-          <Image url="@../icons/menu/exit_icon.png"/>
+          <Image url="@../../icons/menu/exit_icon.png"/>
         </ImageView>
       </graphic>
     </MenuItem>

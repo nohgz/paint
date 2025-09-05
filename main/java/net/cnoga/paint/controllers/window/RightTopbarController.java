@@ -6,10 +6,13 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.ToggleButton;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.events.request.InitSubWindowServiceRequest;
-import net.cnoga.paint.events.request.OpenSettingsRequest;
-import net.cnoga.paint.events.request.OpenColorPickerRequest;
+import net.cnoga.paint.events.request.OpenAboutRequest;
+import net.cnoga.paint.events.request.OpenChangelogRequest;
+import net.cnoga.paint.events.request.OpenGitHubRequest;
+import net.cnoga.paint.events.request.OpenHelpRequest;
 import net.cnoga.paint.events.request.OpenHistoryRequest;
 import net.cnoga.paint.events.request.OpenLayersRequest;
+import net.cnoga.paint.events.request.OpenSettingsRequest;
 import net.cnoga.paint.events.request.OpenToolsRequest;
 
 
@@ -44,16 +47,11 @@ import net.cnoga.paint.events.request.OpenToolsRequest;
  */
 public class RightTopbarController extends EventBusPublisher {
 
-  public ToggleButton right_topbar_color_picker;
   public ToggleButton right_topbar_tools;
   public ToggleButton right_topbar_layers;
   public ToggleButton right_topbar_history;
   public ToggleButton right_topbar_settings;
   public MenuButton right_topbar_help;
-
-  public void onOpenColorPicker(ActionEvent actionEvent) {
-    bus.post(new OpenColorPickerRequest());
-  }
 
   public void onOpenTools(ActionEvent actionEvent) {
     bus.post(new OpenToolsRequest());
@@ -71,13 +69,25 @@ public class RightTopbarController extends EventBusPublisher {
     bus.post(new OpenSettingsRequest());
   }
 
-  public void initSubWindowService() {
-    bus.post(new InitSubWindowServiceRequest(right_topbar_history, right_topbar_tools, right_topbar_layers, right_topbar_color_picker, right_topbar_settings));
-  }
-
-  public void onOpenDocumentation(ActionEvent actionEvent) {
-  }
-
   public void onOpenChangelog(ActionEvent actionEvent) {
+    bus.post(new OpenChangelogRequest());
+  }
+
+  public void onOpenHelp(ActionEvent actionEvent) {
+    bus.post(new OpenHelpRequest());
+  }
+
+  public void onOpenAbout(ActionEvent actionEvent) {
+    bus.post(new OpenAboutRequest());
+  }
+
+  public void onOpenGithub(ActionEvent actionEvent) {
+    bus.post(new OpenGitHubRequest());
+  }
+
+  public void initSubWindowService() {
+    bus.post(
+      new InitSubWindowServiceRequest(right_topbar_history, right_topbar_tools, right_topbar_layers,
+        right_topbar_settings));
   }
 }

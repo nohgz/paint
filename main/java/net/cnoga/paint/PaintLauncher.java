@@ -38,7 +38,7 @@ public class PaintLauncher extends Application {
   public void start(Stage primaryStage) throws IOException {
     // Start with the fundamental stuff
     FXMLLoader mainFxmlLoader = new FXMLLoader(
-      PaintLauncher.class.getResource("fxml/main_gui.fxml"));
+      PaintLauncher.class.getResource("fxml/window/main_gui.fxml"));
     Scene scene = new Scene(mainFxmlLoader.load(), 320, 240);
 
     // Initialize the ''brains'' of the whole operation

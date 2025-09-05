@@ -4,14 +4,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
-import net.cnoga.paint.bus.SubscribeEvent;
-import net.cnoga.paint.events.request.ToolColorChangedRequest;
-import net.cnoga.paint.events.request.ToolWidthChangeRequest;
 
-public class Tool {
+@EventBusSubscriber
+public class Tool extends EventBusPublisher {
   protected String name = "Tool";
   protected String iconPath = getClass().getResource("/net/cnoga/paint/icons/tools/tool.png").toExternalForm();
   protected Color currentColor = Color.BLACK;
+  protected Integer currentWidth = 1;
+
+  public Tool() {
+    bus.register(this);
+  }
 
   public String getName() {
     return name;
@@ -32,4 +35,6 @@ public class Tool {
   public void onMouseReleased(GraphicsContext gc, double x, double y) {
 
   }
+
+
 }

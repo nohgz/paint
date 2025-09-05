@@ -6,5 +6,4 @@ public record InitSubWindowServiceRequest(
     ToggleButton historyButton,
     ToggleButton toolsButton,
     ToggleButton layersButton,
-    ToggleButton colorPickerButton,
     ToggleButton settingsButton) { }

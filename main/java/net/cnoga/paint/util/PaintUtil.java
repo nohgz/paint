@@ -1,19 +1,17 @@
 package net.cnoga.paint.util;
 
-import java.io.File;
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.WritableImage;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javax.imageio.ImageIO;
 
 /**
  * Utility class providing helper methods for Paint(t).
@@ -21,24 +19,6 @@ import javax.imageio.ImageIO;
  * @version 1.0
  */
 public class PaintUtil {
-  /**
-   * Saves the current contents of a JavaFX {@link javafx.scene.canvas.Canvas} to a file as a PNG image.
-   *
-   * @param canvas the {@code Canvas} to save; must not be {@code null}
-   * @param file   the target {@code File} where the image will be written;
-   *
-   * @implNote The snapshot uses the current size of the canvas
-   *           (width × height as integers). The output format is fixed to "png".
-   */
-  public static void saveCanvasToFile(Canvas canvas, File file) {
-    WritableImage writableImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
-    canvas.snapshot(null, writableImage);
-    try {
-      ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
 
   public static Stage createSubwindow(String title, String fxmlPath, Stage mainStage, Boolean resizable, Double x, Double y) {
     URL fxmlUrl = PaintUtil.class.getResource(fxmlPath);
@@ -68,9 +48,6 @@ public class PaintUtil {
         sub.setAlwaysOnTop(is);   // on when app focused, off when not
       });
 
-      // Mirror minimize/restore behavior
-//      mainStage.iconifiedProperty().addListener((obs, was, is) -> sub.setIconified(is));
-
       return sub;
     } catch (IOException e) {
       System.err.println("Failed to load FXML: " + fxmlPath);
@@ -96,8 +73,10 @@ public class PaintUtil {
     subStage.setOnShown(e -> {
       // The magic numbers here are to account for the size of the other bars
       // so that the subwindows are opened over the main canvas.
+
+      // I don't like this approach its stupid and dumb.
       double x = mainStage.getX();
-      double y = mainStage.getY() + 100;
+      double y = mainStage.getY() + 110;
 
       double mainWidth = mainStage.getWidth();
       double mainHeight = mainStage.getHeight()-120;
@@ -169,6 +148,20 @@ public class PaintUtil {
       subStage.setX(targetX);
       subStage.setY(targetY);
     });
+  }
+
+  public static void openLink(String url) {
+    if (Desktop.isDesktopSupported()) {
+      new Thread(() -> {
+        try {
+          Desktop.getDesktop().browse(new URI(url));
+        } catch (IOException | URISyntaxException e) {
+          e.printStackTrace();
+        }
+      }).start();
+    } else {
+      System.err.println("Desktop browsing not supported.");
+    }
   }
 
 }

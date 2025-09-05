@@ -27,7 +27,7 @@
 
     <!-- Canvas -->
     <center>
-        <fx:include source="workspace.fxml" fx:id="workspace"/>
+        <fx:include source="../subwindow/workspace.fxml" fx:id="workspace"/>
     </center>
 
     <!-- Info Logging -->

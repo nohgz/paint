@@ -9,7 +9,7 @@
   <Button fx:id = "shortcut_bar_new" onAction="#onNewFile">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../icons/menu/new_icon.png"/>
+        <Image url="@../../icons/menu/new_icon.png"/>
       </ImageView>
     </graphic>
 
@@ -21,7 +21,7 @@
   <Button fx:id = "shortcut_bar_open" onAction="#onFileOpen">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../icons/menu/open_icon.png"/>
+        <Image url="@../../icons/menu/open_icon.png"/>
       </ImageView>
     </graphic>
 
@@ -33,7 +33,7 @@
   <Button fx:id = "shortcut_bar_save" onAction="#onFileSave">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../icons/menu/save_icon.png"/>
+        <Image url="@../../icons/menu/save_icon.png"/>
       </ImageView>
     </graphic>
 
@@ -45,7 +45,7 @@
   <Button fx:id = "shortcut_bar_save_as" onAction="#onFileSaveAs">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../icons/menu/save_as_icon.png"/>
+        <Image url="@../../icons/menu/save_as_icon.png"/>
       </ImageView>
     </graphic>
 

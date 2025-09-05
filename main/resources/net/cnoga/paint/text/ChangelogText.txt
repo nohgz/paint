@@ -1,0 +1,28 @@
+Chris' Pain(t) 1.0.0 - 08/29/2025
+
+"Initial Release"
+
+# New Features:
+- Image open, save, and save as capability
+- Menu bars for these capabilities
+- Exit program capability
+- Support for extra large images via scroll bars
+- Initialize blank image capability
+
+# Known Issues:
+- New Canvases are hard-coded to be 1000x700.
+
+# Expected Next Sprint
+- Multiple images in different tabs
+- Canvas zooming and scaling, via a "move" tool.
+- Save to different file formats (JPG, BMP, etc.)
+- Toggle-able tool/color picker bars
+- Drawing to the canvas
+- Color picker functionality
+
+# Future Features
+- Dark/Light mode switching
+- Keybinds for tools and capabilities
+
+# Links
+GitHub - https://github.com/nohgz/paint

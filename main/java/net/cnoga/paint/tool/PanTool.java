@@ -1,5 +1,8 @@
 package net.cnoga.paint.tool;
 
+import net.cnoga.paint.bus.EventBusSubscriber;
+
+@EventBusSubscriber
 public class PanTool extends Tool {
   public PanTool() {
     super.name = "Pan";

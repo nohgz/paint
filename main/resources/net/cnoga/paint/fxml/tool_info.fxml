@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-
-<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.window.ToolInfoController">
-  <Label text="Selected tool info will be placed here. Coming Soon!" fx:id="toolInfoCaption"/>
-</HBox>

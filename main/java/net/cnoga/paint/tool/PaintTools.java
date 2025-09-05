@@ -1,6 +1,5 @@
 package net.cnoga.paint.tool;
 
-
 public final class PaintTools {
   public static final Tool BRUSH = new BrushTool();
   public static final Tool LINE = new LineTool();

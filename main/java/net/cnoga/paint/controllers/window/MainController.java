@@ -9,6 +9,7 @@ import net.cnoga.paint.service.FileIOService;
 import net.cnoga.paint.service.ProgramService;
 import net.cnoga.paint.service.SubWindowService;
 import net.cnoga.paint.service.WorkspaceService;
+import net.cnoga.paint.tool.Tool;
 
 /**
  * The root JavaFX controller for the application.
@@ -53,6 +54,7 @@ public class MainController extends EventBusPublisher {
   private FileIOService fileIOService;
   private ProgramService programService;
   private net.cnoga.paint.service.SubWindowService subwindowService;
+  private Tool tool;
 
   /**
    * Initializes the main controller and wires up the application.
@@ -70,6 +72,9 @@ public class MainController extends EventBusPublisher {
     programService = new ProgramService(primaryStage);
     fileIOService = new FileIOService(primaryStage);
     subwindowService = new SubWindowService(primaryStage);
+
+    // This is so fucking dumb
+    tool = new Tool();
 
     // Connect the stuff in the program to the services
     workspaceController.initWorkspaceService();
