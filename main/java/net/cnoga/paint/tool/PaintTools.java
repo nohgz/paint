@@ -13,9 +13,6 @@ import net.cnoga.paint.tool.shape.ShapesTool;
  * <p>Designed as a static holder class with no instances.</p>
  */
 public final class PaintTools {
-
-  // initialize this one thing?? FIXME: Might be able to straight remove this.
-  private static final Tool TOOL = new Tool();
   public static final Tool BRUSH = new BrushTool();
   public static final Tool LINE = new LineTool();
   public static final Tool PAN = new PanTool();

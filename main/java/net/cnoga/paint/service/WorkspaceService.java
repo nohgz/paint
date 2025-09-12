@@ -105,17 +105,21 @@ public class WorkspaceService extends EventBusPublisher {
 
   @SubscribeEvent
   private void onCloseWorkspace(CloseCurrentWorkspaceRequest req) {
+
     Workspace ws = getActiveWorkspace();
     if (ws == null) return;
-
     if (ws.getDirtyFlag()) {
       saveWarningService.promptWorkspaceClose(ws, () -> {
         workspaces.remove(ws);
-
         workspaceTabPane.getTabs().stream()
           .filter(tab -> tab.getContent() == ws.getScrollPane())
           .findFirst().ifPresent(tabToRemove -> workspaceTabPane.getTabs().remove(tabToRemove));
       });
+    } else {
+      workspaces.remove(ws);
+      workspaceTabPane.getTabs().stream()
+        .filter(tab -> tab.getContent() == ws.getScrollPane())
+        .findFirst().ifPresent(tabToRemove -> workspaceTabPane.getTabs().remove(tabToRemove));
     }
   }
 

@@ -2,9 +2,11 @@ package net.cnoga.paint.controllers.window;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -56,7 +58,14 @@ public class ToolInfoController extends EventBusPublisher {
   }
   public Label toolInfoCaption;
 
+  public Label numberWidth = new Label("1");
+
   public Slider toolWidthSlider = new Slider(1, 25, 1);
+
+  @SubscribeEvent
+  private void updateWidthText(WidthChangedEvent evt) {
+    numberWidth.setText(evt.width().toString());
+  }
 
   @SubscribeEvent
   private void updateToolInformation(ToolChangedEvent evt) {
@@ -67,6 +76,8 @@ public class ToolInfoController extends EventBusPublisher {
     if (evt.tool() instanceof WidthCapability) {
       toolSpecificThings.getChildren().add(new Label("Line Width: "));
       toolSpecificThings.getChildren().add(toolWidthSlider);
+      toolSpecificThings.getChildren().add(numberWidth);
+      toolSpecificThings.getChildren().add(new Separator(Orientation.VERTICAL));
     }
 
     if (evt.tool() instanceof ShapesTool) {
@@ -85,6 +96,7 @@ public class ToolInfoController extends EventBusPublisher {
       });
 
       toolSpecificThings.getChildren().add(shapeDropdown);
+      toolSpecificThings.getChildren().add(new Separator(Orientation.VERTICAL));
     }
   }
 

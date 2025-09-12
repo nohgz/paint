@@ -13,6 +13,7 @@ import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.events.request.FocusWorkspaceRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveAsRequest;
+import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 import net.cnoga.paint.workspace.Workspace;
 
 @EventBusSubscriber
@@ -72,7 +73,7 @@ public class SaveWarningService extends EventBusPublisher  {
       dirtyWorkspaces.forEach(ws -> {
         // focus then save. kind of how PDN does it
         bus.post(new FocusWorkspaceRequest(ws));
-        bus.post(new WorkspaceSaveAsRequest());
+        bus.post(new WorkspaceSaveRequest());
       });
       onCloseAction.run();
       dialog.close();
