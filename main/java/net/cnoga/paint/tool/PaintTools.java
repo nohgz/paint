@@ -1,5 +1,7 @@
 package net.cnoga.paint.tool;
 
+import net.cnoga.paint.tool.shape.ShapesTool;
+
 /**
  * Utility class providing access to all built-in paint tools.
  *
@@ -11,16 +13,25 @@ package net.cnoga.paint.tool;
  * <p>Designed as a static holder class with no instances.</p>
  */
 public final class PaintTools {
+
+  // initialize this one thing?? FIXME: Might be able to straight remove this.
+  private static final Tool TOOL = new Tool();
   public static final Tool BRUSH = new BrushTool();
   public static final Tool LINE = new LineTool();
   public static final Tool PAN = new PanTool();
+  public static final Tool DROPPER = new DropperTool();
+  public static final Tool ERASER = new EraserTool();
+  public static final Tool SHAPES = new ShapesTool();
 
   static {
     ToolRegistry.register(BRUSH);
     ToolRegistry.register(LINE);
+    ToolRegistry.register(SHAPES);
+    ToolRegistry.register(ERASER);
+    ToolRegistry.register(DROPPER);
     ToolRegistry.register(PAN);
-    ToolRegistry.lockRegistry(); // freeze registration
+    ToolRegistry.lockRegistry();
   }
 
-  private PaintTools() {} // utility class
+  private PaintTools() {} // initializes to nuffin
 }

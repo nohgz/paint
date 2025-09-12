@@ -1,4 +1,4 @@
-package net.cnoga.paint.events.request;
+package net.cnoga.paint.events.init;
 
 import javafx.scene.control.ColorPicker;
 

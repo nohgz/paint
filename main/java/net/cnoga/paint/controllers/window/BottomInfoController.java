@@ -6,6 +6,7 @@ import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.response.FileOpenedEvent;
+import net.cnoga.paint.events.response.ToolChangedEvent;
 
 /**
  * Controller for the bottom information panel of the workspace UI.
@@ -33,7 +34,7 @@ public class BottomInfoController extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onFileOpened(FileOpenedEvent event) {
-    textStatus.setText(event.file().getName());
+  private void onToolChanged(ToolChangedEvent evt) {
+    textStatus.setText(evt.tool().getHelpInfo());
   }
 }

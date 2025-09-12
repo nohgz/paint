@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TabPane?>
+
+<TabPane xmlns:fx="http://javafx.com/fxml"
+fx:id="workspaceTabPane"
+fx:controller="net.cnoga.paint.controllers.window.WorkspaceController"
+side="BOTTOM">
+
+</TabPane>

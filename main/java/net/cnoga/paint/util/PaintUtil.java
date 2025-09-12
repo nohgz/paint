@@ -79,7 +79,7 @@ public class PaintUtil {
       double y = mainStage.getY() + 110;
 
       double mainWidth = mainStage.getWidth();
-      double mainHeight = mainStage.getHeight()-120;
+      double mainHeight = mainStage.getHeight()-160;
       double subWidth = subStage.getWidth();
       double subHeight = subStage.getHeight();
 
@@ -134,7 +134,6 @@ public class PaintUtil {
         if (anchorType.toString().contains("LEFT")) {
           targetX = x - subWidth; // push left of main
         } else if (anchorType.toString().contains("RIGHT")) {
-          System.out.println("PUSH RIGHT OF MAIN");
           targetX = x + mainWidth + subWidth; // push right of main
         } else {
           // center anchors default to right, fallback to left if no room
@@ -150,17 +149,5 @@ public class PaintUtil {
     });
   }
 
-  public static void openLink(String url) {
-    if (Desktop.isDesktopSupported()) {
-      new Thread(() -> {
-        try {
-          Desktop.getDesktop().browse(new URI(url));
-        } catch (IOException | URISyntaxException e) {
-          e.printStackTrace();
-        }
-      }).start();
-    } else {
-      System.err.println("Desktop browsing not supported.");
-    }
-  }
+
 }

@@ -1,15 +1,23 @@
-package net.cnoga.paint.controllers.window;
+package net.cnoga.paint.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
 import net.cnoga.paint.bus.EventBusPublisher;
+import net.cnoga.paint.controllers.window.BottomInfoController;
+import net.cnoga.paint.controllers.window.LeftTopbarController;
+import net.cnoga.paint.controllers.window.RightTopbarController;
+import net.cnoga.paint.controllers.window.ShortcutBarController;
+import net.cnoga.paint.controllers.window.ToolInfoController;
+import net.cnoga.paint.controllers.window.WorkspaceController;
 import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.service.FileIOService;
+import net.cnoga.paint.service.KeystrokeService;
 import net.cnoga.paint.service.ProgramService;
+import net.cnoga.paint.service.SaveWarningService;
 import net.cnoga.paint.service.SubWindowService;
 import net.cnoga.paint.service.WorkspaceService;
-import net.cnoga.paint.tool.Tool;
 
 /**
  * The root JavaFX controller for the application.
@@ -45,8 +53,9 @@ public class MainController extends EventBusPublisher {
   private WorkspaceService workspaceService;
   private FileIOService fileIOService;
   private ProgramService programService;
-  private net.cnoga.paint.service.SubWindowService subwindowService;
-  private Tool tool;
+  private SubWindowService subwindowService;
+  private KeystrokeService keystrokeService;
+  private SaveWarningService saveWarningService;
 
   /**
    * Initializes the main controller and wires up the application.
@@ -58,20 +67,18 @@ public class MainController extends EventBusPublisher {
    *
    * @param primaryStage the primary JavaFX stage
    */
-  public void init(Stage primaryStage) {
+  public void init(Stage primaryStage, Scene primaryScene) {
     // The services the program runs
-    workspaceService = new WorkspaceService();
-    programService = new ProgramService(primaryStage);
     fileIOService = new FileIOService(primaryStage);
+    saveWarningService = new SaveWarningService(primaryStage);
+    programService = new ProgramService(primaryStage, saveWarningService);
+    workspaceService = new WorkspaceService(saveWarningService);
     subwindowService = new SubWindowService(primaryStage);
-
-    // This is so fucking dumb
-    tool = new Tool();
+    keystrokeService = new KeystrokeService(primaryScene);
 
     // Connect the stuff in the program to the services
     workspaceController.initWorkspaceService();
     rightTopbarController.initSubWindowService();
-
 
     // intercept the main close request
     primaryStage.setOnCloseRequest(windowEvent -> {

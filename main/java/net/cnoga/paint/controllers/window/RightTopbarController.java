@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ToggleButton;
 import net.cnoga.paint.bus.EventBusPublisher;
-import net.cnoga.paint.events.request.InitSubWindowServiceRequest;
+import net.cnoga.paint.events.init.InitSubWindowServiceRequest;
 import net.cnoga.paint.events.request.OpenAboutRequest;
 import net.cnoga.paint.events.request.OpenChangelogRequest;
 import net.cnoga.paint.events.request.OpenGitHubRequest;

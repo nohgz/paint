@@ -1,10 +1,8 @@
 package net.cnoga.paint.controllers.window;
 
-import javafx.scene.Group;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.TabPane;
 import net.cnoga.paint.bus.EventBusPublisher;
-import net.cnoga.paint.events.request.InitWorkspaceRequest;
+import net.cnoga.paint.events.init.InitWorkspaceServiceRequest;
 import net.cnoga.paint.service.WorkspaceService;
 
 /**
@@ -15,10 +13,8 @@ import net.cnoga.paint.service.WorkspaceService;
  * the {@link WorkspaceService}.
  */
 public class WorkspaceController extends EventBusPublisher {
-  public ScrollPane workspaceScrollPane;
-  public StackPane workspaceStackPane;
-  public Group workspaceCanvasGroup;
+  public TabPane workspaceTabPane;
   public void initWorkspaceService() {
-    bus.post(new InitWorkspaceRequest(workspaceScrollPane, workspaceStackPane, workspaceCanvasGroup));
+    bus.post(new InitWorkspaceServiceRequest(workspaceTabPane));
   }
 }

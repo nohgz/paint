@@ -7,8 +7,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
-import net.cnoga.paint.controllers.window.MainController;
+import net.cnoga.paint.controllers.MainController;
 import net.cnoga.paint.events.request.NewFileRequest;
+import net.cnoga.paint.events.request.OpenHistoryRequest;
+import net.cnoga.paint.events.request.OpenLayersRequest;
+import net.cnoga.paint.events.request.OpenToolsRequest;
 import net.cnoga.paint.events.response.ToolChangedEvent;
 import net.cnoga.paint.tool.PaintTools;
 
@@ -39,13 +42,13 @@ public class PaintLauncher extends Application {
     // Start with the fundamental stuff
     FXMLLoader mainFxmlLoader = new FXMLLoader(
       PaintLauncher.class.getResource("fxml/window/main_gui.fxml"));
-    Scene scene = new Scene(mainFxmlLoader.load(), 320, 240);
+    Scene primaryScene = new Scene(mainFxmlLoader.load(), 320, 240);
 
     // Initialize the ''brains'' of the whole operation
     MainController mainController = mainFxmlLoader.getController();
-    mainController.init(primaryStage);
 
     EventBus bus = EventBus.getInstance();
+    mainController.init(primaryStage, primaryScene);
 
     // Then the cosmetics
     try {
@@ -56,12 +59,15 @@ public class PaintLauncher extends Application {
     }
 
     primaryStage.setTitle("Pain(t)");
-    primaryStage.setScene(scene);
+    primaryStage.setScene(primaryScene);
     primaryStage.setMaximized(true);
     primaryStage.show();
 
     // Initial startup state
     bus.post(new ToolChangedEvent(PaintTools.BRUSH));
     bus.post(new NewFileRequest());
+    bus.post(new OpenHistoryRequest());
+    bus.post(new OpenLayersRequest());
+    bus.post(new OpenToolsRequest());
   }
 }

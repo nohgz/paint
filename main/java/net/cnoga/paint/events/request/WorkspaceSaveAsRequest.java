@@ -15,6 +15,6 @@ import net.cnoga.paint.service.WorkspaceService;
  * @author cnoga
  * @version 1.0
  */
-public record FileSaveAsRequest() {
+public record WorkspaceSaveAsRequest() {
   // Left empty, as the actual saving of the image is left to the CanvasService.
 }

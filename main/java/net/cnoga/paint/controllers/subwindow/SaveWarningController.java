@@ -6,9 +6,9 @@ import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
-import net.cnoga.paint.events.request.FileSaveRequest;
+import net.cnoga.paint.events.init.InitSaveStageRequest;
+import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 import net.cnoga.paint.events.request.ForceCloseRequest;
-import net.cnoga.paint.events.request.InitSaveStageRequest;
 
 
 /**
@@ -22,7 +22,7 @@ import net.cnoga.paint.events.request.InitSaveStageRequest;
  *
  * <ul>
  *   <li>{@link #onExitAnyway(ActionEvent)} posts a {@link ForceCloseRequest} to quit immediately.</li>
- *   <li>{@link #onSave(ActionEvent)} posts a {@link FileSaveRequest} and closes the warning stage.</li>
+ *   <li>{@link #onSave(ActionEvent)} posts a {@link WorkspaceSaveRequest} and closes the warning stage.</li>
  *   <li>{@link #onCancel(ActionEvent)} dismisses the dialog without exiting.</li>
  * </ul>
  *
@@ -50,7 +50,7 @@ public class SaveWarningController extends EventBusPublisher {
 
   // maybe this should also exit on top of saving?
   public void onSave(ActionEvent actionEvent) {
-    bus.post(new FileSaveRequest());
+    bus.post(new WorkspaceSaveRequest());
     warningStage.close();
   }
 

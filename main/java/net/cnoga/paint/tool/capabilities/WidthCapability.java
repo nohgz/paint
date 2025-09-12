@@ -1,0 +1,7 @@
+package net.cnoga.paint.tool.capabilities;
+
+import net.cnoga.paint.events.request.WidthChangedEvent;
+
+public interface WidthCapability {
+  void updateWidthEvent(WidthChangedEvent evt);
+}

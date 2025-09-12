@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
-import net.cnoga.paint.events.request.InitSubWindowServiceRequest;
+import net.cnoga.paint.events.init.InitSubWindowServiceRequest;
 import net.cnoga.paint.events.request.OpenAboutRequest;
 import net.cnoga.paint.events.request.OpenChangelogRequest;
 import net.cnoga.paint.events.request.OpenHelpRequest;
@@ -76,7 +76,7 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickHistory(OpenHistoryRequest event) {
+  private void onClickHistory(OpenHistoryRequest evt) {
     if (historyStage == null) {
       historyStage = createToggledSubwindow(
         "History",
@@ -102,18 +102,18 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickLayers(OpenLayersRequest event) {
+  private void onClickLayers(OpenLayersRequest evt) {
     if (layersStage == null) {
       layersStage = createToggledSubwindow(
         "Layers",
         "/net/cnoga/paint/fxml/subwindow/layers.fxml",
         mainStage,
         true,
-        500.0,
-        0.0,
+        500.0d,
+        0.0d,
         layersButton);
 
-      setSubwindowSpawnPoint(layersStage, mainStage, AnchorTypes.BOTTOM_RIGHT);
+      setSubwindowSpawnPoint(layersStage, mainStage, AnchorTypes.MIDDLE_RIGHT);
     }
 
     if (layersOpen) {
@@ -129,7 +129,7 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickTools(OpenToolsRequest event) {
+  private void onClickTools(OpenToolsRequest evt) {
     if (toolsStage == null) {
       toolsStage = createToggledSubwindow(
         "Tools",
@@ -156,7 +156,7 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickSettings(OpenSettingsRequest event) {
+  private void onClickSettings(OpenSettingsRequest evt) {
     if (settingsStage == null) {
       settingsStage = createToggledSubwindow(
         "Settings",
@@ -181,7 +181,7 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickAbout(OpenAboutRequest event) {
+  private void onClickAbout(OpenAboutRequest evt) {
     if (aboutStage == null) {
       aboutStage = createSubwindow(
         "About",
@@ -199,7 +199,7 @@ public class SubWindowService extends EventBusPublisher {
 
 
   @SubscribeEvent
-  private void onClickHelp(OpenHelpRequest event) {
+  private void onClickHelp(OpenHelpRequest evt) {
     if (helpStage == null) {
       helpStage = createSubwindow(
         "Help",
@@ -216,7 +216,7 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickChangelog(OpenChangelogRequest event) {
+  private void onClickChangelog(OpenChangelogRequest evt) {
     if (changelogStage == null) {
       changelogStage = createSubwindow(
         "Changelog",

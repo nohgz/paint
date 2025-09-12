@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.events.request.FileOpenRequest;
-import net.cnoga.paint.events.request.FileSaveAsRequest;
-import net.cnoga.paint.events.request.FileSaveRequest;
+import net.cnoga.paint.events.request.WorkspaceSaveAsRequest;
+import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 import net.cnoga.paint.events.request.NewFileRequest;
 
 /**
@@ -34,10 +34,10 @@ public class ShortcutBarController extends EventBusPublisher {
   }
   @FXML
   private void onFileSave(ActionEvent event) {
-    bus.post(new FileSaveRequest());
+    bus.post(new WorkspaceSaveRequest());
   }
   @FXML
   private void onFileSaveAs(ActionEvent event) {
-    bus.post(new FileSaveAsRequest());
+    bus.post(new WorkspaceSaveAsRequest());
   }
 }

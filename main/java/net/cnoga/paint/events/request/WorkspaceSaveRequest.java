@@ -1,6 +1,5 @@
 package net.cnoga.paint.events.request;
 
-import net.cnoga.paint.events.request.FileSaveAsRequest;
 import net.cnoga.paint.service.FileIOService;
 import net.cnoga.paint.service.WorkspaceService;
 
@@ -10,7 +9,7 @@ import net.cnoga.paint.service.WorkspaceService;
  * <p>
  * Typically posted by the {@link FileIOService} when "Save" is chosen.
  * <p>
- * If no file is currently associated, a {@link FileSaveAsRequest} should be
+ * If no file is currently associated, a {@link WorkspaceSaveAsRequest} should be
  * triggered instead.
  * <p>
  * See {@link WorkspaceService}
@@ -19,6 +18,6 @@ import net.cnoga.paint.service.WorkspaceService;
  * @author cnoga
  * @version 1.0
  */
-public record FileSaveRequest() {
+public record WorkspaceSaveRequest() {
 
 }

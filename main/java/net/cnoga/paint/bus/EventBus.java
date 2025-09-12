@@ -35,7 +35,7 @@ public class EventBus {
   /**
    * Register all @SubscribeEvent methods in a class marked @EventBusSubscriber.
    * Methods must take exactly one parameter = event type.
-   * @param subscriber
+   * @param subscriber - The subscriber to the event bus.
    */
   public void register(Object subscriber) {
     Class<?> clazz = subscriber.getClass();
@@ -85,7 +85,7 @@ public class EventBus {
 
   /**
    * Post an event to all subscribers on the event bus listening for its type.
-   * @param event
+   * @param event - The event the bus posts.
    */
   @SuppressWarnings("unchecked")
   public <T> void post(T event) {

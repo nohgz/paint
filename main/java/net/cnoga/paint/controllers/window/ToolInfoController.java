@@ -1,8 +1,9 @@
 package net.cnoga.paint.controllers.window;
 
-import java.util.Objects;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
@@ -13,9 +14,13 @@ import javafx.scene.paint.Color;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
-import net.cnoga.paint.events.request.ToolColorChangeRequest;
-import net.cnoga.paint.events.request.ToolWidthChangeRequest;
+import net.cnoga.paint.events.request.ColorChangedEvent;
+import net.cnoga.paint.events.request.WidthChangedEvent;
+import net.cnoga.paint.events.response.ShapeChangedEvent;
 import net.cnoga.paint.events.response.ToolChangedEvent;
+import net.cnoga.paint.tool.capabilities.WidthCapability;
+import net.cnoga.paint.tool.shape.ShapeType;
+import net.cnoga.paint.tool.shape.ShapesTool;
 
 /**
  * Controller for the tool information panel.
@@ -27,7 +32,7 @@ import net.cnoga.paint.events.response.ToolChangedEvent;
  *
  * <p>The controller listens for {@link ToolChangedEvent} messages on the
  * event bus and updates its UI accordingly. It also publishes requests
- * (e.g., {@link ToolColorChangeRequest}, {@link ToolWidthChangeRequest})
+ * (e.g., {@link ColorChangedEvent}, {@link WidthChangedEvent})
  * when the user modifies tool parameters.</p>
  *
  * <p>Responsibilities:</p>
@@ -54,14 +59,38 @@ public class ToolInfoController extends EventBusPublisher {
   public Slider toolWidthSlider = new Slider(1, 25, 1);
 
   @SubscribeEvent
-  private void updateToolInformation(ToolChangedEvent event) {
-    toolInfoIcon.setImage(new Image(event.tool().getIconPath()));
+  private void updateToolInformation(ToolChangedEvent evt) {
+    toolInfoIcon.setImage(new Image(evt.tool().getIconPath()));
 
     toolSpecificThings.getChildren().clear();
 
-    if (!Objects.equals(event.tool().getName(), "Pan")) {
+    if (evt.tool() instanceof WidthCapability) {
+      toolSpecificThings.getChildren().add(new Label("Line Width: "));
       toolSpecificThings.getChildren().add(toolWidthSlider);
     }
+
+    if (evt.tool() instanceof ShapesTool) {
+      toolSpecificThings.getChildren().add(new Label("Shape: "));
+      ComboBox<ShapeType> shapeDropdown = new ComboBox<>();
+      shapeDropdown.setItems(FXCollections.observableArrayList(ShapeType.values()));
+
+      // optionally set the current shape
+      ShapesTool shapesTool = (ShapesTool) evt.tool();
+      shapeDropdown.setValue(shapesTool.getCurrentShape());
+
+      shapeDropdown.setOnAction(e -> {
+        ShapeType selected = shapeDropdown.getValue();
+        // post event to update the ShapesTool
+        bus.post(new ShapeChangedEvent(selected, shapesTool.getPolygonSides()));
+      });
+
+      toolSpecificThings.getChildren().add(shapeDropdown);
+    }
+  }
+
+  @SubscribeEvent
+  private void updateColorPicker(ColorChangedEvent evt) {
+    toolColorPicker.setValue(evt.color());
   }
 
   @FXML
@@ -69,7 +98,7 @@ public class ToolInfoController extends EventBusPublisher {
     toolColorPicker.setValue(Color.BLACK);
     toolColorPicker.setOnAction(e -> {
       Color color = toolColorPicker.getValue();
-      bus.post(new ToolColorChangeRequest(color));
+      bus.post(new ColorChangedEvent(color));
     });
 
     // Slider setup
@@ -77,20 +106,16 @@ public class ToolInfoController extends EventBusPublisher {
     toolWidthSlider.setMinorTickCount(0);
     toolWidthSlider.setSnapToTicks(true);
     toolWidthSlider.setShowTickMarks(true);
-    toolWidthSlider.setShowTickLabels(true);
+//    toolWidthSlider.setShowTickLabels(true);
 
-    // Tooltip for current value
     Tooltip valueTooltip = new Tooltip(String.valueOf((int) toolWidthSlider.getValue()));
     Tooltip.install(toolWidthSlider, valueTooltip);
-
-    // Update tooltip while dragging
     toolWidthSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
       valueTooltip.setText(String.valueOf(newVal.intValue()));
     });
 
-    // Only print value when user releases the mouse
     toolWidthSlider.setOnMouseReleased(e -> {
-      bus.post(new ToolWidthChangeRequest((int) toolWidthSlider.getValue()));
+      bus.post(new WidthChangedEvent((int) toolWidthSlider.getValue()));
     });
   }
 }

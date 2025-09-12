@@ -9,6 +9,7 @@ import net.cnoga.paint.bus.EventBusSubscriber;
 public class PanTool extends Tool {
   public PanTool() {
     super.name = "Pan";
+    super.helpInfo = "[Pan] Left click and drag to navigate around the canvas";
     super.iconPath = getClass()
       .getResource("/net/cnoga/paint/icons/tools/pan.png")
       .toExternalForm();

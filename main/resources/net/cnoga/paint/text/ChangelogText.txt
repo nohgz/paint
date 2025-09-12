@@ -1,3 +1,33 @@
+Chris' Pain(t) 2.0.0 - 9/5/2025
+
+"The Tool Update"
+
+# New Features:
+- Added JPG BMP and PNG support to all IO operations
+- Line, Paintbrush, and Pan tool
+  - Customizable Line Widths
+  - Customizable Color via Color Chooser
+- The ability to manage an image larger than the window and the screen. Done via zooming
+- Added a help menu with documentation, help, this changelog, and a GitHub link.
+- Smart Save.
+- Canvas resizing for larger drawings.
+
+# Known Issues:
+- Zooming is clunky and awkward.
+- Save As from one image is rather stupid. Doesn't work very well. I think it's an issue with
+  storing the file and not clearing it for the next save.
+
+# Next Sprint Hopes
+- Multiple images in different tabs
+- Keybinds for tools and capabilities
+- Shapes with solid fill and outline fill. Make the shapes resizable when drawing. Give them
+  little grabber things that allow for
+
+# Links
+GitHub - https://github.com/nohgz/paint
+
+--------------------------------------------------
+
 Chris' Pain(t) 1.0.0 - 08/29/2025
 
 "Initial Release"

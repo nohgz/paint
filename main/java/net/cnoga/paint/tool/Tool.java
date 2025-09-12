@@ -25,6 +25,7 @@ import net.cnoga.paint.bus.EventBusSubscriber;
  */
 @EventBusSubscriber
 public class Tool extends EventBusPublisher {
+  protected String helpInfo = "[Tool] If you are able to see this text, something is wrong.";
   protected String name = "Tool";
   protected String iconPath = getClass().getResource("/net/cnoga/paint/icons/tools/tool.png").toExternalForm();
   protected Color currentColor = Color.BLACK;
@@ -42,15 +43,19 @@ public class Tool extends EventBusPublisher {
     return iconPath;
   }
 
-  public void onMousePressed(GraphicsContext gc, double x, double y) {
+  public String getHelpInfo() {
+    return helpInfo;
+  }
+
+  public void onMousePressed(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
 
   }
 
-  public void onMouseDragged(GraphicsContext gc, double x, double y) {
+  public void onMouseDragged(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
 
   }
 
-  public void onMouseReleased(GraphicsContext gc, double x, double y) {
+  public void onMouseReleased(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
 
   }
 }

@@ -1,4 +1,4 @@
-package net.cnoga.paint.util;
+package net.cnoga.paint.tool;
 
 import javafx.scene.canvas.GraphicsContext;
 
@@ -11,7 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
  *
  * <p>All methods are static and stateless.</p>
  */
-public final class ShapeUtil {
+public final class LineUtil {
 
   public static void drawCircle(GraphicsContext gc, double currentWidth, double x, double y) {
     double r = currentWidth / 2;

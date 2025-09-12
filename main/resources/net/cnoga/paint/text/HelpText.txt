@@ -1,13 +1,35 @@
 == Help! ==
-A JavaFX-based paint application inspired by Minecraft Forge-style event handling.
-Supports image editing, file I/O, and a flexible, pixel-perfect workspace.
-It focuses on a clean, modular architecture using an event bus to decouple UI controllers from backend logic.
 
+******************
+*     Tools      *
+******************
+Brush Tool
+-----------
+The brush tool lets you draw freehand strokes.
+- Press and hold the left mouse button to begin drawing.
+- Drag the mouse to continue the stroke.
+- Release the mouse button to complete the stroke.
+- Uses the current color and width.
 
-## Features
-- Pixel-perfect canvas rendering
-- Pannable workspace
-- Multiple file operations: New, Open, Save, Save As
-- Shortcut bar for quick access
-- Modular UI with subcontrollers for tool info, workspace, and bottom status
-- Event-driven architecture for flexible extensibility
+Line Tool
+----------
+The line tool lets you draw straight lines.
+- Click and hold to set the starting point.
+- Release to draw a straight line to the end point.
+- Uses the current color and width.
+
+*******************
+* Color and Width *
+*******************
+- Use the Color Picker to change the active drawing color.
+- The width slider (or numeric input) sets the current stroke thickness.
+- Tools automatically receive updates when color or width changes.
+
+*******************
+*      Tips       *
+*******************
+- Always pick your color *before* starting a stroke.
+  (Colors update live, but strokes only use the color at the moment
+  drawing commands are executed.)
+- Experiment with different widths for more expressive strokes.
+- Switching tools keeps your last used color and width.
