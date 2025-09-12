@@ -1,4 +1,4 @@
-package net.cnoga.paint.service;
+package net.cnoga.paint.brews;
 
 
 import java.io.FileInputStream;
@@ -17,12 +17,11 @@ import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.init.InitWorkspaceServiceRequest;
 import net.cnoga.paint.events.request.CloseCurrentWorkspaceRequest;
-import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.events.request.DirtyWorkspacesRequest;
 import net.cnoga.paint.events.request.FocusWorkspaceRequest;
+import net.cnoga.paint.events.request.NewFileRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveAsRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveRequest;
-import net.cnoga.paint.events.request.NewFileRequest;
 import net.cnoga.paint.events.response.FileOpenedEvent;
 import net.cnoga.paint.events.response.GetDirtyWorkspaceEvent;
 import net.cnoga.paint.events.response.ToolChangedEvent;
@@ -32,21 +31,41 @@ import net.cnoga.paint.tool.PanTool;
 import net.cnoga.paint.tool.Tool;
 import net.cnoga.paint.workspace.Workspace;
 
+/**
+ * Service that manages the lifecycle and state of {@link Workspace} instances.
+ * <p>
+ * This class is responsible for creating, opening, closing, and saving workspaces,
+ * as well as maintaining the {@link TabPane} UI that holds them. It also integrates
+ * with the event bus to handle workspace-related requests and ensures unsaved work
+ * is not lost by delegating to {@link SaveWarningBrew}.
+ * </p>
+ */
 @EventBusSubscriber
-public class WorkspaceService extends EventBusPublisher {
+public class WorkspaceBrew extends EventBusPublisher {
+
   private static final double DEFAULT_WIDTH = 800;
   private static final double DEFAULT_HEIGHT = 600;
-  private final SaveWarningService saveWarningService;
 
+  private final SaveWarningBrew saveWarningBrew;
   private final List<Workspace> workspaces = new ArrayList<>();
   private TabPane workspaceTabPane;
   private Tool currentTool;
 
-  public WorkspaceService(SaveWarningService saveWarningService) {
+  /**
+   * Constructs a {@code WorkspaceService}.
+   *
+   * @param saveWarningBrew service that prompts the user before closing dirty workspaces
+   */
+  public WorkspaceBrew(SaveWarningBrew saveWarningBrew) {
     bus.register(this);
-    this.saveWarningService = saveWarningService;
+    this.saveWarningBrew = saveWarningBrew;
   }
 
+  /**
+   * Brings the requested workspace to the front.
+   *
+   * @param req the event containing the workspace to focus
+   */
   @SubscribeEvent
   private void onFocusWorkspaceRequest(FocusWorkspaceRequest req) {
     int index = workspaces.indexOf(req.workspace());
@@ -55,11 +74,22 @@ public class WorkspaceService extends EventBusPublisher {
     }
   }
 
+  /**
+   * Initializes this service with the {@link TabPane} that holds workspaces.
+   *
+   * @param req the event containing the tab pane
+   */
   @SubscribeEvent
   private void onInitWorkspaceService(InitWorkspaceServiceRequest req) {
     this.workspaceTabPane = req.tabPane();
   }
 
+  /**
+   * Sets up mouse handling for a workspace canvas, binding drawing operations
+   * to the currently selected tool.
+   *
+   * @param ws the workspace whose canvas will be initialized
+   */
   private void initCanvasForWorkspace(Workspace ws) {
     Canvas baseLayer = ws.getBaseLayer();
     Canvas effectsLayer = ws.getEffectsLayer();
@@ -69,18 +99,27 @@ public class WorkspaceService extends EventBusPublisher {
 
     baseLayer.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
       currentTool.onMousePressed(base_gc, effects_gc, e.getX(), e.getY());
-      if (!(currentTool instanceof PanTool)) ws.setDirtyFlag(true);
+      if (!(currentTool instanceof PanTool)) {
+        ws.setDirty(true);
+      }
     });
 
     baseLayer.addEventHandler(MouseEvent.MOUSE_DRAGGED, e -> {
       currentTool.onMouseDragged(base_gc, effects_gc, e.getX(), e.getY());
-      if (!(currentTool instanceof PanTool)) ws.setDirtyFlag(true);
+      if (!(currentTool instanceof PanTool)) {
+        ws.setDirty(true);
+      }
     });
 
     baseLayer.addEventHandler(MouseEvent.MOUSE_RELEASED,
       e -> currentTool.onMouseReleased(base_gc, effects_gc, e.getX(), e.getY()));
   }
 
+  /**
+   * Creates a new empty workspace with a white background.
+   *
+   * @param req event requesting a new workspace
+   */
   @SubscribeEvent
   private void onNewWorkspace(NewFileRequest req) {
     Workspace ws = new Workspace("Workspace " + workspaces.size(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -92,6 +131,12 @@ public class WorkspaceService extends EventBusPublisher {
     addWorkspaceTab(ws);
   }
 
+  /**
+   * Creates a workspace from a file (e.g., opening an image).
+   *
+   * @param evt event containing the file to open
+   * @throws FileNotFoundException if the file cannot be read
+   */
   @SubscribeEvent
   private void createWorkspaceFromFile(FileOpenedEvent evt) throws FileNotFoundException {
     Image img = new Image(new FileInputStream(evt.file()));
@@ -103,13 +148,19 @@ public class WorkspaceService extends EventBusPublisher {
     addWorkspaceTab(ws);
   }
 
+  /**
+   * Handles closing the currently active workspace, prompting the user if it has unsaved changes.
+   *
+   * @param req event requesting to close the active workspace
+   */
   @SubscribeEvent
   private void onCloseWorkspace(CloseCurrentWorkspaceRequest req) {
-
     Workspace ws = getActiveWorkspace();
-    if (ws == null) return;
-    if (ws.getDirtyFlag()) {
-      saveWarningService.promptWorkspaceClose(ws, () -> {
+    if (ws == null) {
+      return;
+    }
+    if (ws.isDirty()) {
+      saveWarningBrew.promptWorkspaceClose(ws, () -> {
         workspaces.remove(ws);
         workspaceTabPane.getTabs().stream()
           .filter(tab -> tab.getContent() == ws.getScrollPane())
@@ -123,11 +174,16 @@ public class WorkspaceService extends EventBusPublisher {
     }
   }
 
+  /**
+   * Saves the currently active workspace. If no file is associated with it,
+   * triggers a "Save As" event.
+   *
+   * @param req event requesting a save
+   */
   @SubscribeEvent
   private void saveWorkspace(WorkspaceSaveRequest req) {
     Workspace ws = getActiveWorkspace();
 
-    // Try to get the file from workspace
     if (ws.getFile() != null) {
       bus.post(new WorkspaceSavedEvent(ws));
     } else {
@@ -135,12 +191,23 @@ public class WorkspaceService extends EventBusPublisher {
     }
   }
 
+  /**
+   * Forces a "Save As" operation for the current workspace.
+   *
+   * @param req event requesting "Save As"
+   */
   @SubscribeEvent
   private void saveWorkspaceAs(WorkspaceSaveAsRequest req) {
     Workspace ws = getActiveWorkspace();
     bus.post(new WorkspaceSavedAsEvent(ws));
   }
 
+  /**
+   * Updates the current tool and applies panning behavior to all workspaces
+   * when switching to or from the {@link PanTool}.
+   *
+   * @param evt event indicating the tool change
+   */
   @SubscribeEvent
   private void handlePanning(ToolChangedEvent evt) {
     for (Workspace ws : workspaces) {
@@ -149,6 +216,11 @@ public class WorkspaceService extends EventBusPublisher {
     this.currentTool = evt.tool();
   }
 
+  /**
+   * Adds a workspace to the list and creates a corresponding tab in the UI.
+   *
+   * @param ws the workspace to add
+   */
   private void addWorkspaceTab(Workspace ws) {
     workspaces.add(ws);
 
@@ -162,20 +234,40 @@ public class WorkspaceService extends EventBusPublisher {
     workspaceTabPane.getSelectionModel().select(tab);
   }
 
+  /**
+   * Gets the currently active workspace, or {@code null} if none is selected.
+   *
+   * @return the active workspace, or null
+   */
   public Workspace getActiveWorkspace() {
     int index = workspaceTabPane.getSelectionModel().getSelectedIndex();
     return (index >= 0 && index < workspaces.size()) ? workspaces.get(index) : null;
   }
 
+  /**
+   * Responds to requests for dirty workspaces by posting them back on the bus.
+   *
+   * @param req event requesting dirty workspaces
+   */
   @SubscribeEvent
   private void onDirtyWorkspacesRequest(DirtyWorkspacesRequest req) {
     bus.post(new GetDirtyWorkspaceEvent(getDirtyWorkspaces()));
   }
 
+  /**
+   * Returns all workspaces that have unsaved changes.
+   *
+   * @return list of dirty workspaces
+   */
   public List<Workspace> getDirtyWorkspaces() {
-    return workspaces.stream().filter(Workspace::getDirtyFlag).toList();
+    return workspaces.stream().filter(Workspace::isDirty).toList();
   }
 
+  /**
+   * Returns all open workspaces.
+   *
+   * @return list of workspaces
+   */
   public List<Workspace> getWorkspaces() {
     return workspaces;
   }

@@ -25,37 +25,99 @@ import net.cnoga.paint.bus.EventBusSubscriber;
  */
 @EventBusSubscriber
 public class Tool extends EventBusPublisher {
-  protected String helpInfo = "[Tool] If you are able to see this text, something is wrong.";
+
+  /** Human-readable description of the tool’s purpose. */
+  protected String helpInfo =
+    "[Tool] If you are able to see this text, something is wrong.";
+
+  /** The tool’s display name. */
   protected String name = "Tool";
-  protected String iconPath = getClass().getResource("/net/cnoga/paint/icons/tools/tool.png").toExternalForm();
+
+  /** Path to the tool’s icon resource. */
+  protected String iconPath =
+    getClass().getResource("/net/cnoga/paint/icons/tools/tool.png").toExternalForm();
+
+  /** Current drawing color for this tool. */
   protected Color currentColor = Color.BLACK;
+
+  /** Current stroke width for this tool. */
   protected Integer currentWidth = 1;
 
+  /**
+   * Constructs a new {@code Tool} and registers it on the global event bus.
+   * <p>
+   * Subclasses should call this constructor via {@code super()}.
+   */
   public Tool() {
     bus.register(this);
   }
 
+  /**
+   * Returns the name of this tool.
+   *
+   * @return the tool’s name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Returns the path to this tool’s icon resource.
+   *
+   * @return the tool’s icon path
+   */
   public String getIconPath() {
     return iconPath;
   }
 
+  /**
+   * Returns a short help string describing how to use this tool.
+   *
+   * @return the help information string
+   */
   public String getHelpInfo() {
     return helpInfo;
   }
 
-  public void onMousePressed(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
-
+  /**
+   * Called when the mouse is pressed.
+   * <p>
+   * Default implementation does nothing; subclasses may override.
+   *
+   * @param gc        the main drawing context
+   * @param effectsGc the effects drawing context
+   * @param x         x-coordinate of the press
+   * @param y         y-coordinate of the press
+   */
+  public void onMousePressed(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+    // no-op by default
   }
 
-  public void onMouseDragged(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
-
+  /**
+   * Called when the mouse is dragged.
+   * <p>
+   * Default implementation does nothing; subclasses may override.
+   *
+   * @param gc        the main drawing context
+   * @param effectsGc the effects drawing context
+   * @param x         current x-coordinate of the cursor
+   * @param y         current y-coordinate of the cursor
+   */
+  public void onMouseDragged(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+    // no-op by default
   }
 
-  public void onMouseReleased(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
-
+  /**
+   * Called when the mouse is released.
+   * <p>
+   * Default implementation does nothing; subclasses may override.
+   *
+   * @param gc        the main drawing context
+   * @param effectsGc the effects drawing context
+   * @param x         x-coordinate of release
+   * @param y         y-coordinate of release
+   */
+  public void onMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+    // no-op by default
   }
 }

@@ -18,14 +18,13 @@ import net.cnoga.paint.tool.PaintTools;
 /**
  * The main launcher for the Paint(t) application.
  * <p>
- * Initializes the JavaFX runtime, loads the primary FXML layout,
- * sets up the main controller, and displays the primary stage.
- * Also sets application icons and initial window properties.
+ * Initializes the JavaFX runtime, loads the primary FXML layout, sets up the main controller, and
+ * displays the primary stage. Also sets application icons and initial window properties.
  * </p>
  *
  * <p>
- * Note: This class is the entry point for the application and should
- * not contain business logic beyond JavaFX initialization.
+ * Note: This class is the entry point for the application and should not contain business logic
+ * beyond JavaFX initialization.
  * </p>
  *
  * @author cnoga

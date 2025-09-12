@@ -1,28 +1,19 @@
-package net.cnoga.paint.service;
+package net.cnoga.paint.brews;
 
-
-import static net.cnoga.paint.util.PaintUtil.createSubwindow;
-import static net.cnoga.paint.util.PaintUtil.setSubwindowSpawnPoint;
 
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
-import net.cnoga.paint.events.init.InitSaveStageRequest;
 import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.events.request.DirtyWorkspacesRequest;
 import net.cnoga.paint.events.request.ForceCloseRequest;
 import net.cnoga.paint.events.request.OpenGitHubRequest;
-import net.cnoga.paint.events.request.SaveStateRequest;
 import net.cnoga.paint.events.response.GetDirtyWorkspaceEvent;
-import net.cnoga.paint.events.response.GetSaveStateEvent;
-import net.cnoga.paint.util.AnchorTypes;
-import net.cnoga.paint.util.PaintUtil;
 
 /**
  * Service responsible for managing the overall lifecycle of the program.
@@ -41,38 +32,17 @@ import net.cnoga.paint.util.PaintUtil;
  * </ul>
  */
 @EventBusSubscriber
-public class ProgramService extends EventBusPublisher {
+public class ProgramBrew extends EventBusPublisher {
+
   private final Stage primaryStage;
-  private final SaveWarningService saveWarningService;
+  private final SaveWarningBrew saveWarningBrew;
   private Stage warningStage;
 
-  public ProgramService(Stage primaryStage, SaveWarningService saveWarningService) {
+  public ProgramBrew(Stage primaryStage, SaveWarningBrew saveWarningBrew) {
     this.primaryStage = primaryStage;
-    this.saveWarningService = saveWarningService;
+    this.saveWarningBrew = saveWarningBrew;
     bus.register(this);
   }
-
-
-  @SubscribeEvent
-  private void onForceCloseRequest(ForceCloseRequest req) {
-    primaryStage.close();
-  }
-
-  @SubscribeEvent
-  private void onCloseRequest(CloseProgramRequest req) {
-    bus.post(new DirtyWorkspacesRequest());
-  }
-
-  @SubscribeEvent
-  private void onGetDirtyWorkspacesEvent(GetDirtyWorkspaceEvent evt) {
-    saveWarningService.promptProgramClose(evt.dirtyWorkspaces(), primaryStage::close);
-  }
-
-  @SubscribeEvent
-  private void onOpenGitHub(OpenGitHubRequest req) {
-    openLink("https://github.com/nohgz/paint");
-  }
-
 
   public static void openLink(String url) {
     if (Desktop.isDesktopSupported()) {
@@ -86,5 +56,25 @@ public class ProgramService extends EventBusPublisher {
     } else {
       System.err.println("Desktop browsing not supported.");
     }
+  }
+
+  @SubscribeEvent
+  private void onForceCloseRequest(ForceCloseRequest req) {
+    primaryStage.close();
+  }
+
+  @SubscribeEvent
+  private void onCloseRequest(CloseProgramRequest req) {
+    bus.post(new DirtyWorkspacesRequest());
+  }
+
+  @SubscribeEvent
+  private void onGetDirtyWorkspacesEvent(GetDirtyWorkspaceEvent evt) {
+    saveWarningBrew.promptProgramClose(evt.dirtyWorkspaces(), primaryStage::close);
+  }
+
+  @SubscribeEvent
+  private void onOpenGitHub(OpenGitHubRequest req) {
+    openLink("https://github.com/nohgz/paint");
   }
 }

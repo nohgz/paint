@@ -35,9 +35,9 @@ import net.cnoga.paint.tool.ToolRegistry;
  */
 public class ToolsController extends EventBusPublisher {
 
+  private final ToggleGroup toolGroup = new ToggleGroup();
   @FXML
   private GridPane toolGrid;
-  private final ToggleGroup toolGroup = new ToggleGroup();
 
   @FXML
   public void initialize() {

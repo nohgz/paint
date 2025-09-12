@@ -1,8 +1,8 @@
-package net.cnoga.paint.service;
+package net.cnoga.paint.brews;
 
-import static net.cnoga.paint.util.PaintUtil.createSubwindow;
-import static net.cnoga.paint.util.PaintUtil.createToggledSubwindow;
-import static net.cnoga.paint.util.PaintUtil.setSubwindowSpawnPoint;
+import static net.cnoga.paint.util.SubwindowUtil.createSubwindow;
+import static net.cnoga.paint.util.SubwindowUtil.createToggledSubwindow;
+import static net.cnoga.paint.util.SubwindowUtil.setSubwindowSpawnPoint;
 
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
@@ -38,8 +38,12 @@ import net.cnoga.paint.util.AnchorTypes;
  * </ul>
  */
 @EventBusSubscriber
-public class SubWindowService extends EventBusPublisher {
+public class SubWindowBrew extends EventBusPublisher {
 
+  private final Stage mainStage;
+  private final Boolean aboutOpen = false;
+  private final Boolean helpOpen = false;
+  private final Boolean changelogOpen = false;
   private Stage historyStage;
   private Stage layersStage;
   private Stage toolsStage;
@@ -47,22 +51,16 @@ public class SubWindowService extends EventBusPublisher {
   private Stage helpStage;
   private Stage changelogStage;
   private Stage aboutStage;
-  private final Stage mainStage;
-
   private ToggleButton historyButton;
   private ToggleButton toolsButton;
   private ToggleButton layersButton;
   private ToggleButton settingsButton;
-
   private Boolean historyOpen = false;
   private Boolean toolsOpen = false;
   private Boolean layersOpen = false;
   private Boolean settingsOpen = false;
-  private final Boolean aboutOpen = false;
-  private final Boolean helpOpen = false;
-  private final Boolean changelogOpen = false;
 
-  public SubWindowService(Stage stage) {
+  public SubWindowBrew(Stage stage) {
     this.mainStage = stage;
     bus.register(this);
   }
@@ -76,7 +74,7 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickHistory(OpenHistoryRequest evt) {
+  private void onClickHistory(OpenHistoryRequest req) {
     if (historyStage == null) {
       historyStage = createToggledSubwindow(
         "History",
@@ -102,7 +100,7 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickLayers(OpenLayersRequest evt) {
+  private void onClickLayers(OpenLayersRequest req) {
     if (layersStage == null) {
       layersStage = createToggledSubwindow(
         "Layers",
@@ -129,7 +127,7 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickTools(OpenToolsRequest evt) {
+  private void onClickTools(OpenToolsRequest req) {
     if (toolsStage == null) {
       toolsStage = createToggledSubwindow(
         "Tools",
@@ -143,7 +141,6 @@ public class SubWindowService extends EventBusPublisher {
       setSubwindowSpawnPoint(toolsStage, mainStage, AnchorTypes.TOP_LEFT);
     }
 
-
     if (toolsOpen) {
       toolsStage.hide();
       toolsButton.setSelected(false);
@@ -156,7 +153,7 @@ public class SubWindowService extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickSettings(OpenSettingsRequest evt) {
+  private void onClickSettings(OpenSettingsRequest req) {
     if (settingsStage == null) {
       settingsStage = createToggledSubwindow(
         "Settings",

@@ -3,12 +3,13 @@ package net.cnoga.paint.tool;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * Central registry for managing all available tools in the application.
  *
  * <p>Tools must be registered at application startup, after which the
- * registry can be locked to prevent accidental modification. Once locked,
- * no new tools can be added.</p>
+ * registry can be locked to prevent accidental modification. Once locked, no new tools can be
+ * added.</p>
  *
  * <p>Provides access to individual tools by name or all registered tools
  * as an unmodifiable map.</p>
@@ -22,10 +23,12 @@ import java.util.Map;
  * </ul>
  */
 public final class ToolRegistry {
+
   private static final Map<String, Tool> tools = new HashMap<>();
   private static boolean locked = false;
 
-  private ToolRegistry() {} // No instances
+  private ToolRegistry() {
+  } // No instances
 
   // Register a tool; must be done at startup
   public static void register(Tool tool) {

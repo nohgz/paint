@@ -20,10 +20,9 @@ import net.cnoga.paint.events.request.OpenToolsRequest;
  * Controller for the right-side top bar of the application UI.
  *
  * <p>The right top bar provides quick access to tools, layers, history, settings, and help
- * sections. This controller acts as the intermediary between the
- * {@code right_topbar.fxml} layout and the backend services, ensuring that user
- * interactions (button presses and menu selections) are properly dispatched
- * as events.</p>
+ * sections. This controller acts as the intermediary between the {@code right_topbar.fxml} layout
+ * and the backend services, ensuring that user interactions (button presses and menu selections)
+ * are properly dispatched as events.</p>
  *
  * <p>Responsibilities include:</p>
  * <ul>

@@ -12,9 +12,8 @@ import net.cnoga.paint.events.response.ToolChangedEvent;
  * Controller for the bottom information panel of the workspace UI.
  *
  * <p>Displays contextual information such as the current file name,
- * canvas size, selected tool, cursor position, or zoom level. The
- * panel updates reactively through events published on the global
- * {@link net.cnoga.paint.bus.EventBus}.</p>
+ * canvas size, selected tool, cursor position, or zoom level. The panel updates reactively through
+ * events published on the global {@link net.cnoga.paint.bus.EventBus}.</p>
  *
  * <h3>Event Handling:</h3>
  * <ul>
@@ -26,6 +25,7 @@ import net.cnoga.paint.events.response.ToolChangedEvent;
  */
 @EventBusSubscriber
 public class BottomInfoController extends EventBusPublisher {
+
   public Label textStatus;
 
   @FXML

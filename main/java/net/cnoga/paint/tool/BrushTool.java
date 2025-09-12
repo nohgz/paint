@@ -1,7 +1,7 @@
 package net.cnoga.paint.tool;
 
-import static net.cnoga.paint.tool.LineUtil.drawCircle;
-import static net.cnoga.paint.tool.LineUtil.drawLineWithCircles;
+import static net.cnoga.paint.util.LineUtil.roundLineCap;
+import static net.cnoga.paint.util.LineUtil.drawLineWithCircles;
 
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.bus.EventBusSubscriber;
@@ -12,8 +12,8 @@ import net.cnoga.paint.tool.capabilities.ColorCapability;
 import net.cnoga.paint.tool.capabilities.WidthCapability;
 
 /**
- * A simple freehand paintbrush tool that draws continuous strokes
- * following the mouse cursor, using the currently selected color and width.
+ * A simple freehand paintbrush tool that draws continuous strokes following the mouse cursor, using
+ * the currently selected color and width.
  *
  * <p>Brush strokes are rendered as connected circles to create smooth lines.</p>
  *
@@ -40,7 +40,7 @@ public class BrushTool extends Tool implements ColorCapability, WidthCapability 
     lastX = x;
     lastY = y;
 
-    drawCircle(gc, currentWidth, x, y);
+    roundLineCap(gc, currentWidth, x, y);
   }
 
   @Override

@@ -5,15 +5,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.events.request.FileOpenRequest;
+import net.cnoga.paint.events.request.NewFileRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveAsRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveRequest;
-import net.cnoga.paint.events.request.NewFileRequest;
 
 /**
  * Controller for the shortcut bar.
  * <p>
- * Provides quick access to frequently used file operations
- * (new, open, save) for convenience.
+ * Provides quick access to frequently used file operations (new, open, save) for convenience.
+ *
  * @author cnoga
  * @version 1.0
  */
@@ -28,14 +28,17 @@ public class ShortcutBarController extends EventBusPublisher {
   private void onNewFile(ActionEvent event) {
     bus.post(new NewFileRequest());
   }
+
   @FXML
   private void onFileOpen(ActionEvent event) {
     bus.post(new FileOpenRequest());
   }
+
   @FXML
   private void onFileSave(ActionEvent event) {
     bus.post(new WorkspaceSaveRequest());
   }
+
   @FXML
   private void onFileSaveAs(ActionEvent event) {
     bus.post(new WorkspaceSaveAsRequest());

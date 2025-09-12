@@ -10,8 +10,8 @@ import java.util.function.Consumer;
 /**
  * A simple publish/subscribe event bus.
  * <p>
- * Subscribers register methods to handle events of a specific type, and
- * publishers post events to be delivered to all matching subscribers.
+ * Subscribers register methods to handle events of a specific type, and publishers post events to
+ * be delivered to all matching subscribers.
  *
  * @author cnoga
  * @version 1.1
@@ -23,7 +23,8 @@ public class EventBus {
   private final Map<Class<?>, List<Consumer<?>>> listeners = new ConcurrentHashMap<>();
 
   // private constructor to enforce singleton
-  private EventBus() {}
+  private EventBus() {
+  }
 
   /**
    * Get the global singleton instance of the EventBus.
@@ -33,8 +34,9 @@ public class EventBus {
   }
 
   /**
-   * Register all @SubscribeEvent methods in a class marked @EventBusSubscriber.
-   * Methods must take exactly one parameter = event type.
+   * Register all @SubscribeEvent methods in a class marked @EventBusSubscriber. Methods must take
+   * exactly one parameter = event type.
+   *
    * @param subscriber - The subscriber to the event bus.
    */
   public void register(Object subscriber) {
@@ -85,6 +87,7 @@ public class EventBus {
 
   /**
    * Post an event to all subscribers on the event bus listening for its type.
+   *
    * @param event - The event the bus posts.
    */
   @SuppressWarnings("unchecked")

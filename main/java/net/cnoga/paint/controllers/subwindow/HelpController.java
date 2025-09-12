@@ -19,6 +19,7 @@ import javafx.scene.control.TextArea;
  * @version 1.0
  */
 public class HelpController {
+
   @FXML
   public TextArea helpTextArea;
 

@@ -1,3 +1,5 @@
 package net.cnoga.paint.events.request;
 
-public record ResizeWorkspaceRequest() {}
+public record ResizeWorkspaceRequest() {
+
+}

@@ -1,4 +1,4 @@
-package net.cnoga.paint.service;
+package net.cnoga.paint.brews;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -8,6 +8,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import net.cnoga.paint.bus.EventBus;
@@ -15,7 +16,6 @@ import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.FileOpenRequest;
-import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 import net.cnoga.paint.events.response.FileOpenedEvent;
 import net.cnoga.paint.events.response.WorkspaceSavedAsEvent;
 import net.cnoga.paint.events.response.WorkspaceSavedEvent;
@@ -27,10 +27,9 @@ import org.apache.commons.imaging.Imaging;
 /**
  * Publishes file I/O–related actions to the application's {@link EventBus}.
  * <p>
- * This class connects JavaFX controller actions (e.g., "New", "Open", "Save")
- * with the event-driven backend by posting corresponding events. It also provides
- * simple integration with the JavaFX {@link FileChooser} for file selection
- * and with the {@link Stage} for closing the application.
+ * This class connects JavaFX controller actions (e.g., "New", "Open", "Save") with the event-driven
+ * backend by posting corresponding events. It also provides simple integration with the JavaFX
+ * {@link FileChooser} for file selection and with the {@link Stage} for closing the application.
  * </p>
  *
  * @author cnoga
@@ -38,10 +37,11 @@ import org.apache.commons.imaging.Imaging;
  */
 
 @EventBusSubscriber
-public class FileIOService extends EventBusPublisher {
+public class FileIOBrew extends EventBusPublisher {
+
   private final Stage stage;
 
-  public FileIOService(Stage stage) {
+  public FileIOBrew(Stage stage) {
     this.stage = stage;
     bus.register(this);
   }
@@ -62,16 +62,18 @@ public class FileIOService extends EventBusPublisher {
   @SubscribeEvent
   public void onWorkspaceSaveAsEvent(WorkspaceSavedAsEvent evt) {
     Workspace ws = evt.workspace();
-    if (ws == null) return;
+    if (ws == null) {
+      return;
+    }
 
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Save Workspace As...");
 
     // Add file extension filters
     fileChooser.getExtensionFilters().addAll(
-      new FileChooser.ExtensionFilter("PNG Image", "*.png"),
-      new FileChooser.ExtensionFilter("JPEG Image", "*.jpg", "*.jpeg"),
-      new FileChooser.ExtensionFilter("BMP Image", "*.bmp")
+      new ExtensionFilter("PNG Image", "*.png"),
+      new ExtensionFilter("JPEG Image", "*.jpg", "*.jpeg"),
+      new ExtensionFilter("BMP Image", "*.bmp")
     );
 
     File file = fileChooser.showSaveDialog(stage);
@@ -79,7 +81,7 @@ public class FileIOService extends EventBusPublisher {
       ws.setFile(file);
       try {
         saveWorkspaceCanvas(ws);
-        ws.setDirtyFlag(false);
+        ws.setDirty(false);
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -94,7 +96,7 @@ public class FileIOService extends EventBusPublisher {
     if (ws.getFile() != null) {
       try {
         saveWorkspaceCanvas(ws);
-        ws.setDirtyFlag(false);
+        ws.setDirty(false);
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -105,7 +107,9 @@ public class FileIOService extends EventBusPublisher {
   // does the actual saving
   public void saveWorkspaceCanvas(Workspace ws) throws IOException, ImageWriteException {
     File file = ws.getFile();
-    if (ws == null || file == null) return;
+    if (ws == null || file == null) {
+      return;
+    }
 
     Canvas canvas = ws.getBaseLayer(); // TODO: Make this flatten all user-defined layers down. for now this works
 

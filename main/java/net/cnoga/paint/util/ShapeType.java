@@ -1,4 +1,4 @@
-package net.cnoga.paint.tool.shape;
+package net.cnoga.paint.util;
 
 public enum ShapeType {
   RECTANGLE,
@@ -6,5 +6,5 @@ public enum ShapeType {
   ELLIPSE,
   CIRCLE,
   TRIANGLE,
-  POLYGON
+  PENTAGON
 }

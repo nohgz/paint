@@ -8,10 +8,11 @@ import java.lang.annotation.Target;
 /**
  * Marks a class as a subscriber to the global event bus.
  * <p>
- * Classes annotated with {@code @EventBusSubscriber} are discovered and
- * automatically registered so their methods annotated with
- * {@link SubscribeEvent} can receive events.
+ * Classes annotated with {@code @EventBusSubscriber} are discovered and automatically registered so
+ * their methods annotated with {@link SubscribeEvent} can receive events.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface EventBusSubscriber { }
+public @interface EventBusSubscriber {
+
+}

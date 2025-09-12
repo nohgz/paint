@@ -21,8 +21,8 @@ import net.cnoga.paint.events.request.WidthChangedEvent;
 import net.cnoga.paint.events.response.ShapeChangedEvent;
 import net.cnoga.paint.events.response.ToolChangedEvent;
 import net.cnoga.paint.tool.capabilities.WidthCapability;
-import net.cnoga.paint.tool.shape.ShapeType;
-import net.cnoga.paint.tool.shape.ShapesTool;
+import net.cnoga.paint.util.ShapeType;
+import net.cnoga.paint.tool.capabilities.ShapesTool;
 
 /**
  * Controller for the tool information panel.

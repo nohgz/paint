@@ -6,16 +6,16 @@ import javafx.scene.control.MenuItem;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.events.request.FileOpenRequest;
+import net.cnoga.paint.events.request.NewFileRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveAsRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveRequest;
-import net.cnoga.paint.events.request.NewFileRequest;
 
 /**
  * Controller for the left top bar, which contains the File/Edit/View/Image menus.
  *
  * <p>Acts as the bridge between {@code left_topbar.fxml} and the backend services.
- * Each menu item is wired via {@code fx:id} and {@code onAction} to this controller,
- * which then posts the corresponding request to the {@link net.cnoga.paint.bus.EventBus}.</p>
+ * Each menu item is wired via {@code fx:id} and {@code onAction} to this controller, which then
+ * posts the corresponding request to the {@link net.cnoga.paint.bus.EventBus}.</p>
  *
  * <h3>Typical Flow:</h3>
  * <ol>
@@ -35,6 +35,7 @@ import net.cnoga.paint.events.request.NewFileRequest;
  */
 
 public class LeftTopbarController extends EventBusPublisher {
+
   public MenuItem left_topbar_new_file;
   public MenuItem left_topbar_file_open;
   public MenuItem left_topbar_file_save;
@@ -45,20 +46,24 @@ public class LeftTopbarController extends EventBusPublisher {
   private void onFileNew(ActionEvent event) {
     bus.post(new NewFileRequest());
   }
+
   @FXML
   private void onFileOpen(ActionEvent event) {
     bus.post(new FileOpenRequest());
   }
+
   @FXML
   private void onFileSave(ActionEvent event) {
     bus.post(new WorkspaceSaveRequest());
   }
+
   @FXML
   private void onFileSaveAs(ActionEvent event) {
     bus.post(new WorkspaceSaveAsRequest());
   }
+
   @FXML
-  private void onAppExit(ActionEvent actionEvent) {
+  private void onAppExit(ActionEvent event) {
     bus.post(new CloseProgramRequest());
   }
 }

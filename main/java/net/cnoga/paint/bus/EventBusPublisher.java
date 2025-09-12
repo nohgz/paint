@@ -21,5 +21,6 @@ package net.cnoga.paint.bus;
  * @version 1.0
  */
 public class EventBusPublisher {
+
   protected final EventBus bus = EventBus.getInstance();
 }
