@@ -65,6 +65,7 @@ public class ProgramBrew extends EventBusPublisher {
 
   @SubscribeEvent
   private void onCloseRequest(CloseProgramRequest req) {
+    // ask for the states before closing
     bus.post(new DirtyWorkspacesRequest());
   }
 

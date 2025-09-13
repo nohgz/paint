@@ -1,7 +1,5 @@
 package net.cnoga.paint.tool;
 
-import net.cnoga.paint.tool.capabilities.ShapesTool;
-
 /**
  * Utility class providing access to all built-in paint tools.
  *

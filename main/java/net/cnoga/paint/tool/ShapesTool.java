@@ -1,4 +1,4 @@
-package net.cnoga.paint.tool.capabilities;
+package net.cnoga.paint.tool;
 
 import static net.cnoga.paint.util.ShapeUtil.drawShape;
 
