@@ -8,7 +8,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
 <HBox xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.controllers.window.ToolInfoController"
+  fx:controller="net.cnoga.paint.fxml_controllers.window.ToolInfoController"
   alignment="CENTER_LEFT">
 
   <Label text="Tool:" fx:id="toolInfoCaption"/>

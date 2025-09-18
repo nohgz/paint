@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TextArea?>
 <ScrollPane xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.controllers.subwindow.HelpController"
+  fx:controller="net.cnoga.paint.fxml_controllers.subwindow.HelpController"
   prefHeight="400.0" prefWidth="600.0"
   fitToWidth="true" fitToHeight="true">
 

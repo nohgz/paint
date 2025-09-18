@@ -9,9 +9,8 @@ import net.cnoga.paint.tool.capabilities.WidthCapability;
 /**
  * A tool for erasing pixels from the canvas.
  * <p>
- * The {@code EraserTool} allows the user to erase by clicking
- * or dragging across the canvas. The eraser size responds to
- * {@link WidthChangedEvent} updates.
+ * The {@code EraserTool} allows the user to erase by clicking or dragging across the canvas. The
+ * eraser size responds to {@link WidthChangedEvent} updates.
  */
 @EventBusSubscriber
 public class EraserTool extends Tool implements WidthCapability {
@@ -78,7 +77,7 @@ public class EraserTool extends Tool implements WidthCapability {
    * @param evt the width change event
    */
   @SubscribeEvent
-  public void updateWidthEvent(WidthChangedEvent evt) {
+  public void onWidthChanged(WidthChangedEvent evt) {
     super.currentWidth = evt.width();
   }
 
@@ -105,7 +104,8 @@ public class EraserTool extends Tool implements WidthCapability {
    * @param x1   ending x-coordinate
    * @param y1   ending y-coordinate
    */
-  private void eraseLine(GraphicsContext gc, double size, double x0, double y0, double x1, double y1) {
+  private void eraseLine(GraphicsContext gc, double size, double x0, double y0, double x1,
+    double y1) {
     double dx = x1 - x0;
     double dy = y1 - y0;
     double distance = Math.hypot(dx, dy);

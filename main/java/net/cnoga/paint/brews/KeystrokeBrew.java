@@ -7,8 +7,8 @@ import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.events.request.CloseCurrentWorkspaceRequest;
 import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.events.request.FileOpenRequest;
-import net.cnoga.paint.events.request.ForceCloseRequest;
-import net.cnoga.paint.events.request.NewFileRequest;
+import net.cnoga.paint.events.request.ForceCloseProgramRequest;
+import net.cnoga.paint.events.request.OpenNewWorkspaceDialogRequest;
 import net.cnoga.paint.events.request.RedoRequest;
 import net.cnoga.paint.events.request.ResizeWorkspaceRequest;
 import net.cnoga.paint.events.request.UndoRequest;
@@ -20,8 +20,8 @@ import net.cnoga.paint.tool.PaintTools;
  * Service for handling global keyboard shortcuts within the application.
  *
  * <p>Registers an event filter on the primary {@link Scene} to listen for
- * keystrokes and translate them into high-level events posted on the event bus.
- * This allows decoupling of UI input (keyboard shortcuts) from application logic.</p>
+ * keystrokes and translate them into high-level events posted on the event bus. This allows
+ * decoupling of UI input (keyboard shortcuts) from application logic.</p>
  */
 @EventBusSubscriber
 public class KeystrokeBrew extends EventBusPublisher {
@@ -40,8 +40,7 @@ public class KeystrokeBrew extends EventBusPublisher {
   }
 
   /**
-   * Initializes all keyboard shortcuts by attaching an event filter
-   * to the primary scene.
+   * Initializes all keyboard shortcuts by attaching an event filter to the primary scene.
    */
   private void initStrokes() {
     primaryScene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
@@ -49,7 +48,7 @@ public class KeystrokeBrew extends EventBusPublisher {
       if (keyEvent.isControlDown() && keyEvent.isShiftDown()) {
         switch (keyEvent.getCode()) {
           case Q -> {
-            bus.post(new ForceCloseRequest());
+            bus.post(new ForceCloseProgramRequest());
             keyEvent.consume();
           }
         }
@@ -75,7 +74,7 @@ public class KeystrokeBrew extends EventBusPublisher {
             keyEvent.consume();
           }
           case N -> {
-            bus.post(new NewFileRequest());
+            bus.post(new OpenNewWorkspaceDialogRequest());
             keyEvent.consume();
           }
           case O -> {

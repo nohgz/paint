@@ -18,10 +18,7 @@ import net.cnoga.paint.workspace.Workspace;
 @EventBusSubscriber
 public class SaveWarningBrew extends EventBusPublisher {
 
-  private final Stage primaryStage;
-
-  public SaveWarningBrew(Stage primaryStage) {
-    this.primaryStage = primaryStage;
+  public SaveWarningBrew() {
     bus.register(this);
   }
 
@@ -61,7 +58,6 @@ public class SaveWarningBrew extends EventBusPublisher {
    */
   private void showDialog(List<Workspace> dirtyWorkspaces, Runnable onCloseAction) {
     Stage dialog = new Stage();
-    dialog.initOwner(primaryStage);
     dialog.initModality(Modality.APPLICATION_MODAL);
     dialog.setTitle("Unsaved Changes");
 
@@ -71,7 +67,8 @@ public class SaveWarningBrew extends EventBusPublisher {
 
     Label label = new Label(dirtyWorkspaces.size() == 1
       ? "This workspace has unsaved changes. What do you want to do?"
-      : "You have unsaved changes in " + dirtyWorkspaces.size() + " workspaces. What do you want to do?");
+      : "You have unsaved changes in " + dirtyWorkspaces.size()
+        + " workspaces. What do you want to do?");
     label.setWrapText(true);
 
     HBox buttons = new HBox(10);
@@ -108,4 +105,3 @@ public class SaveWarningBrew extends EventBusPublisher {
     dialog.showAndWait();
   }
 }
-

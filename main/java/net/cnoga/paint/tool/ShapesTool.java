@@ -8,7 +8,6 @@ import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.ColorChangedEvent;
 import net.cnoga.paint.events.request.WidthChangedEvent;
 import net.cnoga.paint.events.response.ShapeChangedEvent;
-import net.cnoga.paint.tool.Tool;
 import net.cnoga.paint.tool.capabilities.ColorCapability;
 import net.cnoga.paint.tool.capabilities.WidthCapability;
 import net.cnoga.paint.util.ShapeType;
@@ -61,12 +60,12 @@ public class ShapesTool extends Tool implements WidthCapability, ColorCapability
   }
 
   @SubscribeEvent
-  public void updateWidthEvent(WidthChangedEvent evt) {
+  public void onWidthChanged(WidthChangedEvent evt) {
     super.currentWidth = evt.width();
   }
 
   @SubscribeEvent
-  public void updateColorEvent(ColorChangedEvent evt) {
+  public void onColorChanged(ColorChangedEvent evt) {
     super.currentColor = evt.color();
   }
 

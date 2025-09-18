@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Tooltip?>
-<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.window.ShortcutBarController">
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.fxml_controllers.window.ShortcutBarController">
   <Button fx:id = "shortcut_bar_new" onAction="#onNewFile">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
@@ -50,7 +50,19 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="Save Image" showDelay="0.5s"/>
+      <Tooltip text="Save Image As" showDelay="0.5s"/>
+    </tooltip>
+  </Button>
+
+  <Button fx:id = "shortcut_bar_clear_workspace" onAction="#onClearWorkspace">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../../icons/menu/clear_workspace_icon.png"/>
+      </ImageView>
+    </graphic>
+
+    <tooltip>
+      <Tooltip text="Clear Workspace" showDelay="0.5s"/>
     </tooltip>
   </Button>
 </HBox>

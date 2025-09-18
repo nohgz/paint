@@ -47,7 +47,7 @@ public class FileIOBrew extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  public void onOpenFileRequest(FileOpenRequest fileOpenRequest) {
+  public void onOpenFile(FileOpenRequest req) {
     FileChooser chooser = new FileChooser();
     chooser.setTitle("Open");
     File selectedFile = chooser.showOpenDialog(stage);
@@ -60,7 +60,7 @@ public class FileIOBrew extends EventBusPublisher {
 
   // does the save handling
   @SubscribeEvent
-  public void onWorkspaceSaveAsEvent(WorkspaceSavedAsEvent evt) {
+  public void onWorkspaceSavedAs(WorkspaceSavedAsEvent evt) {
     Workspace ws = evt.workspace();
     if (ws == null) {
       return;
@@ -80,7 +80,7 @@ public class FileIOBrew extends EventBusPublisher {
     if (file != null) {
       ws.setFile(file);
       try {
-        saveWorkspaceCanvas(ws);
+        saveWorkspace(ws);
         ws.setDirty(false);
       } catch (Exception e) {
         e.printStackTrace();
@@ -90,12 +90,12 @@ public class FileIOBrew extends EventBusPublisher {
 
 
   @SubscribeEvent
-  public void onWorkspaceSaveEvent(WorkspaceSavedEvent evt) {
+  public void onWorkspaceSaved(WorkspaceSavedEvent evt) {
     Workspace ws = evt.workspace();
 
     if (ws.getFile() != null) {
       try {
-        saveWorkspaceCanvas(ws);
+        saveWorkspace(ws);
         ws.setDirty(false);
       } catch (Exception e) {
         e.printStackTrace();
@@ -105,7 +105,7 @@ public class FileIOBrew extends EventBusPublisher {
 
 
   // does the actual saving
-  public void saveWorkspaceCanvas(Workspace ws) throws IOException, ImageWriteException {
+  public void saveWorkspace(Workspace ws) throws IOException, ImageWriteException {
     File file = ws.getFile();
     if (ws == null || file == null) {
       return;

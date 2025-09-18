@@ -4,5 +4,5 @@ import net.cnoga.paint.events.request.ColorChangedEvent;
 
 public interface ColorCapability {
 
-  void updateColorEvent(ColorChangedEvent evt);
+  void onColorChanged(ColorChangedEvent evt);
 }

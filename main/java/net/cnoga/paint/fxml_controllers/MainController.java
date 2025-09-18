@@ -1,16 +1,16 @@
-package net.cnoga.paint.controllers;
+package net.cnoga.paint.fxml_controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
 import net.cnoga.paint.bus.EventBusPublisher;
-import net.cnoga.paint.controllers.window.BottomInfoController;
-import net.cnoga.paint.controllers.window.LeftTopbarController;
-import net.cnoga.paint.controllers.window.RightTopbarController;
-import net.cnoga.paint.controllers.window.ShortcutBarController;
-import net.cnoga.paint.controllers.window.ToolInfoController;
-import net.cnoga.paint.controllers.window.WorkspaceController;
+import net.cnoga.paint.fxml_controllers.window.BottomInfoController;
+import net.cnoga.paint.fxml_controllers.window.LeftTopbarController;
+import net.cnoga.paint.fxml_controllers.window.RightTopbarController;
+import net.cnoga.paint.fxml_controllers.window.ShortcutBarController;
+import net.cnoga.paint.fxml_controllers.window.ToolInfoController;
+import net.cnoga.paint.fxml_controllers.window.WorkspaceController;
 import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.brews.FileIOBrew;
 import net.cnoga.paint.brews.KeystrokeBrew;
@@ -69,8 +69,7 @@ public class MainController extends EventBusPublisher {
   public void init(Stage primaryStage, Scene primaryScene) {
     // The services the program runs
     fileIOBrew = new FileIOBrew(primaryStage);
-    saveWarningBrew = new SaveWarningBrew(primaryStage);
-    programBrew = new ProgramBrew(primaryStage, saveWarningBrew);
+    programBrew = new ProgramBrew(primaryStage);
     workspaceBrew = new WorkspaceBrew(saveWarningBrew);
     subwindowBrew = new SubWindowBrew(primaryStage);
     keystrokeBrew = new KeystrokeBrew(primaryScene);

@@ -63,18 +63,17 @@ public class LineTool extends Tool implements ColorCapability, WidthCapability {
     effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(),
       effects_gc.getCanvas().getHeight());
 
-    // Draw the final line on the main canvas
     drawLineWithCircles(gc, currentWidth, startX, startY, x, y);
   }
 
 
   @SubscribeEvent
-  public void updateColorEvent(ColorChangedEvent req) {
+  public void onColorChanged(ColorChangedEvent req) {
     super.currentColor = req.color();
   }
 
   @SubscribeEvent
-  public void updateWidthEvent(WidthChangedEvent req) {
+  public void onWidthChanged(WidthChangedEvent req) {
     super.currentWidth = req.width();
   }
 }

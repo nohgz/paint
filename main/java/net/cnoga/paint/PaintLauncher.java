@@ -7,8 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
-import net.cnoga.paint.controllers.MainController;
-import net.cnoga.paint.events.request.NewFileRequest;
+import net.cnoga.paint.fxml_controllers.MainController;
+import net.cnoga.paint.events.request.NewWorkspaceRequest;
 import net.cnoga.paint.events.request.OpenHistoryRequest;
 import net.cnoga.paint.events.request.OpenLayersRequest;
 import net.cnoga.paint.events.request.OpenToolsRequest;
@@ -64,7 +64,7 @@ public class PaintLauncher extends Application {
 
     // Initial startup state
     bus.post(new ToolChangedEvent(PaintTools.BRUSH));
-    bus.post(new NewFileRequest());
+    bus.post(new NewWorkspaceRequest(800, 600));
     bus.post(new OpenHistoryRequest());
     bus.post(new OpenLayersRequest());
     bus.post(new OpenToolsRequest());

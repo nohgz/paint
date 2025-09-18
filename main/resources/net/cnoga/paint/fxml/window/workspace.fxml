@@ -4,7 +4,7 @@
 
 <TabPane xmlns:fx="http://javafx.com/fxml"
 fx:id="workspaceTabPane"
-fx:controller="net.cnoga.paint.controllers.window.WorkspaceController"
+fx:controller="net.cnoga.paint.fxml_controllers.window.WorkspaceController"
 side="BOTTOM">
 
 </TabPane>

@@ -4,5 +4,5 @@ import net.cnoga.paint.events.request.WidthChangedEvent;
 
 public interface WidthCapability {
 
-  void updateWidthEvent(WidthChangedEvent evt);
+  void onWidthChanged(WidthChangedEvent evt);
 }

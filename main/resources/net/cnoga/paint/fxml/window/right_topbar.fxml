@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.MenuItem?>
-<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.controllers.window.RightTopbarController">
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.fxml_controllers.window.RightTopbarController">
   <ToggleButton fx:id = "right_topbar_tools" onAction="#onOpenTools">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">

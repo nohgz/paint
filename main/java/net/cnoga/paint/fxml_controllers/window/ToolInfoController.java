@@ -1,4 +1,4 @@
-package net.cnoga.paint.controllers.window;
+package net.cnoga.paint.fxml_controllers.window;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -20,22 +20,21 @@ import net.cnoga.paint.events.request.ColorChangedEvent;
 import net.cnoga.paint.events.request.WidthChangedEvent;
 import net.cnoga.paint.events.response.ShapeChangedEvent;
 import net.cnoga.paint.events.response.ToolChangedEvent;
+import net.cnoga.paint.tool.ShapesTool;
 import net.cnoga.paint.tool.capabilities.WidthCapability;
 import net.cnoga.paint.util.ShapeType;
-import net.cnoga.paint.tool.ShapesTool;
 
 /**
  * Controller for the tool information panel.
  *
  * <p>This panel displays information about the currently selected tool,
- * including its icon, caption, and configurable options such as color
- * and stroke width. It also provides interactive controls that allow
- * the user to customize the tool's behavior.</p>
+ * including its icon, caption, and configurable options such as color and stroke width. It also
+ * provides interactive controls that allow the user to customize the tool's behavior.</p>
  *
  * <p>The controller listens for {@link ToolChangedEvent} messages on the
- * event bus and updates its UI accordingly. It also publishes requests
- * (e.g., {@link ColorChangedEvent}, {@link WidthChangedEvent})
- * when the user modifies tool parameters.</p>
+ * event bus and updates its UI accordingly. It also publishes requests (e.g.,
+ * {@link ColorChangedEvent}, {@link WidthChangedEvent}) when the user modifies tool
+ * parameters.</p>
  *
  * <p>Responsibilities:</p>
  * <ul>
@@ -52,15 +51,13 @@ public class ToolInfoController extends EventBusPublisher {
   public ColorPicker toolColorPicker;
   public ImageView toolInfoIcon;
   public HBox toolSpecificThings;
+  public Label toolInfoCaption;
+  public Label numberWidth = new Label("1");
+  public Slider toolWidthSlider = new Slider(1, 25, 1);
 
   public ToolInfoController() {
     bus.register(this);
   }
-  public Label toolInfoCaption;
-
-  public Label numberWidth = new Label("1");
-
-  public Slider toolWidthSlider = new Slider(1, 25, 1);
 
   @SubscribeEvent
   private void updateWidthText(WidthChangedEvent evt) {
@@ -80,13 +77,12 @@ public class ToolInfoController extends EventBusPublisher {
       toolSpecificThings.getChildren().add(new Separator(Orientation.VERTICAL));
     }
 
-    if (evt.tool() instanceof ShapesTool) {
+    if (evt.tool() instanceof ShapesTool shapesTool) {
       toolSpecificThings.getChildren().add(new Label("Shape: "));
       ComboBox<ShapeType> shapeDropdown = new ComboBox<>();
       shapeDropdown.setItems(FXCollections.observableArrayList(ShapeType.values()));
 
       // optionally set the current shape
-      ShapesTool shapesTool = (ShapesTool) evt.tool();
       shapeDropdown.setValue(shapesTool.getCurrentShape());
 
       shapeDropdown.setOnAction(e -> {

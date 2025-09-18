@@ -1,4 +1,4 @@
-package net.cnoga.paint.controllers.subwindow;
+package net.cnoga.paint.fxml_controllers.subwindow;
 
 import java.io.IOException;
 import java.nio.file.Files;

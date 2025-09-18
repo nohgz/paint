@@ -1,7 +1,7 @@
 package net.cnoga.paint.tool;
 
-import static net.cnoga.paint.util.LineUtil.roundLineCap;
 import static net.cnoga.paint.util.LineUtil.drawLineWithCircles;
+import static net.cnoga.paint.util.LineUtil.roundLineCap;
 
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.bus.EventBusSubscriber;
@@ -56,12 +56,12 @@ public class BrushTool extends Tool implements ColorCapability, WidthCapability 
   }
 
   @SubscribeEvent
-  public void updateWidthEvent(WidthChangedEvent evt) {
+  public void onWidthChanged(WidthChangedEvent evt) {
     super.currentWidth = evt.width();
   }
 
   @SubscribeEvent
-  public void updateColorEvent(ColorChangedEvent evt) {
+  public void onColorChanged(ColorChangedEvent evt) {
     super.currentColor = evt.color();
   }
 }

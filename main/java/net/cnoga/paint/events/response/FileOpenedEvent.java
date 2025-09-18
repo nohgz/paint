@@ -7,8 +7,8 @@ import net.cnoga.paint.brews.WorkspaceBrew;
 /**
  * Event signaling that a file has been opened for editing or display.
  * <p>
- * Typically posted by the {@link FileIOBrew} when "Open File" is chosen. Listeners should
- * respond by loading its contents into the active workspace.
+ * Typically posted by the {@link FileIOBrew} when "Open File" is chosen. Listeners should respond
+ * by loading its contents into the active workspace.
  * <p>
  * See {@link WorkspaceBrew} for an implementation of a listener that implements this logic.
  *

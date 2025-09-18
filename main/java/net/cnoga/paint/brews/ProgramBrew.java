@@ -10,10 +10,11 @@ import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.CloseProgramRequest;
-import net.cnoga.paint.events.request.DirtyWorkspacesRequest;
-import net.cnoga.paint.events.request.ForceCloseRequest;
+import net.cnoga.paint.events.request.ForceCloseProgramRequest;
+import net.cnoga.paint.events.request.GetDirtyWorkspacesRequest;
 import net.cnoga.paint.events.request.OpenGitHubRequest;
-import net.cnoga.paint.events.response.GetDirtyWorkspaceEvent;
+import net.cnoga.paint.events.response.GotDirtyWorkspacesEvent;
+import net.cnoga.paint.popup.ProgramSaveWarningPopup;
 
 /**
  * Service responsible for managing the overall lifecycle of the program.
@@ -35,13 +36,19 @@ import net.cnoga.paint.events.response.GetDirtyWorkspaceEvent;
 public class ProgramBrew extends EventBusPublisher {
 
   private final Stage primaryStage;
-  private final SaveWarningBrew saveWarningBrew;
+  private ProgramSaveWarningPopup programSaveWarningPopup;
   private Stage warningStage;
 
-  public ProgramBrew(Stage primaryStage, SaveWarningBrew saveWarningBrew) {
+  private final Runnable closeProgram;
+
+  public ProgramBrew(Stage primaryStage) {
     this.primaryStage = primaryStage;
-    this.saveWarningBrew = saveWarningBrew;
     bus.register(this);
+
+    closeProgram = () -> {
+      primaryStage.close();
+    };
+
   }
 
   public static void openLink(String url) {
@@ -59,19 +66,23 @@ public class ProgramBrew extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onForceCloseRequest(ForceCloseRequest req) {
+  private void onForceClose(ForceCloseProgramRequest req) {
     primaryStage.close();
   }
 
   @SubscribeEvent
-  private void onCloseRequest(CloseProgramRequest req) {
+  private void onCloseProgram(CloseProgramRequest req) {
     // ask for the states before closing
-    bus.post(new DirtyWorkspacesRequest());
+    bus.post(new GetDirtyWorkspacesRequest());
   }
 
   @SubscribeEvent
-  private void onGetDirtyWorkspacesEvent(GetDirtyWorkspaceEvent evt) {
-    saveWarningBrew.promptProgramClose(evt.dirtyWorkspaces(), primaryStage::close);
+  private void onGetDirtyWorkspace(GotDirtyWorkspacesEvent evt) {
+    if (programSaveWarningPopup == null) {
+      this.programSaveWarningPopup = new ProgramSaveWarningPopup(evt.dirtyWorkspaces(),
+        closeProgram);
+    }
+    programSaveWarningPopup.show();
   }
 
   @SubscribeEvent

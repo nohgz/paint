@@ -13,6 +13,6 @@ import net.cnoga.paint.brews.WorkspaceBrew;
  * @author cnoga
  * @version 1.0
  */
-public record NewFileRequest() {
+public record NewWorkspaceRequest(int width, int height) {
 
 }

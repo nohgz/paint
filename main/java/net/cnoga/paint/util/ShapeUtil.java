@@ -6,8 +6,8 @@ import javafx.scene.canvas.GraphicsContext;
  * Utility class for shape drawing operations.
  *
  * <p>Provides helper methods for drawing rectangles, ellipses, polygons,
- * and other shapes onto a {@link GraphicsContext}. Coordinates are
- * interpreted as opposite corners of a bounding box.</p>
+ * and other shapes onto a {@link GraphicsContext}. Coordinates are interpreted as opposite corners
+ * of a bounding box.</p>
  */
 public final class ShapeUtil {
 
@@ -18,13 +18,14 @@ public final class ShapeUtil {
   /**
    * Draws a shape defined by two bounding coordinates and a shape type.
    *
-   * @param gc the {@link GraphicsContext} to draw on
-   * @param x0 the first x-coordinate (corner of bounding box)
-   * @param y0 the first y-coordinate (corner of bounding box)
-   * @param x1 the second x-coordinate (opposite corner of bounding box)
-   * @param y1 the second y-coordinate (opposite corner of bounding box)
+   * @param gc           the {@link GraphicsContext} to draw on
+   * @param x0           the first x-coordinate (corner of bounding box)
+   * @param y0           the first y-coordinate (corner of bounding box)
+   * @param x1           the second x-coordinate (opposite corner of bounding box)
+   * @param y1           the second y-coordinate (opposite corner of bounding box)
    * @param currentShape the type of shape to draw
-   * @param polygonSides the number of sides for polygons (only used for PENTAGON or custom polygons)
+   * @param polygonSides the number of sides for polygons (only used for PENTAGON or custom
+   *                     polygons)
    */
   public static void drawShape(GraphicsContext gc, double x0, double y0,
     double x1, double y1,
@@ -58,16 +59,15 @@ public final class ShapeUtil {
   }
 
   /**
-   * Draws a regular polygon centered inside the bounding box defined by
-   * (x0, y0) and (x1, y1).
+   * Draws a regular polygon centered inside the bounding box defined by (x0, y0) and (x1, y1).
    *
    * <p>The polygon is automatically rotated so that one vertex points up.</p>
    *
-   * @param gc the {@link GraphicsContext} to draw on
-   * @param x0 the first x-coordinate of the bounding box
-   * @param y0 the first y-coordinate of the bounding box
-   * @param x1 the second x-coordinate of the bounding box
-   * @param y1 the second y-coordinate of the bounding box
+   * @param gc    the {@link GraphicsContext} to draw on
+   * @param x0    the first x-coordinate of the bounding box
+   * @param y0    the first y-coordinate of the bounding box
+   * @param x1    the second x-coordinate of the bounding box
+   * @param y1    the second y-coordinate of the bounding box
    * @param sides the number of sides of the polygon (e.g. 5 for pentagon)
    */
   public static void drawRegularPolygon(GraphicsContext gc,

@@ -1,4 +1,4 @@
-package net.cnoga.paint.controllers.subwindow;
+package net.cnoga.paint.fxml_controllers.subwindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;

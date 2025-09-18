@@ -1,4 +1,4 @@
-== Help! ==
+Help!
 
 ******************
 *     Tools      *
@@ -17,6 +17,19 @@ The line tool lets you draw straight lines.
 - Click and hold to set the starting point.
 - Release to draw a straight line to the end point.
 - Uses the current color and width.
+
+Eraser Tool
+----------
+The eraser behaves like the brush but removes color instead of adding it.
+- Drag the mouse over areas you want to clear.
+- Eraser size matches the current stroke width.
+- Great for fine corrections or broad clean-up.
+
+Shapes Tool
+----------
+- The shapes tool lets you draw geometric figures such as rectangles, circles, triangles, ellipses, or polygons.
+- Click and drag to define the size and position of the shape.
+- Release to complete the shape.
 
 *******************
 * Color and Width *

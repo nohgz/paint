@@ -1,3 +1,29 @@
+Chris' Pain(t) 3.0.0 - 9/12/2025
+
+"The Brews, Shapes, and Tabs Update"
+
+# New Features:
+- The shape tool, which is currently able to draw a Square, Rectangle, Circle, Ellipse, Triangle, and Pentagon.
+- Line previews for the line drawing tool. You can now see what you're doing!
+- Multiple workspace support (Tabs!), where each workspace is aware of its own save state before it is closed.
+- The eraser tool with true transparency.
+- The dropper tool which takes the color from the canvas and shows nice
+- Renamed all "Services" to "Brews" to ensure maximum Java punniness.
+- Added Keith
+- Less swear words
+
+# Known Issues:
+- There is a small hiccup in closing the entire program where tabs that need to be saved can still be closed even if they aren't saved.
+- Zooming is still stupid. Saving this for the UI-focused sprint.
+- I will also try to center the canvas for that sprint.
+- I want to also mess around with tightening some of the event bus driven architecture (i.e. making some names clearer), but this isn't top priority.
+
+# Next Sprint Hopes
+- Undo & Redo
+- Scale Canvas
+- Selection
+- Text
+
 Chris' Pain(t) 2.0.0 - 9/5/2025
 
 "The Tool Update"
@@ -14,14 +40,13 @@ Chris' Pain(t) 2.0.0 - 9/5/2025
 
 # Known Issues:
 - Zooming is clunky and awkward.
-- Save As from one image is rather stupid. Doesn't work very well. I think it's an issue with
-  storing the file and not clearing it for the next save.
+- Save As from one image is rather stupid. Doesn't work very well. I think it's an issue with storing the file and not clearing it for the next save.
 
 # Next Sprint Hopes
 - Multiple images in different tabs
 - Keybinds for tools and capabilities
 - Shapes with solid fill and outline fill. Make the shapes resizable when drawing. Give them
-  little grabber things that allow for
+  little grabber things that allow for resizing. (last part NYI)
 
 # Links
 GitHub - https://github.com/nohgz/paint

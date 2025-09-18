@@ -9,9 +9,8 @@ import net.cnoga.paint.events.request.ColorChangedEvent;
 /**
  * A tool for selecting colors from the canvas.
  * <p>
- * The {@code DropperTool} allows the user to pick a color by clicking
- * on any pixel of the canvas. The selected color is broadcasted via
- * a {@link ColorChangedEvent} on the event bus.
+ * The {@code DropperTool} allows the user to pick a color by clicking on any pixel of the canvas.
+ * The selected color is broadcasted via a {@link ColorChangedEvent} on the event bus.
  */
 @EventBusSubscriber
 public class DropperTool extends Tool {
@@ -28,8 +27,7 @@ public class DropperTool extends Tool {
   }
 
   /**
-   * Invoked when the mouse is pressed.
-   * Picks the color under the cursor immediately.
+   * Invoked when the mouse is pressed. Picks the color under the cursor immediately.
    *
    * @param gc        the main drawing context
    * @param effectsGc the effects drawing context
@@ -42,8 +40,7 @@ public class DropperTool extends Tool {
   }
 
   /**
-   * Invoked when the mouse is released.
-   * Picks the color under the cursor again for confirmation.
+   * Invoked when the mouse is released. Picks the color under the cursor again for confirmation.
    *
    * @param gc        the main drawing context
    * @param effectsGc the effects drawing context
@@ -73,4 +70,3 @@ public class DropperTool extends Tool {
     }
   }
 }
-;

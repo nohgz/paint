@@ -6,7 +6,7 @@
 <?import javafx.scene.control.Button?>
 <VBox xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.controllers.subwindow.MasterSaveWarningController"
+  fx:controller="net.cnoga.paint.fxml_controllers.subwindow.MasterSaveWarningController"
   spacing="10" alignment="CENTER"
   prefWidth="300" prefHeight="150">
 

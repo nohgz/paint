@@ -1,4 +1,4 @@
-package net.cnoga.paint.controllers.window;
+package net.cnoga.paint.fxml_controllers.window;
 
 
 import javafx.event.ActionEvent;

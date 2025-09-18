@@ -16,17 +16,21 @@ import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.init.InitWorkspaceServiceRequest;
+import net.cnoga.paint.events.request.ClearWorkspaceRequest;
 import net.cnoga.paint.events.request.CloseCurrentWorkspaceRequest;
-import net.cnoga.paint.events.request.DirtyWorkspacesRequest;
 import net.cnoga.paint.events.request.FocusWorkspaceRequest;
-import net.cnoga.paint.events.request.NewFileRequest;
+import net.cnoga.paint.events.request.GetDirtyWorkspacesRequest;
+import net.cnoga.paint.events.request.NewWorkspaceRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveAsRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 import net.cnoga.paint.events.response.FileOpenedEvent;
-import net.cnoga.paint.events.response.GetDirtyWorkspaceEvent;
+import net.cnoga.paint.events.response.GotDirtyWorkspacesEvent;
 import net.cnoga.paint.events.response.ToolChangedEvent;
 import net.cnoga.paint.events.response.WorkspaceSavedAsEvent;
 import net.cnoga.paint.events.response.WorkspaceSavedEvent;
+import net.cnoga.paint.popup.ClearWorkspacePopup;
+import net.cnoga.paint.popup.NewWorkspacePopup;
+import net.cnoga.paint.popup.WorkspaceSaveWarningPopup;
 import net.cnoga.paint.tool.PanTool;
 import net.cnoga.paint.tool.Tool;
 import net.cnoga.paint.workspace.Workspace;
@@ -34,20 +38,20 @@ import net.cnoga.paint.workspace.Workspace;
 /**
  * Service that manages the lifecycle and state of {@link Workspace} instances.
  * <p>
- * This class is responsible for creating, opening, closing, and saving workspaces,
- * as well as maintaining the {@link TabPane} UI that holds them. It also integrates
- * with the event bus to handle workspace-related requests and ensures unsaved work
- * is not lost by delegating to {@link SaveWarningBrew}.
+ * This class is responsible for creating, opening, closing, and saving workspaces, as well as
+ * maintaining the {@link TabPane} UI that holds them. It also integrates with the event bus to
+ * handle workspace-related requests and ensures unsaved work is not lost by delegating to
+ * {@link SaveWarningBrew}.
  * </p>
  */
 @EventBusSubscriber
 public class WorkspaceBrew extends EventBusPublisher {
 
-  private static final double DEFAULT_WIDTH = 800;
-  private static final double DEFAULT_HEIGHT = 600;
-
+  private final ClearWorkspacePopup clearWorkspacePopup;
+  private final NewWorkspacePopup newWorkspacePopup;
   private final SaveWarningBrew saveWarningBrew;
   private final List<Workspace> workspaces = new ArrayList<>();
+  private WorkspaceSaveWarningPopup workspaceSaveWarningPopup;
   private TabPane workspaceTabPane;
   private Tool currentTool;
 
@@ -59,6 +63,9 @@ public class WorkspaceBrew extends EventBusPublisher {
   public WorkspaceBrew(SaveWarningBrew saveWarningBrew) {
     bus.register(this);
     this.saveWarningBrew = saveWarningBrew;
+
+    this.clearWorkspacePopup = new ClearWorkspacePopup();
+    this.newWorkspacePopup = new NewWorkspacePopup();
   }
 
   /**
@@ -67,7 +74,7 @@ public class WorkspaceBrew extends EventBusPublisher {
    * @param req the event containing the workspace to focus
    */
   @SubscribeEvent
-  private void onFocusWorkspaceRequest(FocusWorkspaceRequest req) {
+  private void onFocusWorkspace(FocusWorkspaceRequest req) {
     int index = workspaces.indexOf(req.workspace());
     if (index >= 0) {
       workspaceTabPane.getSelectionModel().select(index);
@@ -85,8 +92,8 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
   /**
-   * Sets up mouse handling for a workspace canvas, binding drawing operations
-   * to the currently selected tool.
+   * Sets up mouse handling for a workspace canvas, binding drawing operations to the currently
+   * selected tool.
    *
    * @param ws the workspace whose canvas will be initialized
    */
@@ -121,14 +128,30 @@ public class WorkspaceBrew extends EventBusPublisher {
    * @param req event requesting a new workspace
    */
   @SubscribeEvent
-  private void onNewWorkspace(NewFileRequest req) {
-    Workspace ws = new Workspace("Workspace " + workspaces.size(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
+  private void onNewWorkspace(NewWorkspaceRequest req) {
+    Workspace ws = new Workspace("Workspace " + workspaces.size(), req.width(), req.height());
     GraphicsContext gc = ws.getBaseLayer().getGraphicsContext2D();
     gc.setFill(Color.WHITE);
-    gc.fillRect(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    gc.fillRect(0, 0, req.width(), req.height());
 
     initCanvasForWorkspace(ws);
     addWorkspaceTab(ws);
+  }
+
+  @SubscribeEvent
+  private void onClearWorkspace(ClearWorkspaceRequest req) {
+    Workspace ws = getActiveWorkspace();
+    if (ws == null) {
+      return;
+    }
+
+    Canvas ca = ws.getBaseLayer();
+    GraphicsContext gc = ca.getGraphicsContext2D();
+
+    gc.setFill(Color.WHITE);
+    gc.fillRect(0, 0, ca.getWidth(), ca.getHeight());
+
+    ws.setDirty(true);
   }
 
   /**
@@ -138,7 +161,7 @@ public class WorkspaceBrew extends EventBusPublisher {
    * @throws FileNotFoundException if the file cannot be read
    */
   @SubscribeEvent
-  private void createWorkspaceFromFile(FileOpenedEvent evt) throws FileNotFoundException {
+  private void onFileOpened(FileOpenedEvent evt) throws FileNotFoundException {
     Image img = new Image(new FileInputStream(evt.file()));
     Workspace ws = new Workspace(evt.file().getName(), img.getWidth(), img.getHeight());
     ws.getBaseLayer().getGraphicsContext2D().drawImage(img, 0, 0);
@@ -154,34 +177,37 @@ public class WorkspaceBrew extends EventBusPublisher {
    * @param req event requesting to close the active workspace
    */
   @SubscribeEvent
-  private void onCloseWorkspace(CloseCurrentWorkspaceRequest req) {
+  private void onCloseCurrentWorkspace(CloseCurrentWorkspaceRequest req) {
     Workspace ws = getActiveWorkspace();
     if (ws == null) {
       return;
     }
-    if (ws.isDirty()) {
-      saveWarningBrew.promptWorkspaceClose(ws, () -> {
-        workspaces.remove(ws);
-        workspaceTabPane.getTabs().stream()
-          .filter(tab -> tab.getContent() == ws.getScrollPane())
-          .findFirst().ifPresent(tabToRemove -> workspaceTabPane.getTabs().remove(tabToRemove));
-      });
-    } else {
+
+    Runnable closeWorkspace = () -> {
       workspaces.remove(ws);
       workspaceTabPane.getTabs().stream()
         .filter(tab -> tab.getContent() == ws.getScrollPane())
         .findFirst().ifPresent(tabToRemove -> workspaceTabPane.getTabs().remove(tabToRemove));
+    };
+
+    if (ws.isDirty()) {
+      if (workspaceSaveWarningPopup == null) {
+        workspaceSaveWarningPopup = new WorkspaceSaveWarningPopup(ws, closeWorkspace);
+      }
+      workspaceSaveWarningPopup.show();
+    } else {
+      closeWorkspace.run();
     }
   }
 
   /**
-   * Saves the currently active workspace. If no file is associated with it,
-   * triggers a "Save As" event.
+   * Saves the currently active workspace. If no file is associated with it, triggers a "Save As"
+   * event.
    *
    * @param req event requesting a save
    */
   @SubscribeEvent
-  private void saveWorkspace(WorkspaceSaveRequest req) {
+  private void onWorkspaceSave(WorkspaceSaveRequest req) {
     Workspace ws = getActiveWorkspace();
 
     if (ws.getFile() != null) {
@@ -197,19 +223,19 @@ public class WorkspaceBrew extends EventBusPublisher {
    * @param req event requesting "Save As"
    */
   @SubscribeEvent
-  private void saveWorkspaceAs(WorkspaceSaveAsRequest req) {
+  private void onWorkspaceSaveAs(WorkspaceSaveAsRequest req) {
     Workspace ws = getActiveWorkspace();
     bus.post(new WorkspaceSavedAsEvent(ws));
   }
 
   /**
-   * Updates the current tool and applies panning behavior to all workspaces
-   * when switching to or from the {@link PanTool}.
+   * Updates the current tool and applies panning behavior to all workspaces when switching to or
+   * from the {@link PanTool}.
    *
    * @param evt event indicating the tool change
    */
   @SubscribeEvent
-  private void handlePanning(ToolChangedEvent evt) {
+  private void onToolChanged(ToolChangedEvent evt) {
     for (Workspace ws : workspaces) {
       ws.getScrollPane().setPannable(evt.tool() instanceof PanTool);
     }
@@ -250,8 +276,8 @@ public class WorkspaceBrew extends EventBusPublisher {
    * @param req event requesting dirty workspaces
    */
   @SubscribeEvent
-  private void onDirtyWorkspacesRequest(DirtyWorkspacesRequest req) {
-    bus.post(new GetDirtyWorkspaceEvent(getDirtyWorkspaces()));
+  private void onGetDirtyWorkspaces(GetDirtyWorkspacesRequest req) {
+    bus.post(new GotDirtyWorkspacesEvent(getDirtyWorkspaces()));
   }
 
   /**

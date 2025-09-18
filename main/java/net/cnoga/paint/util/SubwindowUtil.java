@@ -78,9 +78,8 @@ public final class SubwindowUtil {
   }
 
   /**
-   * Creates a new subwindow tied to a {@link ToggleButton}.
-   * When the subwindow is closed manually, the toggle button will be fired
-   * to keep its state consistent.
+   * Creates a new subwindow tied to a {@link ToggleButton}. When the subwindow is closed manually,
+   * the toggle button will be fired to keep its state consistent.
    *
    * @param title        title of the subwindow
    * @param fxmlPath     classpath-relative path to the FXML file
@@ -118,7 +117,8 @@ public final class SubwindowUtil {
    * @param mainStage  the main stage to anchor against
    * @param anchorType where to anchor the subwindow
    */
-  public static void setSubwindowSpawnPoint(Stage subStage, Stage mainStage, AnchorTypes anchorType) {
+  public static void setSubwindowSpawnPoint(Stage subStage, Stage mainStage,
+    AnchorTypes anchorType) {
     subStage.setOnShown(e -> {
       double x = mainStage.getX();
       double y = mainStage.getY() + 110; // offset for toolbars/menus
@@ -141,7 +141,8 @@ public final class SubwindowUtil {
     });
   }
 
-  private static double calculateX(double baseX, double mainWidth, double subWidth, AnchorTypes anchor) {
+  private static double calculateX(double baseX, double mainWidth, double subWidth,
+    AnchorTypes anchor) {
     switch (anchor) {
       case TOP_CENTER:
       case MIDDLE_CENTER:
@@ -156,7 +157,8 @@ public final class SubwindowUtil {
     }
   }
 
-  private static double calculateY(double baseY, double mainHeight, double subHeight, AnchorTypes anchor) {
+  private static double calculateY(double baseY, double mainHeight, double subHeight,
+    AnchorTypes anchor) {
     switch (anchor) {
       case MIDDLE_LEFT:
       case MIDDLE_CENTER:
@@ -171,7 +173,8 @@ public final class SubwindowUtil {
     }
   }
 
-  private static double resolveOversizedX(double baseX, double mainWidth, double subWidth, AnchorTypes anchor) {
+  private static double resolveOversizedX(double baseX, double mainWidth, double subWidth,
+    AnchorTypes anchor) {
     switch (anchor) {
       case TOP_LEFT:
       case MIDDLE_LEFT:

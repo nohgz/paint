@@ -1,5 +1,5 @@
 package net.cnoga.paint.events.request;
 
-public record SaveStateRequest() {
+public record ClearWorkspaceRequest() {
 
 }

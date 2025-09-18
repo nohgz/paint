@@ -1,4 +1,4 @@
-package net.cnoga.paint.controllers.window;
+package net.cnoga.paint.fxml_controllers.window;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,7 +6,7 @@ import javafx.scene.control.MenuItem;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.events.request.FileOpenRequest;
-import net.cnoga.paint.events.request.NewFileRequest;
+import net.cnoga.paint.events.request.OpenNewWorkspaceDialogRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveAsRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 
@@ -44,7 +44,7 @@ public class LeftTopbarController extends EventBusPublisher {
 
   @FXML
   private void onFileNew(ActionEvent event) {
-    bus.post(new NewFileRequest());
+    bus.post(new OpenNewWorkspaceDialogRequest());
   }
 
   @FXML

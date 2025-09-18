@@ -12,9 +12,8 @@ import javafx.scene.layout.StackPane;
 /**
  * Represents a single paint workspace.
  * <p>
- * A {@code Workspace} manages a scrollable view of layered canvases,
- * including base, transparency, effects, and user-added drawing layers.
- * It also tracks file state and zoom controls.
+ * A {@code Workspace} manages a scrollable view of layered canvases, including base, transparency,
+ * effects, and user-added drawing layers. It also tracks file state and zoom controls.
  */
 public class Workspace {
 
@@ -24,7 +23,7 @@ public class Workspace {
   private final List<Canvas> layers = new ArrayList<>();
 
   private final String name;
-  private final ZoomManager zoomManager;
+  private final ZoomCapability zoomCapability;
 
   private File currentFile;
   private boolean dirty;
@@ -45,7 +44,7 @@ public class Workspace {
     this.stackPane = new StackPane();
     this.canvasGroup = new Group();
     this.scrollPane = new ScrollPane(stackPane);
-    this.zoomManager = new ZoomManager(scrollPane, canvasGroup);
+    this.zoomCapability = new ZoomCapability(scrollPane, canvasGroup);
     this.name = name;
 
     stackPane.getChildren().add(canvasGroup);
@@ -143,57 +142,79 @@ public class Workspace {
   }
 
 
-  /** @return true if workspace has unsaved changes */
+  /**
+   * @return true if workspace has unsaved changes
+   */
   public boolean isDirty() {
     return dirty;
   }
 
-  /** @param state whether this workspace has unsaved changes */
+  /**
+   * @param state whether this workspace has unsaved changes
+   */
   public void setDirty(boolean state) {
     this.dirty = state;
   }
 
-  /** @return the file currently associated with this workspace, or null */
+  /**
+   * @return the file currently associated with this workspace, or null
+   */
   public File getFile() {
     return currentFile;
   }
 
-  /** @param file set the current associated file */
+  /**
+   * @param file set the current associated file
+   */
   public void setFile(File file) {
     this.currentFile = file;
   }
 
-  /** @return the scroll pane container for this workspace */
+  /**
+   * @return the scroll pane container for this workspace
+   */
   public ScrollPane getScrollPane() {
     return scrollPane;
   }
 
-  /** @return an unmodifiable view of all layers */
+  /**
+   * @return an unmodifiable view of all layers
+   */
   public List<Canvas> getLayers() {
     return Collections.unmodifiableList(layers);
   }
 
-  /** @return only user-added drawing layers */
+  /**
+   * @return only user-added drawing layers
+   */
   public List<Canvas> getUserLayers() {
     return layers.subList(1, layers.size() - 1);
   }
 
-  /** @return the base layer */
+  /**
+   * @return the base layer
+   */
   public Canvas getBaseLayer() {
     return layers.get(1);
   }
 
-  /** @return the effects layer */
+  /**
+   * @return the effects layer
+   */
   public Canvas getEffectsLayer() {
     return layers.get(layers.size() - 1);
   }
 
-  /** @return the transparency/background layer */
+  /**
+   * @return the transparency/background layer
+   */
   public Canvas getTransparencyLayer() {
     return layers.get(0);
   }
 
-  /** @return the display name of this workspace */
+  /**
+   * @return the display name of this workspace
+   */
   public String getName() {
     return this.name;
   }

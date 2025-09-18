@@ -4,6 +4,6 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.controllers.subwindow.HistoryController"
+  fx:controller="net.cnoga.paint.fxml_controllers.subwindow.HistoryController"
   prefHeight="200.0" prefWidth="200.0">
 </BorderPane>

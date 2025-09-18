@@ -41,9 +41,6 @@ import net.cnoga.paint.util.AnchorTypes;
 public class SubWindowBrew extends EventBusPublisher {
 
   private final Stage mainStage;
-  private final Boolean aboutOpen = false;
-  private final Boolean helpOpen = false;
-  private final Boolean changelogOpen = false;
   private Stage historyStage;
   private Stage layersStage;
   private Stage toolsStage;
@@ -74,7 +71,7 @@ public class SubWindowBrew extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickHistory(OpenHistoryRequest req) {
+  private void onOpenHistory(OpenHistoryRequest req) {
     if (historyStage == null) {
       historyStage = createToggledSubwindow(
         "History",
@@ -100,7 +97,7 @@ public class SubWindowBrew extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickLayers(OpenLayersRequest req) {
+  private void onOpenLayers(OpenLayersRequest req) {
     if (layersStage == null) {
       layersStage = createToggledSubwindow(
         "Layers",
@@ -127,7 +124,7 @@ public class SubWindowBrew extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickTools(OpenToolsRequest req) {
+  private void onOpenTools(OpenToolsRequest req) {
     if (toolsStage == null) {
       toolsStage = createToggledSubwindow(
         "Tools",
@@ -153,7 +150,7 @@ public class SubWindowBrew extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickSettings(OpenSettingsRequest req) {
+  private void onOpenSettings(OpenSettingsRequest req) {
     if (settingsStage == null) {
       settingsStage = createToggledSubwindow(
         "Settings",
@@ -178,7 +175,7 @@ public class SubWindowBrew extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickAbout(OpenAboutRequest evt) {
+  private void onOpenAbout(OpenAboutRequest evt) {
     if (aboutStage == null) {
       aboutStage = createSubwindow(
         "About",
@@ -196,7 +193,7 @@ public class SubWindowBrew extends EventBusPublisher {
 
 
   @SubscribeEvent
-  private void onClickHelp(OpenHelpRequest evt) {
+  private void onOpenHelp(OpenHelpRequest evt) {
     if (helpStage == null) {
       helpStage = createSubwindow(
         "Help",
@@ -213,7 +210,7 @@ public class SubWindowBrew extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  private void onClickChangelog(OpenChangelogRequest evt) {
+  private void onOpenChangelog(OpenChangelogRequest evt) {
     if (changelogStage == null) {
       changelogStage = createSubwindow(
         "Changelog",

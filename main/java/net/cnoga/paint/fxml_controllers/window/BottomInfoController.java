@@ -1,4 +1,4 @@
-package net.cnoga.paint.controllers.window;
+package net.cnoga.paint.fxml_controllers.window;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

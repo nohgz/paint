@@ -9,8 +9,8 @@ import net.cnoga.paint.bus.EventBusSubscriber;
  * Abstract base class for all paint tools.
  *
  * <p>Defines common properties such as name, icon, current color,
- * and stroke width, as well as empty mouse event hooks that tools
- * can override to provide specific drawing behavior.</p>
+ * and stroke width, as well as empty mouse event hooks that tools can override to provide specific
+ * drawing behavior.</p>
  *
  * <p>Each tool is also an event bus subscriber and may react to
  * global tool configuration changes.</p>
@@ -26,21 +26,31 @@ import net.cnoga.paint.bus.EventBusSubscriber;
 @EventBusSubscriber
 public class Tool extends EventBusPublisher {
 
-  /** Human-readable description of the tool’s purpose. */
+  /**
+   * Human-readable description of the tool’s purpose.
+   */
   protected String helpInfo =
     "[Tool] If you are able to see this text, something is wrong.";
 
-  /** The tool’s display name. */
+  /**
+   * The tool’s display name.
+   */
   protected String name = "Tool";
 
-  /** Path to the tool’s icon resource. */
+  /**
+   * Path to the tool’s icon resource.
+   */
   protected String iconPath =
     getClass().getResource("/net/cnoga/paint/icons/tools/tool.png").toExternalForm();
 
-  /** Current drawing color for this tool. */
+  /**
+   * Current drawing color for this tool.
+   */
   protected Color currentColor = Color.BLACK;
 
-  /** Current stroke width for this tool. */
+  /**
+   * Current stroke width for this tool.
+   */
   protected Integer currentWidth = 1;
 
   /**

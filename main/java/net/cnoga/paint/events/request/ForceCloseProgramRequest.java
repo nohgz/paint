@@ -1,5 +1,5 @@
 package net.cnoga.paint.events.request;
 
-public record DirtyWorkspacesRequest() {
+public record ForceCloseProgramRequest() {
 
 }
