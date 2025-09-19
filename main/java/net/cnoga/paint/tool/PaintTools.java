@@ -17,6 +17,7 @@ public final class PaintTools {
   public static final Tool DROPPER = new DropperTool();
   public static final Tool ERASER = new EraserTool();
   public static final Tool SHAPES = new ShapesTool();
+  public static final Tool TEXT = new TextTool();
 
   static {
     ToolRegistry.register(BRUSH);
@@ -25,6 +26,7 @@ public final class PaintTools {
     ToolRegistry.register(ERASER);
     ToolRegistry.register(DROPPER);
     ToolRegistry.register(PAN);
+    ToolRegistry.register(TEXT);
     ToolRegistry.lockRegistry();
   }
 

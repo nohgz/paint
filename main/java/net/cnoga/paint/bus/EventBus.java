@@ -81,7 +81,6 @@ public class EventBus {
           .computeIfAbsent(eventType, k -> new ArrayList<>())
           .add(consumer);
       }
-
     }
   }
 

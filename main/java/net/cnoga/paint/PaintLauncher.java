@@ -7,12 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.cnoga.paint.bus.EventBus;
-import net.cnoga.paint.fxml_controllers.MainController;
 import net.cnoga.paint.events.request.NewWorkspaceRequest;
 import net.cnoga.paint.events.request.OpenHistoryRequest;
 import net.cnoga.paint.events.request.OpenLayersRequest;
 import net.cnoga.paint.events.request.OpenToolsRequest;
 import net.cnoga.paint.events.response.ToolChangedEvent;
+import net.cnoga.paint.fxml_controllers.MainController;
 import net.cnoga.paint.tool.PaintTools;
 
 /**

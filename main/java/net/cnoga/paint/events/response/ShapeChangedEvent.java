@@ -1,7 +1,7 @@
 package net.cnoga.paint.events.response;
 
-import net.cnoga.paint.util.ShapeType;
+import net.cnoga.paint.util.ShapeConfig;
 
-public record ShapeChangedEvent(ShapeType shapeType, Integer sides) {
+public record ShapeChangedEvent(ShapeConfig shapeConfig) {
 
 }

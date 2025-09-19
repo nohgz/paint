@@ -36,10 +36,9 @@ import net.cnoga.paint.popup.ProgramSaveWarningPopup;
 public class ProgramBrew extends EventBusPublisher {
 
   private final Stage primaryStage;
+  private final Runnable closeProgram;
   private ProgramSaveWarningPopup programSaveWarningPopup;
   private Stage warningStage;
-
-  private final Runnable closeProgram;
 
   public ProgramBrew(Stage primaryStage) {
     this.primaryStage = primaryStage;
@@ -78,6 +77,11 @@ public class ProgramBrew extends EventBusPublisher {
 
   @SubscribeEvent
   private void onGetDirtyWorkspace(GotDirtyWorkspacesEvent evt) {
+    if (evt.dirtyWorkspaces() != null && evt.dirtyWorkspaces().size() == 0) {
+      bus.post(new ForceCloseProgramRequest());
+      return;
+    }
+
     if (programSaveWarningPopup == null) {
       this.programSaveWarningPopup = new ProgramSaveWarningPopup(evt.dirtyWorkspaces(),
         closeProgram);

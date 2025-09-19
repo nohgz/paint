@@ -48,13 +48,7 @@ public class LineTool extends Tool implements ColorCapability, WidthCapability {
     // Setup preview style
     effects_gc.setStroke(currentColor);
     effects_gc.setLineWidth(currentWidth);
-    effects_gc.setLineDashes(25);
-
-    // Draw preview line
     effects_gc.strokeLine(startX, startY, x, y);
-
-    // Reset dashes so it doesn’t affect later drawings
-    effects_gc.setLineDashes(0);
   }
 
   @Override

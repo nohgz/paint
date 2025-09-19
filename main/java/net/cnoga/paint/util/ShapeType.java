@@ -6,5 +6,6 @@ public enum ShapeType {
   ELLIPSE,
   CIRCLE,
   TRIANGLE,
-  PENTAGON
+  N_GON,
+  DONUT
 }

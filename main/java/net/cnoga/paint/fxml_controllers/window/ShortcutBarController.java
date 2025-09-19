@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.events.request.FileOpenRequest;
-import net.cnoga.paint.events.request.OpenClearWorkspaceDialogRequest;
-import net.cnoga.paint.events.request.OpenNewWorkspaceDialogRequest;
+import net.cnoga.paint.events.request.ShowClearWorkspacePopupRequest;
+import net.cnoga.paint.events.request.ShowNewWorkspacePopupRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveAsRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 
@@ -27,7 +27,7 @@ public class ShortcutBarController extends EventBusPublisher {
 
   @FXML
   private void onNewFile(ActionEvent event) {
-    bus.post(new OpenNewWorkspaceDialogRequest());
+    bus.post(new ShowNewWorkspacePopupRequest());
   }
 
   @FXML
@@ -47,6 +47,6 @@ public class ShortcutBarController extends EventBusPublisher {
 
   @FXML
   private void onClearWorkspace(ActionEvent event) {
-    bus.post(new OpenClearWorkspaceDialogRequest());
+    bus.post(new ShowClearWorkspacePopupRequest());
   }
 }

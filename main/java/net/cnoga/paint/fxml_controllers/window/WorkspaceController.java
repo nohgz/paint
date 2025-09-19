@@ -1,9 +1,9 @@
 package net.cnoga.paint.fxml_controllers.window;
 
 import javafx.scene.control.TabPane;
+import net.cnoga.paint.brews.WorkspaceBrew;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.events.init.InitWorkspaceServiceRequest;
-import net.cnoga.paint.brews.WorkspaceBrew;
 
 /**
  * Controller for the main workspace area of the application.

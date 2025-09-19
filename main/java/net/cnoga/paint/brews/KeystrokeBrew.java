@@ -8,7 +8,7 @@ import net.cnoga.paint.events.request.CloseCurrentWorkspaceRequest;
 import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.events.request.FileOpenRequest;
 import net.cnoga.paint.events.request.ForceCloseProgramRequest;
-import net.cnoga.paint.events.request.OpenNewWorkspaceDialogRequest;
+import net.cnoga.paint.events.request.ShowNewWorkspacePopupRequest;
 import net.cnoga.paint.events.request.RedoRequest;
 import net.cnoga.paint.events.request.ResizeWorkspaceRequest;
 import net.cnoga.paint.events.request.UndoRequest;
@@ -74,7 +74,7 @@ public class KeystrokeBrew extends EventBusPublisher {
             keyEvent.consume();
           }
           case N -> {
-            bus.post(new OpenNewWorkspaceDialogRequest());
+            bus.post(new ShowNewWorkspacePopupRequest());
             keyEvent.consume();
           }
           case O -> {

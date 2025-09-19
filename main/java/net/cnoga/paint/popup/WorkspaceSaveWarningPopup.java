@@ -7,21 +7,21 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
-import net.cnoga.paint.events.request.OpenClearWorkspaceDialogRequest;
+import net.cnoga.paint.events.request.ShowWorkspaceSaveWarningPopupRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 import net.cnoga.paint.workspace.Workspace;
 
 /**
  * Popup warning the user about unsaved changes in a single workspace.
  * <p>
- * Provides three actions: Save, Discard, or Cancel. Buttons are laid out
- * equally spaced in a horizontal box for consistency across popups.
+ * Provides three actions: Save, Discard, or Cancel. Buttons are laid out equally spaced in a
+ * horizontal box for consistency across popups.
  * </p>
  */
 @EventBusSubscriber
 public class WorkspaceSaveWarningPopup extends AbstractInputPopup {
 
-  private final Runnable onClose;
+  private Runnable onClose;
 
   public WorkspaceSaveWarningPopup(Workspace ws, Runnable onClose) {
     super("Unsaved Changes");
@@ -35,7 +35,8 @@ public class WorkspaceSaveWarningPopup extends AbstractInputPopup {
   @Override
   protected Pane buildContent() {
     Pane pane = new Pane();
-    pane.getChildren().add(new Label("This workspace has unsaved changes. What do you want to do?"));
+    pane.getChildren()
+      .add(new Label("This workspace has unsaved changes. What do you want to do?"));
     return pane;
   }
 
@@ -82,8 +83,12 @@ public class WorkspaceSaveWarningPopup extends AbstractInputPopup {
     return bar;
   }
 
+  public void setRunnable(Runnable closeWorkspace) {
+    this.onClose = closeWorkspace;
+  }
+
   @SubscribeEvent
-  protected void onOpen(OpenClearWorkspaceDialogRequest req) {
-    super.show();
+  protected void onOpen(ShowWorkspaceSaveWarningPopupRequest req) {
+    show();
   }
 }

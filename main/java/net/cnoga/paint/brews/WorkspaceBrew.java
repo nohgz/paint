@@ -39,17 +39,12 @@ import net.cnoga.paint.workspace.Workspace;
  * Service that manages the lifecycle and state of {@link Workspace} instances.
  * <p>
  * This class is responsible for creating, opening, closing, and saving workspaces, as well as
- * maintaining the {@link TabPane} UI that holds them. It also integrates with the event bus to
- * handle workspace-related requests and ensures unsaved work is not lost by delegating to
- * {@link SaveWarningBrew}.
+ * maintaining the {@link TabPane} UI that holds them.
  * </p>
  */
 @EventBusSubscriber
 public class WorkspaceBrew extends EventBusPublisher {
 
-  private final ClearWorkspacePopup clearWorkspacePopup;
-  private final NewWorkspacePopup newWorkspacePopup;
-  private final SaveWarningBrew saveWarningBrew;
   private final List<Workspace> workspaces = new ArrayList<>();
   private WorkspaceSaveWarningPopup workspaceSaveWarningPopup;
   private TabPane workspaceTabPane;
@@ -57,15 +52,11 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Constructs a {@code WorkspaceService}.
-   *
-   * @param saveWarningBrew service that prompts the user before closing dirty workspaces
    */
-  public WorkspaceBrew(SaveWarningBrew saveWarningBrew) {
+  public WorkspaceBrew() {
     bus.register(this);
-    this.saveWarningBrew = saveWarningBrew;
-
-    this.clearWorkspacePopup = new ClearWorkspacePopup();
-    this.newWorkspacePopup = new NewWorkspacePopup();
+    new NewWorkspacePopup();
+    new ClearWorkspacePopup();
   }
 
   /**
@@ -194,6 +185,8 @@ public class WorkspaceBrew extends EventBusPublisher {
       if (workspaceSaveWarningPopup == null) {
         workspaceSaveWarningPopup = new WorkspaceSaveWarningPopup(ws, closeWorkspace);
       }
+      // set the onClose action to this current workspace
+      workspaceSaveWarningPopup.setRunnable(closeWorkspace);
       workspaceSaveWarningPopup.show();
     } else {
       closeWorkspace.run();

@@ -6,7 +6,7 @@ import javafx.scene.layout.GridPane;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.NewWorkspaceRequest;
-import net.cnoga.paint.events.request.OpenNewWorkspaceDialogRequest;
+import net.cnoga.paint.events.request.ShowNewWorkspacePopupRequest;
 
 @EventBusSubscriber
 public class NewWorkspacePopup extends AbstractInputPopup {
@@ -38,9 +38,12 @@ public class NewWorkspacePopup extends AbstractInputPopup {
       int width = Integer.parseInt(widthField.getText());
       int height = Integer.parseInt(heightField.getText());
 
-      if (width * height == 8128)
-
-      bus.post(new NewWorkspaceRequest(width, height));
+      if (width * height
+        <= 3686400) { // Magic number is 2560x1440. The largest image before a canvas blows up.
+        bus.post(new NewWorkspaceRequest(width, height));
+      } else {
+        throw new NumberFormatException("Canvas is too large!");
+      }
     } catch (NumberFormatException e) {
       // post a new popup, but thats a todo
       System.out.println("[NewWorkspacePopup.onConfirm] Caught invalid numerical input!");
@@ -48,7 +51,7 @@ public class NewWorkspacePopup extends AbstractInputPopup {
   }
 
   @SubscribeEvent
-  protected void onOpen(OpenNewWorkspaceDialogRequest req) {
+  protected void onOpen(ShowNewWorkspacePopupRequest req) {
     super.show();
   }
 }

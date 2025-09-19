@@ -4,7 +4,7 @@ import javafx.scene.layout.Pane;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.ClearWorkspaceRequest;
-import net.cnoga.paint.events.request.OpenClearWorkspaceDialogRequest;
+import net.cnoga.paint.events.request.ShowClearWorkspacePopupRequest;
 
 @EventBusSubscriber
 public class ClearWorkspacePopup extends AbstractInputPopup {
@@ -29,7 +29,7 @@ public class ClearWorkspacePopup extends AbstractInputPopup {
   }
 
   @SubscribeEvent
-  protected void onOpen(OpenClearWorkspaceDialogRequest req) {
+  protected void onOpen(ShowClearWorkspacePopupRequest req) {
     super.show();
   }
 }

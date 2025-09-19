@@ -11,16 +11,16 @@ import javafx.scene.layout.VBox;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.FocusWorkspaceRequest;
-import net.cnoga.paint.events.request.OpenCloseProgramDialogRequest;
+import net.cnoga.paint.events.request.ShowProgramSaveWarningPopupRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 import net.cnoga.paint.workspace.Workspace;
 
 /**
- * Popup warning the user about unsaved changes in multiple workspaces
- * before closing the program. Provides Save, Discard, and Cancel options.
+ * Popup warning the user about unsaved changes in multiple workspaces before closing the program.
+ * Provides Save, Discard, and Cancel options.
  * <p>
- * Buttons are laid out equally spaced in a horizontal box for consistent
- * appearance across dialogs.
+ * Buttons are laid out equally spaced in a horizontal box for consistent appearance across
+ * dialogs.
  * </p>
  */
 @EventBusSubscriber
@@ -103,7 +103,7 @@ public class ProgramSaveWarningPopup extends AbstractInputPopup {
   }
 
   @SubscribeEvent
-  protected void onOpen(OpenCloseProgramDialogRequest req) {
-    show();
+  protected void onOpen(ShowProgramSaveWarningPopupRequest req) {
+    super.show();
   }
 }

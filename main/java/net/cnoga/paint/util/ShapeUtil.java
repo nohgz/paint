@@ -54,7 +54,7 @@ public final class ShapeUtil {
           3
         );
       }
-      case PENTAGON -> drawRegularPolygon(gc, x0, y0, x1, y1, polygonSides);
+      case N_GON -> drawRegularPolygon(gc, x0, y0, x1, y1, polygonSides);
     }
   }
 

@@ -3,7 +3,6 @@ package net.cnoga.paint.popup;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -17,9 +16,9 @@ import net.cnoga.paint.bus.EventBusSubscriber;
 /**
  * Abstract base class for input dialogs in the paint program.
  * <p>
- * Provides a consistent framework for creating dialogs with custom content
- * and standardized button handling. Uses a lazy initialization strategy to
- * ensure subclass fields are fully initialized before the UI is built.
+ * Provides a consistent framework for creating dialogs with custom content and standardized button
+ * handling. Uses a lazy initialization strategy to ensure subclass fields are fully initialized
+ * before the UI is built.
  * </p>
  *
  * <h2>Behavior</h2>
@@ -47,23 +46,30 @@ import net.cnoga.paint.bus.EventBusSubscriber;
 @EventBusSubscriber
 public abstract class AbstractInputPopup extends EventBusPublisher {
 
-  /** Currently active popup, ensures only one is visible at a time. */
-  private static AbstractInputPopup activePopup;
-
-  /** The stage representing this dialog window. */
-  protected final Stage dialogStage;
-
-  /** Root container for the dialog content and controls. */
-  protected final BorderPane rootPane;
-
-  /** Ensures the UI is initialized only once. */
-  private boolean initialized = false;
-
-  /** Default minimum width for popups. */
+  /**
+   * Default minimum width for popups.
+   */
   private static final double MIN_WIDTH = 300;
-
-  /** Default minimum height for popups. */
+  /**
+   * Default minimum height for popups.
+   */
   private static final double MIN_HEIGHT = 150;
+  /**
+   * Currently active popup, ensures only one is visible at a time.
+   */
+  private static AbstractInputPopup activePopup;
+  /**
+   * The stage representing this dialog window.
+   */
+  protected final Stage dialogStage;
+  /**
+   * Root container for the dialog content and controls.
+   */
+  protected final BorderPane rootPane;
+  /**
+   * Ensures the UI is initialized only once.
+   */
+  private boolean initialized = false;
 
   /**
    * Creates a new input popup dialog with the given title.
@@ -84,12 +90,27 @@ public abstract class AbstractInputPopup extends EventBusPublisher {
     Scene scene = new Scene(rootPane);
     dialogStage.setScene(scene);
 
+    scene.setOnKeyPressed(event -> {
+      switch (event.getCode()) {
+        case ENTER -> {
+          event.consume();
+          onConfirm();
+          dialogStage.close();
+        }
+        case ESCAPE -> {
+          event.consume();
+          onCancel();
+          dialogStage.close();
+        }
+      }
+    });
+
     bus.register(this);
   }
 
   /**
-   * Initializes the dialog UI. Ensures the content and button bar
-   * are created only once, after subclass fields are initialized.
+   * Initializes the dialog UI. Ensures the content and button bar are created only once, after
+   * subclass fields are initialized.
    */
   private void init() {
     if (!initialized) {
@@ -108,8 +129,8 @@ public abstract class AbstractInputPopup extends EventBusPublisher {
   /**
    * Displays the popup dialog and waits until it is closed.
    * <p>
-   * Ensures that only one popup is visible at a time by closing
-   * any previously active popup before showing this one.
+   * Ensures that only one popup is visible at a time by closing any previously active popup before
+   * showing this one.
    * </p>
    */
   public void show() {
@@ -133,8 +154,8 @@ public abstract class AbstractInputPopup extends EventBusPublisher {
   protected abstract Pane buildContent();
 
   /**
-   * Called when the OK/Confirm button is pressed.
-   * Subclasses should validate input and publish any relevant events.
+   * Called when the OK/Confirm button is pressed. Subclasses should validate input and publish any
+   * relevant events.
    */
   protected abstract void onConfirm();
 
@@ -171,9 +192,8 @@ public abstract class AbstractInputPopup extends EventBusPublisher {
   }
 
   /**
-   * Called when Cancel is pressed. By default, simply closes the dialog.
-   * Subclasses may override this to publish cancellation events or
-   * perform additional cleanup.
+   * Called when Cancel is pressed. By default, simply closes the dialog. Subclasses may override
+   * this to publish cancellation events or perform additional cleanup.
    */
   protected void onCancel() {
     dialogStage.close();
