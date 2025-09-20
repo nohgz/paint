@@ -16,26 +16,24 @@ public final class ShapeUtil {
   }
 
   /**
-   * Draws a shape defined by two bounding coordinates and a shape type.
+   * Draws a shape defined by two bounding coordinates and a ShapeConfig.
    *
-   * @param gc           the {@link GraphicsContext} to draw on
-   * @param x0           the first x-coordinate (corner of bounding box)
-   * @param y0           the first y-coordinate (corner of bounding box)
-   * @param x1           the second x-coordinate (opposite corner of bounding box)
-   * @param y1           the second y-coordinate (opposite corner of bounding box)
-   * @param currentShape the type of shape to draw
-   * @param polygonSides the number of sides for polygons (only used for PENTAGON or custom
-   *                     polygons)
+   * @param gc      the {@link GraphicsContext} to draw on
+   * @param x0      the first x-coordinate (corner of bounding box)
+   * @param y0      the first y-coordinate (corner of bounding box)
+   * @param x1      the second x-coordinate (opposite corner of bounding box)
+   * @param y1      the second y-coordinate (opposite corner of bounding box)
+   * @param config  the {@link ShapeConfig} describing type and properties
    */
   public static void drawShape(GraphicsContext gc, double x0, double y0,
-    double x1, double y1,
-    ShapeType currentShape, Integer polygonSides) {
+    double x1, double y1, ShapeConfig config) {
+
     double left = Math.min(x0, x1);
     double top = Math.min(y0, y1);
     double width = Math.abs(x1 - x0);
     double height = Math.abs(y1 - y0);
 
-    switch (currentShape) {
+    switch (config.type()) {
       case RECTANGLE -> gc.strokeRect(left, top, width, height);
       case SQUARE -> {
         double side = Math.max(width, height);
@@ -47,29 +45,26 @@ public final class ShapeUtil {
         gc.strokeOval(left, top, diameter, diameter);
       }
       case TRIANGLE -> {
-        double midX = left + width / 2;
-        gc.strokePolygon(
-          new double[]{midX, left, left + width},
-          new double[]{top, top + height, top + height},
-          3
-        );
+        if (config.isRightTriangle()) {
+          gc.strokePolygon(
+            new double[]{left, left, left + width},
+            new double[]{top, top + height, top + height},
+            3
+          );
+        } else {
+          double midX = left + width / 2;
+          gc.strokePolygon(
+            new double[]{midX, left, left + width},
+            new double[]{top, top + height, top + height},
+            3
+          );
+        }
       }
-      case N_GON -> drawRegularPolygon(gc, x0, y0, x1, y1, polygonSides);
+      case N_GON -> drawRegularPolygon(gc, x0, y0, x1, y1, config.sides());
+      case DONUT -> drawDonut(gc, x0, y0, x1, y1);
     }
   }
 
-  /**
-   * Draws a regular polygon centered inside the bounding box defined by (x0, y0) and (x1, y1).
-   *
-   * <p>The polygon is automatically rotated so that one vertex points up.</p>
-   *
-   * @param gc    the {@link GraphicsContext} to draw on
-   * @param x0    the first x-coordinate of the bounding box
-   * @param y0    the first y-coordinate of the bounding box
-   * @param x1    the second x-coordinate of the bounding box
-   * @param y1    the second y-coordinate of the bounding box
-   * @param sides the number of sides of the polygon (e.g. 5 for pentagon)
-   */
   public static void drawRegularPolygon(GraphicsContext gc,
     double x0, double y0, double x1, double y1,
     int sides) {
@@ -87,5 +82,31 @@ public final class ShapeUtil {
     }
 
     gc.strokePolygon(xs, ys, sides);
+  }
+
+
+  /**
+   * Draws a donut: two concentric circles (outer + inner "hole").
+   */
+  public static void drawDonut(GraphicsContext gc,
+    double x0, double y0, double x1, double y1) {
+
+    double left = Math.min(x0, x1);
+    double top = Math.min(y0, y1);
+    double width = Math.abs(x1 - x0);
+    double height = Math.abs(y1 - y0);
+
+    // Outer circle
+    double outerDiameter = Math.max(width, height);
+    double centerX = left + width / 2;
+    double centerY = top + height / 2;
+
+    gc.strokeOval(centerX - outerDiameter / 2, centerY - outerDiameter / 2,
+      outerDiameter, outerDiameter);
+
+    // Inner circle (half radius of outer)
+    double innerDiameter = outerDiameter / 2;
+    gc.strokeOval(centerX - innerDiameter / 2, centerY - innerDiameter / 2,
+      innerDiameter, innerDiameter);
   }
 }

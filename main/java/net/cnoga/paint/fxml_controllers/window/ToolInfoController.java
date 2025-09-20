@@ -57,11 +57,11 @@ public class ToolInfoController extends EventBusPublisher {
     if (evt.tool() instanceof ShapesTool shapesTool) {
 
       toolSpecificThings.getChildren().add(new Label("Shape: "));
-      shapeDropdown.setValue(shapesTool.getCurrentShape());
+      shapeDropdown.setValue(shapesTool.getShapeConfig().type());
       toolSpecificThings.getChildren().add(shapeDropdown);
       toolSpecificThings.getChildren().add(new Separator(Orientation.VERTICAL));
 
-      ShapeConfig currentConfig = ShapeConfig.defaultFor(shapesTool.getCurrentShape());
+      ShapeConfig currentConfig = ShapeConfig.defaultFor(shapesTool.getShapeConfig().type());
       updateShapeControls(currentConfig);
     }
   }

@@ -12,15 +12,13 @@ import net.cnoga.paint.tool.capabilities.ColorCapability;
 import net.cnoga.paint.tool.capabilities.WidthCapability;
 import net.cnoga.paint.util.ShapeConfig;
 import net.cnoga.paint.util.ShapeType;
-
+import net.cnoga.paint.util.ShapeUtil;
 
 @EventBusSubscriber
 public class ShapesTool extends Tool implements WidthCapability, ColorCapability {
 
   private double lastX, lastY;
-  private ShapeType currentShape = ShapeType.RECTANGLE;
-  private int polygonSides = 8;
-  private boolean isRightTriangle = false;
+  private ShapeConfig shapeConfig = new ShapeConfig(ShapeType.RECTANGLE, 8, false);
 
   public ShapesTool() {
     super.name = "Shape";
@@ -46,8 +44,7 @@ public class ShapesTool extends Tool implements WidthCapability, ColorCapability
     effects_gc.setStroke(currentColor);
     effects_gc.setLineWidth(currentWidth);
 
-    drawShape(effects_gc, lastX, lastY, x, y, currentShape, polygonSides);
-
+    ShapeUtil.drawShape(effects_gc, lastX, lastY, x, y, shapeConfig);
   }
 
   @Override
@@ -56,7 +53,7 @@ public class ShapesTool extends Tool implements WidthCapability, ColorCapability
       effects_gc.getCanvas().getHeight());
     gc.setStroke(currentColor);
     gc.setLineWidth(currentWidth);
-    drawShape(gc, lastX, lastY, x, y, currentShape, polygonSides);
+    ShapeUtil.drawShape(gc, lastX, lastY, x, y, shapeConfig);
   }
 
   @SubscribeEvent
@@ -71,17 +68,10 @@ public class ShapesTool extends Tool implements WidthCapability, ColorCapability
 
   @SubscribeEvent
   public void onShapeChanged(ShapeChangedEvent evt) {
-    ShapeConfig config = evt.shapeConfig();
-    currentShape = config.type();
-    this.polygonSides = config.sides();
-    this.isRightTriangle = config.isRightTriangle();
+    this.shapeConfig = evt.shapeConfig();
   }
 
-  public ShapeType getCurrentShape() {
-    return currentShape;
-  }
-
-  public int getPolygonSides() {
-    return polygonSides;
+  public ShapeConfig getShapeConfig() {
+    return shapeConfig;
   }
 }
