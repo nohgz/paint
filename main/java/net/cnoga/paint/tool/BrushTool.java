@@ -3,9 +3,11 @@ package net.cnoga.paint.tool;
 import static net.cnoga.paint.util.LineUtil.drawLineWithCircles;
 import static net.cnoga.paint.util.LineUtil.roundLineCap;
 
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 import net.cnoga.paint.bus.EventBusSubscriber;
-import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.ColorChangedEvent;
 import net.cnoga.paint.events.request.WidthChangedEvent;
 import net.cnoga.paint.tool.capabilities.ColorCapability;
@@ -35,33 +37,40 @@ public class BrushTool extends Tool implements ColorCapability, WidthCapability 
 
   @Override
   public void onMousePressed(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
-    gc.setFill(currentColor);
-
     lastX = x;
     lastY = y;
 
-    roundLineCap(gc, currentWidth, x, y);
+    effects_gc.setFill(Tool.getCurrentColor());
+    roundLineCap(effects_gc, Tool.getCurrentWidth(), x, y);
   }
 
   @Override
   public void onMouseDragged(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
-    drawLineWithCircles(gc, currentWidth, lastX, lastY, x, y);
+    drawLineWithCircles(effects_gc, Tool.getCurrentWidth(), lastX, lastY, x, y);
     lastX = x;
     lastY = y;
   }
 
   @Override
   public void onMouseReleased(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
-    drawLineWithCircles(gc, currentWidth, lastX, lastY, x, y);
-  }
+    // Finish the stroke on effects layer
+    drawLineWithCircles(effects_gc, Tool.getCurrentWidth(), lastX, lastY, x, y);
 
-  @SubscribeEvent
-  public void onWidthChanged(WidthChangedEvent evt) {
-    super.currentWidth = evt.width();
-  }
+    // Prepare a transparent snapshot
+    SnapshotParameters params = new SnapshotParameters();
+    params.setFill(Color.TRANSPARENT);  // Preserve transparency
 
-  @SubscribeEvent
-  public void onColorChanged(ColorChangedEvent evt) {
-    super.currentColor = evt.color();
+    WritableImage snapshot = new WritableImage(
+      (int) effects_gc.getCanvas().getWidth(),
+      (int) effects_gc.getCanvas().getHeight()
+    );
+
+    effects_gc.getCanvas().snapshot(params, snapshot);
+
+    // Draw onto base without destroying underlying pixels
+    gc.drawImage(snapshot, 0, 0);
+
+    // Clear effects for next stroke
+    effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(), effects_gc.getCanvas().getHeight());
   }
 }

@@ -4,7 +4,6 @@ import static net.cnoga.paint.util.LineUtil.drawLineWithCircles;
 
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.bus.EventBusSubscriber;
-import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.ColorChangedEvent;
 import net.cnoga.paint.events.request.WidthChangedEvent;
 import net.cnoga.paint.tool.capabilities.ColorCapability;
@@ -34,7 +33,7 @@ public class LineTool extends Tool implements ColorCapability, WidthCapability {
 
   @Override
   public void onMousePressed(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
-    gc.setFill(currentColor);
+    gc.setFill(Tool.getCurrentColor());
     startX = x;
     startY = y;
   }
@@ -46,8 +45,8 @@ public class LineTool extends Tool implements ColorCapability, WidthCapability {
       effects_gc.getCanvas().getHeight());
 
     // Setup preview style
-    effects_gc.setStroke(currentColor);
-    effects_gc.setLineWidth(currentWidth);
+    effects_gc.setStroke(Tool.getCurrentColor());
+    effects_gc.setLineWidth(Tool.getCurrentWidth());
     effects_gc.strokeLine(startX, startY, x, y);
   }
 
@@ -57,17 +56,6 @@ public class LineTool extends Tool implements ColorCapability, WidthCapability {
     effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(),
       effects_gc.getCanvas().getHeight());
 
-    drawLineWithCircles(gc, currentWidth, startX, startY, x, y);
-  }
-
-
-  @SubscribeEvent
-  public void onColorChanged(ColorChangedEvent req) {
-    super.currentColor = req.color();
-  }
-
-  @SubscribeEvent
-  public void onWidthChanged(WidthChangedEvent req) {
-    super.currentWidth = req.width();
+    drawLineWithCircles(gc, Tool.getCurrentWidth(), startX, startY, x, y);
   }
 }

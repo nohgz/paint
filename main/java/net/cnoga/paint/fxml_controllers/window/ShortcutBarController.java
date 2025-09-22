@@ -19,7 +19,6 @@ import net.cnoga.paint.events.request.WorkspaceSaveRequest;
  * @version 1.0
  */
 public class ShortcutBarController extends EventBusPublisher {
-
   public Button shortcut_bar_new;
   public Button shortcut_bar_open;
   public Button shortcut_bar_save;

@@ -14,5 +14,6 @@ public class PanTool extends Tool {
     super.iconPath = getClass()
       .getResource("/net/cnoga/paint/icons/tools/pan.png")
       .toExternalForm();
+    super.isMutator = false;
   }
 }

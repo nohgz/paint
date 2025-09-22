@@ -4,130 +4,110 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
+import net.cnoga.paint.bus.SubscribeEvent;
+import net.cnoga.paint.events.request.ColorChangedEvent;
+import net.cnoga.paint.events.request.SaveStateRequest;
+import net.cnoga.paint.events.request.WidthChangedEvent;
 
 /**
  * Abstract base class for all paint tools.
  *
- * <p>Defines common properties such as name, icon, current color,
- * and stroke width, as well as empty mouse event hooks that tools can override to provide specific
- * drawing behavior.</p>
+ * <p>Defines common properties such as name, icon, global color,
+ * and stroke width, as well as empty mouse event hooks that tools can override.</p>
  *
- * <p>Each tool is also an event bus subscriber and may react to
- * global tool configuration changes.</p>
- *
- * <p>Responsibilities:</p>
- * <ul>
- *   <li>Providing metadata such as name and icon.</li>
- *   <li>Exposing overridable methods for mouse interactions
- *       ({@link #onMousePressed}, {@link #onMouseDragged}, {@link #onMouseReleased}).</li>
- *   <li>Maintaining and updating the active color and width.</li>
- * </ul>
+ * <p>Color and width are global across all tools. When changed, all
+ * tools see the new values immediately.</p>
  */
 @EventBusSubscriber
 public class Tool extends EventBusPublisher {
 
-  /**
-   * Human-readable description of the tool’s purpose.
-   */
+  /** Human-readable description of the tool’s purpose. */
   protected String helpInfo =
     "[Tool] If you are able to see this text, something is wrong.";
 
-  /**
-   * The tool’s display name.
-   */
+  /** The tool’s display name. */
   protected String name = "Tool";
 
-  /**
-   * Path to the tool’s icon resource.
-   */
+  /** If the tool actually makes changes. */
+  protected Boolean isMutator = true;
+
+  /** Path to the tool’s icon resource. */
   protected String iconPath =
     getClass().getResource("/net/cnoga/paint/icons/tools/tool.png").toExternalForm();
 
-  /**
-   * Current drawing color for this tool.
-   */
-  protected Color currentColor = Color.BLACK;
+  /** Global drawing color shared across all tools. */
+  private static Color currentColor = Color.BLACK;
 
-  /**
-   * Current stroke width for this tool.
-   */
-  protected Integer currentWidth = 1;
+  /** Global stroke width shared across all tools. */
+  private static Integer currentWidth = 1;
 
   /**
    * Constructs a new {@code Tool} and registers it on the global event bus.
-   * <p>
-   * Subclasses should call this constructor via {@code super()}.
    */
   public Tool() {
     bus.register(this);
   }
 
-  /**
-   * Returns the name of this tool.
-   *
-   * @return the tool’s name
-   */
+  @SubscribeEvent
+  private void onColorChanged(ColorChangedEvent evt) {
+    currentColor = evt.color();
+  }
+
+  @SubscribeEvent
+  private void onWidthChanged(WidthChangedEvent evt) {
+    currentWidth = evt.width();
+  }
+
   public String getName() {
     return name;
   }
 
-  /**
-   * Returns the path to this tool’s icon resource.
-   *
-   * @return the tool’s icon path
-   */
   public String getIconPath() {
     return iconPath;
   }
 
-  /**
-   * Returns a short help string describing how to use this tool.
-   *
-   * @return the help information string
-   */
   public String getHelpInfo() {
     return helpInfo;
   }
 
-  /**
-   * Called when the mouse is pressed.
-   * <p>
-   * Default implementation does nothing; subclasses may override.
-   *
-   * @param gc        the main drawing context
-   * @param effectsGc the effects drawing context
-   * @param x         x-coordinate of the press
-   * @param y         y-coordinate of the press
-   */
-  public void onMousePressed(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+  public static Color getCurrentColor() {
+    return currentColor;
+  }
+
+  public static Integer getCurrentWidth() {
+    return currentWidth;
+  }
+
+  /** Tools hook into this */
+  protected void onMousePressed(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
     // no-op by default
   }
 
-  /**
-   * Called when the mouse is dragged.
-   * <p>
-   * Default implementation does nothing; subclasses may override.
-   *
-   * @param gc        the main drawing context
-   * @param effectsGc the effects drawing context
-   * @param x         current x-coordinate of the cursor
-   * @param y         current y-coordinate of the cursor
-   */
-  public void onMouseDragged(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+  /** Tools hook into this */
+  protected void onMouseDragged(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
     // no-op by default
   }
 
-  /**
-   * Called when the mouse is released.
-   * <p>
-   * Default implementation does nothing; subclasses may override.
-   *
-   * @param gc        the main drawing context
-   * @param effectsGc the effects drawing context
-   * @param x         x-coordinate of release
-   * @param y         y-coordinate of release
-   */
-  public void onMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+  /** Tools hook into this */
+  protected void onMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
     // no-op by default
+  }
+
+  //** The other stuff hooks into this */
+  public void handleMousePressed(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+    onMousePressed(gc, effectsGc, x, y);
+    if (isMutator) {
+      bus.post(new SaveStateRequest());
+    }
+  }
+
+  //** The other stuff hooks into this */
+  public void handleMouseDragged(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+    onMouseDragged(gc, effectsGc, x, y);
+  }
+
+  //** The other stuff hooks into this */
+  public void handleMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+    onMouseReleased(gc, effectsGc, x, y);
   }
 }

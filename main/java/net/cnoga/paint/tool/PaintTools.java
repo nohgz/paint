@@ -11,6 +11,7 @@ package net.cnoga.paint.tool;
  */
 public final class PaintTools {
 
+  public static final Tool TOOL = new Tool(); // merely done to get it on the event bus
   public static final Tool BRUSH = new BrushTool();
   public static final Tool LINE = new LineTool();
   public static final Tool PAN = new PanTool();

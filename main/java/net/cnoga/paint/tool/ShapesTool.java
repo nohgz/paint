@@ -1,12 +1,8 @@
 package net.cnoga.paint.tool;
 
-import static net.cnoga.paint.util.ShapeUtil.drawShape;
-
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
-import net.cnoga.paint.events.request.ColorChangedEvent;
-import net.cnoga.paint.events.request.WidthChangedEvent;
 import net.cnoga.paint.events.response.ShapeChangedEvent;
 import net.cnoga.paint.tool.capabilities.ColorCapability;
 import net.cnoga.paint.tool.capabilities.WidthCapability;
@@ -41,8 +37,8 @@ public class ShapesTool extends Tool implements WidthCapability, ColorCapability
       effects_gc.getCanvas().getHeight());
 
     // draw preview
-    effects_gc.setStroke(currentColor);
-    effects_gc.setLineWidth(currentWidth);
+    effects_gc.setStroke(Tool.getCurrentColor());
+    effects_gc.setLineWidth(Tool.getCurrentWidth());
 
     ShapeUtil.drawShape(effects_gc, lastX, lastY, x, y, shapeConfig);
   }
@@ -51,19 +47,9 @@ public class ShapesTool extends Tool implements WidthCapability, ColorCapability
   public void onMouseReleased(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
     effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(),
       effects_gc.getCanvas().getHeight());
-    gc.setStroke(currentColor);
-    gc.setLineWidth(currentWidth);
+    gc.setStroke(Tool.getCurrentColor());
+    gc.setLineWidth(Tool.getCurrentWidth());
     ShapeUtil.drawShape(gc, lastX, lastY, x, y, shapeConfig);
-  }
-
-  @SubscribeEvent
-  public void onWidthChanged(WidthChangedEvent evt) {
-    super.currentWidth = evt.width();
-  }
-
-  @SubscribeEvent
-  public void onColorChanged(ColorChangedEvent evt) {
-    super.currentColor = evt.color();
   }
 
   @SubscribeEvent

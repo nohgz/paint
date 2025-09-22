@@ -3,10 +3,8 @@ package net.cnoga.paint.tool;
 import java.util.Optional;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import net.cnoga.paint.bus.EventBusSubscriber;
-import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.ColorChangedEvent;
 import net.cnoga.paint.events.request.WidthChangedEvent;
 import net.cnoga.paint.tool.capabilities.ColorCapability;
@@ -45,20 +43,7 @@ public class TextTool extends Tool implements WidthCapability, ColorCapability {
    */
   @Override
   public void onMousePressed(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
-    lastX = x;
-    lastY = y;
-
-    TextInputDialog dialog = new TextInputDialog();
-    dialog.setTitle("Insert Text");
-    dialog.setHeaderText("Enter text to place on canvas:");
-    dialog.setContentText("Text:");
-
-    Optional<String> result = dialog.showAndWait();
-    result.ifPresent(text -> {
-      gc.setFill(currentColor);
-      gc.setFont(new Font(currentWidth <= 12 ? 12 : currentWidth));
-      gc.fillText(text, lastX, lastY);
-    });
+    // Intentionally Empty
   }
 
   @Override
@@ -68,26 +53,16 @@ public class TextTool extends Tool implements WidthCapability, ColorCapability {
 
   @Override
   public void onMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
-    // Intentionally Empty
-  }
+    TextInputDialog dialog = new TextInputDialog();
+    dialog.setTitle("Insert Text");
+    dialog.setHeaderText("Enter text to place on canvas:");
+    dialog.setContentText("Text:");
 
-  /**
-   * Updates the font size when a {@link WidthChangedEvent} is received.
-   *
-   * @param evt the width change event
-   */
-  @SubscribeEvent
-  public void onWidthChanged(WidthChangedEvent evt) {
-    super.currentWidth = evt.width();
-  }
-
-  /**
-   * Updates the current color when a {@link ColorChangedEvent} is received.
-   *
-   * @param evt the color change event
-   */
-  @SubscribeEvent
-  public void onColorChanged(ColorChangedEvent evt) {
-    super.currentColor = evt.color();
+    Optional<String> result = dialog.showAndWait();
+    result.ifPresent(text -> {
+      gc.setFill(Tool.getCurrentColor());
+      gc.setFont(new Font(Tool.getCurrentWidth() <= 12 ? 12 : Tool.getCurrentWidth()));
+      gc.fillText(text, x, y);
+    });
   }
 }

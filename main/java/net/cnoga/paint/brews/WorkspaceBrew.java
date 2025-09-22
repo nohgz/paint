@@ -96,21 +96,21 @@ public class WorkspaceBrew extends EventBusPublisher {
     GraphicsContext effects_gc = effectsLayer.getGraphicsContext2D();
 
     baseLayer.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-      currentTool.onMousePressed(base_gc, effects_gc, e.getX(), e.getY());
+      currentTool.handleMousePressed(base_gc, effects_gc, e.getX(), e.getY());
       if (!(currentTool instanceof PanTool)) {
         ws.setDirty(true);
       }
     });
 
     baseLayer.addEventHandler(MouseEvent.MOUSE_DRAGGED, e -> {
-      currentTool.onMouseDragged(base_gc, effects_gc, e.getX(), e.getY());
+      currentTool.handleMouseDragged(base_gc, effects_gc, e.getX(), e.getY());
       if (!(currentTool instanceof PanTool)) {
         ws.setDirty(true);
       }
     });
 
     baseLayer.addEventHandler(MouseEvent.MOUSE_RELEASED,
-      e -> currentTool.onMouseReleased(base_gc, effects_gc, e.getX(), e.getY()));
+      e -> currentTool.handleMouseReleased(base_gc, effects_gc, e.getX(), e.getY()));
   }
 
   /**

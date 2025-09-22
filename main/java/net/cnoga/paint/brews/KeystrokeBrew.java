@@ -8,9 +8,9 @@ import net.cnoga.paint.events.request.CloseCurrentWorkspaceRequest;
 import net.cnoga.paint.events.request.CloseProgramRequest;
 import net.cnoga.paint.events.request.FileOpenRequest;
 import net.cnoga.paint.events.request.ForceCloseProgramRequest;
-import net.cnoga.paint.events.request.ShowNewWorkspacePopupRequest;
 import net.cnoga.paint.events.request.RedoRequest;
 import net.cnoga.paint.events.request.ResizeWorkspaceRequest;
+import net.cnoga.paint.events.request.ShowNewWorkspacePopupRequest;
 import net.cnoga.paint.events.request.UndoRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 import net.cnoga.paint.events.response.ToolChangedEvent;
@@ -51,6 +51,10 @@ public class KeystrokeBrew extends EventBusPublisher {
             bus.post(new ForceCloseProgramRequest());
             keyEvent.consume();
           }
+          case Z -> {
+            bus.post(new RedoRequest());
+            keyEvent.consume();
+          }
         }
         return;
       }
@@ -66,7 +70,7 @@ public class KeystrokeBrew extends EventBusPublisher {
             keyEvent.consume();
           }
           case Z -> {
-            bus.post(new UndoRequest());
+            bus.post(new UndoRequest()); // redos are in ctrl+shift+z
             keyEvent.consume();
           }
           case Y -> {

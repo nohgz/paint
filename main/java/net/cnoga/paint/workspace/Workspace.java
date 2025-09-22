@@ -24,7 +24,7 @@ public class Workspace {
 
   private final String name;
   private final ZoomCapability zoomCapability;
-
+  private final UndoRedoCapability undoRedoCapability;
   private File currentFile;
   private boolean dirty;
 
@@ -49,6 +49,8 @@ public class Workspace {
 
     stackPane.getChildren().add(canvasGroup);
     setupDefaultLayers(width, height);
+
+    this.undoRedoCapability = new UndoRedoCapability(this);
   }
 
   /**
@@ -74,7 +76,7 @@ public class Workspace {
     Canvas effects = createLayer("Effects Layer", width, height);
     effects.setMouseTransparent(true);
 
-    // Order matters: bottom → top
+    // bottom to top
     layers.add(transparency);
     layers.add(base);
     layers.add(effects);

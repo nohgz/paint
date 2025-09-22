@@ -2,7 +2,6 @@ package net.cnoga.paint.tool;
 
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.bus.EventBusSubscriber;
-import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.WidthChangedEvent;
 import net.cnoga.paint.tool.capabilities.WidthCapability;
 
@@ -40,7 +39,7 @@ public class EraserTool extends Tool implements WidthCapability {
   public void onMousePressed(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
     lastX = x;
     lastY = y;
-    eraseSquare(gc, currentWidth, x, y);
+    eraseSquare(gc, Tool.getCurrentWidth(), x, y);
   }
 
   /**
@@ -53,7 +52,7 @@ public class EraserTool extends Tool implements WidthCapability {
    */
   @Override
   public void onMouseDragged(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
-    eraseLine(gc, currentWidth, lastX, lastY, x, y);
+    eraseLine(gc, Tool.getCurrentWidth(), lastX, lastY, x, y);
     lastX = x;
     lastY = y;
   }
@@ -68,17 +67,7 @@ public class EraserTool extends Tool implements WidthCapability {
    */
   @Override
   public void onMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
-    eraseLine(gc, currentWidth, lastX, lastY, x, y);
-  }
-
-  /**
-   * Updates the eraser width when a {@link WidthChangedEvent} is received.
-   *
-   * @param evt the width change event
-   */
-  @SubscribeEvent
-  public void onWidthChanged(WidthChangedEvent evt) {
-    super.currentWidth = evt.width();
+    eraseLine(gc, Tool.getCurrentWidth(), lastX, lastY, x, y);
   }
 
   /**
