@@ -44,6 +44,6 @@ public class MoveTool extends Tool {
 
   @Override
   public void onMouseReleased(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
-    bus.post(new CommitSelectionRequest());
+    // do nothing?
   }
 }
