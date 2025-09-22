@@ -3,7 +3,7 @@ package net.cnoga.paint.fxml_controllers.window;
 import javafx.scene.control.TabPane;
 import net.cnoga.paint.brews.WorkspaceBrew;
 import net.cnoga.paint.bus.EventBusPublisher;
-import net.cnoga.paint.events.init.InitWorkspaceServiceRequest;
+import net.cnoga.paint.events.init.InitWorkspaceBrewRequest;
 
 /**
  * Controller for the main workspace area of the application.
@@ -16,6 +16,6 @@ public class WorkspaceController extends EventBusPublisher {
   public TabPane workspaceTabPane;
 
   public void initWorkspaceService() {
-    bus.post(new InitWorkspaceServiceRequest(workspaceTabPane));
+    bus.post(new InitWorkspaceBrewRequest(workspaceTabPane));
   }
 }

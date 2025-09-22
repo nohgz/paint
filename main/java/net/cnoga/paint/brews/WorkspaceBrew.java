@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
-import net.cnoga.paint.events.init.InitWorkspaceServiceRequest;
+import net.cnoga.paint.events.init.InitWorkspaceBrewRequest;
 import net.cnoga.paint.events.request.ClearWorkspaceRequest;
 import net.cnoga.paint.events.request.CloseCurrentWorkspaceRequest;
 import net.cnoga.paint.events.request.FocusWorkspaceRequest;
@@ -78,7 +78,7 @@ public class WorkspaceBrew extends EventBusPublisher {
    * @param req the event containing the tab pane
    */
   @SubscribeEvent
-  private void onInitWorkspaceService(InitWorkspaceServiceRequest req) {
+  private void onInitWorkspaceBrew(InitWorkspaceBrewRequest req) {
     this.workspaceTabPane = req.tabPane();
   }
 

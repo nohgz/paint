@@ -25,6 +25,7 @@ public class Workspace {
   private final String name;
   private final ZoomCapability zoomCapability;
   private final UndoRedoCapability undoRedoCapability;
+  private final SelectionCapability selectionCapability;
   private File currentFile;
   private boolean dirty;
 
@@ -51,6 +52,7 @@ public class Workspace {
     setupDefaultLayers(width, height);
 
     this.undoRedoCapability = new UndoRedoCapability(this);
+    this.selectionCapability = new SelectionCapability(this);
   }
 
   /**
