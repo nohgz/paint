@@ -21,10 +21,12 @@ import net.cnoga.paint.events.request.CloseCurrentWorkspaceRequest;
 import net.cnoga.paint.events.request.FocusWorkspaceRequest;
 import net.cnoga.paint.events.request.GetDirtyWorkspacesRequest;
 import net.cnoga.paint.events.request.NewWorkspaceRequest;
+import net.cnoga.paint.events.request.PasteSelectionRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveAsRequest;
 import net.cnoga.paint.events.request.WorkspaceSaveRequest;
 import net.cnoga.paint.events.response.FileOpenedEvent;
 import net.cnoga.paint.events.response.GotDirtyWorkspacesEvent;
+import net.cnoga.paint.events.response.SelectionPastedEvent;
 import net.cnoga.paint.events.response.ToolChangedEvent;
 import net.cnoga.paint.events.response.WorkspaceSavedAsEvent;
 import net.cnoga.paint.events.response.WorkspaceSavedEvent;
@@ -49,6 +51,7 @@ public class WorkspaceBrew extends EventBusPublisher {
   private WorkspaceSaveWarningPopup workspaceSaveWarningPopup;
   private TabPane workspaceTabPane;
   private Tool currentTool;
+  private double lastMouseX, lastMouseY;
 
   /**
    * Constructs a {@code WorkspaceService}.
@@ -111,6 +114,16 @@ public class WorkspaceBrew extends EventBusPublisher {
 
     baseLayer.addEventHandler(MouseEvent.MOUSE_RELEASED,
       e -> currentTool.handleMouseReleased(base_gc, effects_gc, e.getX(), e.getY()));
+
+    baseLayer.addEventHandler(MouseEvent.MOUSE_MOVED, e -> {
+      lastMouseX = e.getX();
+      lastMouseY = e.getY();
+    });
+  }
+
+  @SubscribeEvent
+  private void onPasteSelection(PasteSelectionRequest req) {
+    bus.post(new SelectionPastedEvent(lastMouseX, lastMouseY));
   }
 
   /**

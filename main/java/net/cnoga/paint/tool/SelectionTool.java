@@ -11,13 +11,13 @@ public class SelectionTool extends Tool {
 
   private double startX, startY;
 
-
   public SelectionTool() {
     super.name = "Selection";
-    super.helpInfo = "[Selection] Left click and drag to create the selection.";
+    super.helpInfo = "[Selection] Left click and drag to create a selection.";
     super.iconPath = getClass()
       .getResource("/net/cnoga/paint/icons/tools/select.png")
       .toExternalForm();
+    super.isMutator = false;
   }
 
   @Override
@@ -28,11 +28,19 @@ public class SelectionTool extends Tool {
 
   @Override
   public void onMouseDragged(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
+    double oldWidth = effects_gc.getLineWidth();
+    Color oldColor = (Color) effects_gc.getStroke();
+
     effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(), effects_gc.getCanvas().getHeight());
     effects_gc.setLineDashes(5);
     effects_gc.setStroke(Color.BLACK);
-    effects_gc.strokeRect(Math.min(x, startX), Math.min(y, startY), Math.abs(x - startX), Math.abs(y - startY));
-    effects_gc.setLineDashes(0);
+    effects_gc.strokeRect(Math.min(x, startX), Math.min(y, startY),
+      Math.abs(x - startX), Math.abs(y - startY));
+
+    // Reset state
+//    effects_gc.setLineDashes(0);
+//    effects_gc.setStroke(oldColor);
+//    effects_gc.setLineWidth(oldWidth);
   }
 
   @Override

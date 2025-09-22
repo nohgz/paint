@@ -4,6 +4,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -12,9 +13,11 @@ import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.CommitSelectionRequest;
+import net.cnoga.paint.events.request.CopySelectionRequest;
 import net.cnoga.paint.events.request.MoveSelectionRequest;
 import net.cnoga.paint.events.request.PasteSelectionRequest;
 import net.cnoga.paint.events.request.SelectionRequest;
+import net.cnoga.paint.events.response.SelectionPastedEvent;
 import net.cnoga.paint.events.response.ToolChangedEvent;
 import net.cnoga.paint.tool.MoveTool;
 
@@ -31,33 +34,29 @@ public class SelectionCapability extends EventBusPublisher  {
     bus.register(this);
   }
 
-
   @SubscribeEvent
   public void onSelectionRequest(SelectionRequest req) {
-    Rectangle2D bounds = req.bounds();
-    if (bounds.getWidth() <= 0 || bounds.getHeight() <= 0) return;
+    selectionBounds = req.bounds();
+    if (selectionBounds.getWidth() <= 0 || selectionBounds.getHeight() <= 0) return;
 
     // Snapshot the selected area into buffer
     SnapshotParameters params = new SnapshotParameters();
-    params.setViewport(bounds);
+    params.setViewport(selectionBounds);
 
-    buffer = new WritableImage((int) bounds.getWidth(), (int) bounds.getHeight());
+    buffer = new WritableImage((int) selectionBounds.getWidth(), (int) selectionBounds.getHeight());
     workspace.getBaseLayer().snapshot(params, buffer);
 
-    selectionBounds = bounds;
-
-    // Clear original area
-    workspace.getBaseLayer()
-      .getGraphicsContext2D()
-      .clearRect(bounds.getMinX(), bounds.getMinY(), bounds.getWidth(), bounds.getHeight());
-
-    // Draw preview immediately
-    previewSelection(bounds.getMinX(), bounds.getMinY());
+    previewSelection(selectionBounds.getMinX(), selectionBounds.getMinY());
   }
 
   @SubscribeEvent
   public void onMoveSelection(MoveSelectionRequest req) {
     if (buffer == null) return;
+
+    // Clear original area
+    workspace.getBaseLayer()
+      .getGraphicsContext2D()
+      .clearRect(selectionBounds.getMinX(), selectionBounds.getMinY(), selectionBounds.getWidth(), selectionBounds.getHeight());
 
     offsetX += req.dx();
     offsetY += req.dy();
@@ -66,17 +65,6 @@ public class SelectionCapability extends EventBusPublisher  {
     double drawY = selectionBounds.getMinY() + offsetY;
 
     previewSelection(drawX, drawY);
-  }
-
-  @SubscribeEvent
-  private void onPasteSelection(PasteSelectionRequest req) {
-    if (buffer == null) return;
-    selectionBounds = new Rectangle2D(
-      req.x(),
-      req.y(),
-      buffer.getWidth(),
-      buffer.getHeight()
-    );
   }
 
   @SubscribeEvent
@@ -104,12 +92,24 @@ public class SelectionCapability extends EventBusPublisher  {
   private void previewSelection(double x, double y) {
     GraphicsContext effects = workspace.getEffectsLayer().getGraphicsContext2D();
     clearEffects();
+
+    // Draw buffer
     effects.drawImage(buffer, x, y);
-    // optional: add border for clarity
+
+    // Save old state
+    double oldWidth = effects.getLineWidth();
+    Color oldColor = (Color) effects.getStroke();
+
+    // Force selection style
+    effects.setLineWidth(1.0);
     effects.setStroke(Color.BLUE);
     effects.setLineDashes(4);
     effects.strokeRect(x, y, buffer.getWidth(), buffer.getHeight());
+
+    // Reset state
     effects.setLineDashes(0);
+    effects.setStroke(oldColor);
+    effects.setLineWidth(oldWidth);
   }
 
   private void clearEffects() {
@@ -117,22 +117,30 @@ public class SelectionCapability extends EventBusPublisher  {
     effects.clearRect(0, 0, effects.getCanvas().getWidth(), effects.getCanvas().getHeight());
   }
 
-  // Copy to system clipboard
-  public void copyToClipboard() {
+
+  @SubscribeEvent
+  public void onCopySelection(CopySelectionRequest req) {
     if (buffer == null) return;
-    Clipboard clipboard = Clipboard.getSystemClipboard();
+
     ClipboardContent content = new ClipboardContent();
     content.putImage(buffer);
-    clipboard.setContent(content);
+    Clipboard.getSystemClipboard().setContent(content);
   }
 
-  // Paste from system clipboard
-  public void pasteFromClipboard() {
+
+  @SubscribeEvent
+  public void onPasteSelection(SelectionPastedEvent evt) {
     Clipboard clipboard = Clipboard.getSystemClipboard();
-    if (clipboard.hasImage()) {
-      buffer = (WritableImage) clipboard.getImage();
-      selectionBounds = new Rectangle2D(0, 0, buffer.getWidth(), buffer.getHeight());
-    }
+    if (!clipboard.hasImage()) return;
+
+    Image img = clipboard.getImage();
+
+    buffer = new WritableImage(img.getPixelReader(),
+      (int) img.getWidth(), (int) img.getHeight());
+    selectionBounds = new Rectangle2D(evt.x(), evt.y(), img.getWidth(), img.getHeight());
+    offsetX = offsetY = 0;
+
+    previewSelection(selectionBounds.getMinX(), selectionBounds.getMinY());
   }
 
   public boolean hasSelection() {
