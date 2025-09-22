@@ -47,7 +47,7 @@ public class FileIOBrew extends EventBusPublisher {
   }
 
   @SubscribeEvent
-  public void onOpenFile(FileOpenRequest req) {
+  private void onOpenFile(FileOpenRequest req) {
     FileChooser chooser = new FileChooser();
     chooser.setTitle("Open");
     File selectedFile = chooser.showOpenDialog(stage);
@@ -60,7 +60,7 @@ public class FileIOBrew extends EventBusPublisher {
 
   // does the save handling
   @SubscribeEvent
-  public void onWorkspaceSavedAs(WorkspaceSavedAsEvent evt) {
+  private void onWorkspaceSavedAs(WorkspaceSavedAsEvent evt) {
     Workspace ws = evt.workspace();
     if (ws == null) {
       return;
@@ -90,7 +90,7 @@ public class FileIOBrew extends EventBusPublisher {
 
 
   @SubscribeEvent
-  public void onWorkspaceSaved(WorkspaceSavedEvent evt) {
+  private void onWorkspaceSaved(WorkspaceSavedEvent evt) {
     Workspace ws = evt.workspace();
 
     if (ws.getFile() != null) {

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
@@ -17,27 +18,33 @@ import javafx.scene.layout.StackPane;
  */
 public class Workspace {
 
+  // FXML Defined Stuff
   private final ScrollPane scrollPane;
   private final StackPane stackPane;
   private final Group canvasGroup;
-  private final List<Canvas> layers = new ArrayList<>();
 
-  private final String name;
+
+  // Content
+  private final List<Canvas> layers = new ArrayList<>();
+  private File currentFile;
+  private boolean dirty;
+  private UUID uuid;
+  private final String displayName;
+
+  // Capabilities
   private final ZoomCapability zoomCapability;
   private final UndoRedoCapability undoRedoCapability;
   private final SelectionCapability selectionCapability;
-  private File currentFile;
-  private boolean dirty;
 
   /**
    * Creates a new workspace with a given name and initial canvas size.
    *
-   * @param name   the display name of this workspace
+   * @param displayName   the display name of this workspace
    * @param width  the width of the canvas
    * @param height the height of the canvas
    * @throws IllegalArgumentException if width or height are non-positive
    */
-  public Workspace(String name, double width, double height) {
+  public Workspace(String displayName, double width, double height) {
     if (width <= 0 || height <= 0) {
       throw new IllegalArgumentException("Canvas size must be positive");
     }
@@ -46,13 +53,13 @@ public class Workspace {
     this.canvasGroup = new Group();
     this.scrollPane = new ScrollPane(stackPane);
     this.zoomCapability = new ZoomCapability(scrollPane, canvasGroup);
-    this.name = name;
+    this.displayName = displayName;
 
     stackPane.getChildren().add(canvasGroup);
     setupDefaultLayers(width, height);
 
-    this.undoRedoCapability = new UndoRedoCapability(this);
-    this.selectionCapability = new SelectionCapability(this);
+    this.undoRedoCapability = new UndoRedoCapability(this); // add in UUID here?
+    this.selectionCapability = new SelectionCapability(this); // add in workspace UUID?
   }
 
   /**
@@ -220,6 +227,6 @@ public class Workspace {
    * @return the display name of this workspace
    */
   public String getName() {
-    return this.name;
+    return this.displayName;
   }
 }

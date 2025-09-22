@@ -1,3 +1,18 @@
+Chris' Pain(t) 4.0.0 - 9/12/2025
+
+"The Real Paint Program Update"
+
+# New Features:
+- Undo/Redo Functionality
+- Select and move a piece of the image
+- Copy and paste selections
+- Added more shapes: N-sided polygon, right triangle, donut
+- Text Tool
+- Clear Canvas Dialog
+-
+
+
+
 Chris' Pain(t) 3.0.0 - 9/12/2025
 
 "The Brews, Shapes, and Tabs Update"
@@ -23,6 +38,11 @@ Chris' Pain(t) 3.0.0 - 9/12/2025
 - Scale Canvas
 - Selection
 - Text
+
+# Links
+GitHub - https://github.com/nohgz/paint
+
+--------------------------------------------------
 
 Chris' Pain(t) 2.0.0 - 9/5/2025
 

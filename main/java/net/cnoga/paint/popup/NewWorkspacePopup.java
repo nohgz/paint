@@ -51,7 +51,7 @@ public class NewWorkspacePopup extends AbstractInputPopup {
   }
 
   @SubscribeEvent
-  protected void onOpen(ShowNewWorkspacePopupRequest req) {
+  private void onOpen(ShowNewWorkspacePopupRequest req) {
     super.show();
   }
 }

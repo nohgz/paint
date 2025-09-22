@@ -1,8 +1,10 @@
 package net.cnoga.paint.workspace;
 
 import java.util.Stack;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 import net.cnoga.paint.bus.EventBusPublisher;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
@@ -55,7 +57,10 @@ public class UndoRedoCapability extends EventBusPublisher {
     WritableImage snapshot = new WritableImage((int) workspace.getBaseLayer().getWidth(),
       (int) workspace.getBaseLayer().getHeight());
 
-    workspace.getBaseLayer().snapshot(null, snapshot);
+    SnapshotParameters params = new SnapshotParameters();
+    params.setFill(Color.TRANSPARENT);
+
+    workspace.getBaseLayer().snapshot(params, snapshot);
     return snapshot;
   }
 

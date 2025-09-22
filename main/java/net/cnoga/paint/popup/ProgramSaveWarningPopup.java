@@ -103,7 +103,7 @@ public class ProgramSaveWarningPopup extends AbstractInputPopup {
   }
 
   @SubscribeEvent
-  protected void onOpen(ShowProgramSaveWarningPopupRequest req) {
+  private void onOpen(ShowProgramSaveWarningPopupRequest req) {
     super.show();
   }
 }
