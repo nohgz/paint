@@ -71,7 +71,9 @@ public class ToolInfoController extends EventBusPublisher {
     }
   }
 
-  /** Initialize brush size spinner once, keep global */
+  /**
+   * Initialize brush size spinner once, keep global
+   */
   private void initBrushSizeControls() {
     brushSizeSpinner = new Spinner<>(1, 100, 1, 1);
     brushSizeSpinner.setEditable(true);
@@ -81,7 +83,9 @@ public class ToolInfoController extends EventBusPublisher {
     );
   }
 
-  /** Initialize shape dropdown once, keep global */
+  /**
+   * Initialize shape dropdown once, keep global
+   */
   private void initShapeControls() {
     shapeDropdown = new ComboBox<>();
     shapeDropdown.setItems(FXCollections.observableArrayList(ShapeType.values()));
@@ -93,13 +97,16 @@ public class ToolInfoController extends EventBusPublisher {
     });
   }
 
-  /** Add contextual shape controls based on type */
+  /**
+   * Add contextual shape controls based on type
+   */
   private void updateShapeControls(ShapeConfig config) {
     // Remove any old shape-specific controls, but leave brush + shape dropdown
     toolSpecificThings.getChildren().removeIf(node ->
       node instanceof Spinner && node != brushSizeSpinner ||
         node instanceof CheckBox ||
-        (node instanceof Label && !"Shape: ".equals(((Label) node).getText()) && !"Brush Size: ".equals(((Label) node).getText()))
+        (node instanceof Label && !"Shape: ".equals(((Label) node).getText())
+          && !"Brush Size: ".equals(((Label) node).getText()))
     );
 
     if (config.type() == ShapeType.N_GON) {

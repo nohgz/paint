@@ -13,9 +13,8 @@ import net.cnoga.paint.tool.capabilities.WidthCapability;
 /**
  * A tool for creating text on the canvas.
  * <p>
- * The {@code TextTool} allows the user to click on the canvas to place text.
- * The text color responds to {@link ColorChangedEvent}, and the font size responds
- * to {@link WidthChangedEvent}.
+ * The {@code TextTool} allows the user to click on the canvas to place text. The text color
+ * responds to {@link ColorChangedEvent}, and the font size responds to {@link WidthChangedEvent}.
  */
 @EventBusSubscriber
 public class TextTool extends Tool implements WidthCapability, ColorCapability {

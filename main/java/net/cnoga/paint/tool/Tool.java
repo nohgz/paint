@@ -21,31 +21,46 @@ import net.cnoga.paint.events.request.WidthChangedEvent;
 @EventBusSubscriber
 public class Tool extends EventBusPublisher {
 
-  /** Human-readable description of the tool’s purpose. */
+  /**
+   * Global drawing color shared across all tools.
+   */
+  private static Color currentColor = Color.BLACK;
+  /**
+   * Global stroke width shared across all tools.
+   */
+  private static Integer currentWidth = 1;
+  /**
+   * Human-readable description of the tool’s purpose.
+   */
   protected String helpInfo =
     "[Tool] If you are able to see this text, something is wrong.";
-
-  /** The tool’s display name. */
+  /**
+   * The tool’s display name.
+   */
   protected String name = "Tool";
-
-  /** If the tool actually makes changes. */
+  /**
+   * If the tool actually makes changes.
+   */
   protected Boolean isMutator = true;
-
-  /** Path to the tool’s icon resource. */
+  /**
+   * Path to the tool’s icon resource.
+   */
   protected String iconPath =
     getClass().getResource("/net/cnoga/paint/icons/tools/tool.png").toExternalForm();
-
-  /** Global drawing color shared across all tools. */
-  private static Color currentColor = Color.BLACK;
-
-  /** Global stroke width shared across all tools. */
-  private static Integer currentWidth = 1;
 
   /**
    * Constructs a new {@code Tool} and registers it on the global event bus.
    */
   public Tool() {
     bus.register(this);
+  }
+
+  public static Color getCurrentColor() {
+    return currentColor;
+  }
+
+  public static Integer getCurrentWidth() {
+    return currentWidth;
   }
 
   @SubscribeEvent
@@ -70,31 +85,31 @@ public class Tool extends EventBusPublisher {
     return helpInfo;
   }
 
-  public static Color getCurrentColor() {
-    return currentColor;
-  }
-
-  public static Integer getCurrentWidth() {
-    return currentWidth;
-  }
-
-  /** Tools hook into this */
+  /**
+   * Tools hook into this
+   */
   protected void onMousePressed(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
     // no-op by default
   }
 
-  /** Tools hook into this */
+  /**
+   * Tools hook into this
+   */
   protected void onMouseDragged(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
     // no-op by default
   }
 
-  /** Tools hook into this */
-  protected void onMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+  /**
+   * Tools hook into this
+   */
+  protected void onMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x,
+    double y) {
     // no-op by default
   }
 
   //** The other stuff hooks into this */
-  public void handleMousePressed(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+  public void handleMousePressed(GraphicsContext gc, GraphicsContext effectsGc, double x,
+    double y) {
     onMousePressed(gc, effectsGc, x, y);
     if (isMutator) {
       bus.post(new SaveStateRequest());
@@ -102,12 +117,14 @@ public class Tool extends EventBusPublisher {
   }
 
   //** The other stuff hooks into this */
-  public void handleMouseDragged(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+  public void handleMouseDragged(GraphicsContext gc, GraphicsContext effectsGc, double x,
+    double y) {
     onMouseDragged(gc, effectsGc, x, y);
   }
 
   //** The other stuff hooks into this */
-  public void handleMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
+  public void handleMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x,
+    double y) {
     onMouseReleased(gc, effectsGc, x, y);
   }
 }

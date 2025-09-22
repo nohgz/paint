@@ -4,10 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.bus.EventBusSubscriber;
 import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.init.InitWorkspaceBrewRequest;
-import net.cnoga.paint.events.request.CommitSelectionRequest;
 import net.cnoga.paint.events.request.MoveSelectionRequest;
-import net.cnoga.paint.workspace.SelectionCapability;
-import net.cnoga.paint.workspace.Workspace;
 
 @EventBusSubscriber
 public class MoveTool extends Tool {

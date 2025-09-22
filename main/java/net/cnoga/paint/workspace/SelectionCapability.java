@@ -2,7 +2,6 @@ package net.cnoga.paint.workspace;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -15,14 +14,13 @@ import net.cnoga.paint.bus.SubscribeEvent;
 import net.cnoga.paint.events.request.CommitSelectionRequest;
 import net.cnoga.paint.events.request.CopySelectionRequest;
 import net.cnoga.paint.events.request.MoveSelectionRequest;
-import net.cnoga.paint.events.request.PasteSelectionRequest;
 import net.cnoga.paint.events.request.SelectionRequest;
 import net.cnoga.paint.events.response.SelectionPastedEvent;
 import net.cnoga.paint.events.response.ToolChangedEvent;
 import net.cnoga.paint.tool.MoveTool;
 
 @EventBusSubscriber
-public class SelectionCapability extends EventBusPublisher  {
+public class SelectionCapability extends EventBusPublisher {
 
   private final Workspace workspace;
   private WritableImage buffer;
@@ -37,7 +35,9 @@ public class SelectionCapability extends EventBusPublisher  {
   @SubscribeEvent
   public void onSelectionRequest(SelectionRequest req) {
     selectionBounds = req.bounds();
-    if (selectionBounds.getWidth() <= 0 || selectionBounds.getHeight() <= 0) return;
+    if (selectionBounds.getWidth() <= 0 || selectionBounds.getHeight() <= 0) {
+      return;
+    }
 
     // Snapshot the selected area into buffer
     SnapshotParameters params = new SnapshotParameters();
@@ -51,15 +51,18 @@ public class SelectionCapability extends EventBusPublisher  {
 
   @SubscribeEvent
   public void onMoveSelection(MoveSelectionRequest req) {
-    if (buffer == null) return;
+    if (buffer == null) {
+      return;
+    }
 
     // Clear original area
     workspace.getBaseLayer()
       .getGraphicsContext2D()
-      .clearRect(selectionBounds.getMinX(), selectionBounds.getMinY(), selectionBounds.getWidth(), selectionBounds.getHeight());
+      .clearRect(selectionBounds.getMinX(), selectionBounds.getMinY(), selectionBounds.getWidth(),
+        selectionBounds.getHeight());
 
-    offsetX += req.dx();
     offsetY += req.dy();
+    offsetX += req.dx();
 
     double drawX = selectionBounds.getMinX() + offsetX;
     double drawY = selectionBounds.getMinY() + offsetY;
@@ -76,11 +79,14 @@ public class SelectionCapability extends EventBusPublisher  {
 
   @SubscribeEvent
   private void onCommitSelection(CommitSelectionRequest req) {
-    if (buffer == null || selectionBounds == null) return;
+    if (buffer == null || selectionBounds == null) {
+      return;
+    }
 
     // Draw permanently onto base layer
     GraphicsContext base = workspace.getBaseLayer().getGraphicsContext2D();
-    base.drawImage(buffer, selectionBounds.getMinX() + offsetX, selectionBounds.getMinY() + offsetY);
+    base.drawImage(buffer, selectionBounds.getMinX() + offsetX,
+      selectionBounds.getMinY() + offsetY);
 
     // Clear the preview
     clearEffects();
@@ -120,7 +126,9 @@ public class SelectionCapability extends EventBusPublisher  {
 
   @SubscribeEvent
   public void onCopySelection(CopySelectionRequest req) {
-    if (buffer == null) return;
+    if (buffer == null) {
+      return;
+    }
 
     ClipboardContent content = new ClipboardContent();
     content.putImage(buffer);
@@ -131,7 +139,9 @@ public class SelectionCapability extends EventBusPublisher  {
   @SubscribeEvent
   public void onPasteSelection(SelectionPastedEvent evt) {
     Clipboard clipboard = Clipboard.getSystemClipboard();
-    if (!clipboard.hasImage()) return;
+    if (!clipboard.hasImage()) {
+      return;
+    }
 
     Image img = clipboard.getImage();
 

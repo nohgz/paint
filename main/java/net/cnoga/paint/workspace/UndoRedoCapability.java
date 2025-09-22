@@ -12,6 +12,7 @@ import net.cnoga.paint.events.request.UndoRequest;
 
 @EventBusSubscriber
 public class UndoRedoCapability extends EventBusPublisher {
+
   private final Stack<WritableImage> undoStack = new Stack<>();
   private final Stack<WritableImage> redoStack = new Stack<>();
   private final Workspace workspace;
@@ -51,7 +52,8 @@ public class UndoRedoCapability extends EventBusPublisher {
   }
 
   private WritableImage snapshotCanvas() {
-    WritableImage snapshot = new WritableImage((int) workspace.getBaseLayer().getWidth(), (int) workspace.getBaseLayer().getHeight());
+    WritableImage snapshot = new WritableImage((int) workspace.getBaseLayer().getWidth(),
+      (int) workspace.getBaseLayer().getHeight());
 
     workspace.getBaseLayer().snapshot(null, snapshot);
     return snapshot;

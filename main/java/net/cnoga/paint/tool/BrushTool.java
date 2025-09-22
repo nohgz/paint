@@ -71,6 +71,7 @@ public class BrushTool extends Tool implements ColorCapability, WidthCapability 
     gc.drawImage(snapshot, 0, 0);
 
     // Clear effects for next stroke
-    effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(), effects_gc.getCanvas().getHeight());
+    effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(),
+      effects_gc.getCanvas().getHeight());
   }
 }

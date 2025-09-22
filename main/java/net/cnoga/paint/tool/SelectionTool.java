@@ -31,21 +31,24 @@ public class SelectionTool extends Tool {
     double oldWidth = effects_gc.getLineWidth();
     Color oldColor = (Color) effects_gc.getStroke();
 
-    effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(), effects_gc.getCanvas().getHeight());
+    effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(),
+      effects_gc.getCanvas().getHeight());
     effects_gc.setLineDashes(5);
     effects_gc.setStroke(Color.BLACK);
+    effects_gc.setLineWidth(1);
     effects_gc.strokeRect(Math.min(x, startX), Math.min(y, startY),
       Math.abs(x - startX), Math.abs(y - startY));
 
     // Reset state
-//    effects_gc.setLineDashes(0);
-//    effects_gc.setStroke(oldColor);
-//    effects_gc.setLineWidth(oldWidth);
+    effects_gc.setLineDashes(0);
+    effects_gc.setStroke(oldColor);
+    effects_gc.setLineWidth(oldWidth);
   }
 
   @Override
   public void onMouseReleased(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
-    effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(), effects_gc.getCanvas().getHeight());
+    effects_gc.clearRect(0, 0, effects_gc.getCanvas().getWidth(),
+      effects_gc.getCanvas().getHeight());
 
     Rectangle2D bounds = new Rectangle2D(
       Math.min(startX, x),

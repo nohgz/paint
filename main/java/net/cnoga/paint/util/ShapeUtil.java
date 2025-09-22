@@ -18,12 +18,12 @@ public final class ShapeUtil {
   /**
    * Draws a shape defined by two bounding coordinates and a ShapeConfig.
    *
-   * @param gc      the {@link GraphicsContext} to draw on
-   * @param x0      the first x-coordinate (corner of bounding box)
-   * @param y0      the first y-coordinate (corner of bounding box)
-   * @param x1      the second x-coordinate (opposite corner of bounding box)
-   * @param y1      the second y-coordinate (opposite corner of bounding box)
-   * @param config  the {@link ShapeConfig} describing type and properties
+   * @param gc     the {@link GraphicsContext} to draw on
+   * @param x0     the first x-coordinate (corner of bounding box)
+   * @param y0     the first y-coordinate (corner of bounding box)
+   * @param x1     the second x-coordinate (opposite corner of bounding box)
+   * @param y1     the second y-coordinate (opposite corner of bounding box)
+   * @param config the {@link ShapeConfig} describing type and properties
    */
   public static void drawShape(GraphicsContext gc, double x0, double y0,
     double x1, double y1, ShapeConfig config) {
