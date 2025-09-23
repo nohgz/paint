@@ -1,4 +1,4 @@
-Chris' Pain(t) 4.0.0 - 9/12/2025
+Chris' Pain(t) 4.0.0 - 9/22/2025
 
 "The Real Paint Program Update"
 
@@ -9,9 +9,24 @@ Chris' Pain(t) 4.0.0 - 9/12/2025
 - Added more shapes: N-sided polygon, right triangle, donut
 - Text Tool
 - Clear Canvas Dialog
--
 
+# Known Issues:
+- [CRITICAL] Selection mutations happen across tabs.
+- [CRITICAL] Undo/Redo calls happen across tabs.
+This is because of sloppy event bus configuration. Each workspace has its own "SelectionCapability"
+and "UndoRedoCapability", but the events they listen to are not unique. This will be fixed next sprint--
+I've other things to worry about right now.
 
+# Next Sprint Hopes
+- Fixing the critical issues
+- Unit Testing
+- Auto-Save
+- Webserver
+
+# Links
+GitHub - https://github.com/nohgz/paint
+
+--------------------------------------------------
 
 Chris' Pain(t) 3.0.0 - 9/12/2025
 
