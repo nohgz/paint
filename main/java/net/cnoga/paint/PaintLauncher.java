@@ -6,14 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import net.cnoga.paint.bus.EventBus;
-import net.cnoga.paint.events.request.NewWorkspaceRequest;
-import net.cnoga.paint.events.request.OpenHistoryRequest;
-import net.cnoga.paint.events.request.OpenLayersRequest;
-import net.cnoga.paint.events.request.OpenToolsRequest;
-import net.cnoga.paint.events.response.ToolChangedEvent;
-import net.cnoga.paint.fxml_controllers.MainController;
-import net.cnoga.paint.tool.PaintTools;
+import net.cnoga.paint.core.bus.EventBus;
+import net.cnoga.paint.core.bus.events.request.NewWorkspaceRequest;
+import net.cnoga.paint.core.bus.events.request.OpenHistoryRequest;
+import net.cnoga.paint.core.bus.events.request.OpenLayersRequest;
+import net.cnoga.paint.core.bus.events.request.OpenToolsRequest;
+import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
+import net.cnoga.paint.core.fxml_controllers.MainController;
+import net.cnoga.paint.core.tool.PaintTools;
 
 /**
  * The main launcher for the Paint(t) application.

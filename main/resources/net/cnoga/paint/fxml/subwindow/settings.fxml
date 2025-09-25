@@ -1,9 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-
-<GridPane xmlns="http://javafx.com/javafx"
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<FlowPane xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.fxml_controllers.subwindow.SettingsController"
+  fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.SettingsController"
   prefHeight="400.0" prefWidth="600.0">
-</GridPane>
+  <TabPane tabClosingPolicy="UNAVAILABLE" side="LEFT">
+    <!-- User Interface Settings -->
+    <tabs>
+      <Tab text="User Interface">
+        <VBox spacing="10">
+          <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+          </padding>
+          <CheckBox fx:id="autosaveCheckBox" text="Enable Autosave"/>
+          <HBox spacing="5">
+            <Label text="Autosave Interval (minutes):"/>
+            <Spinner fx:id="autosaveIntervalSpinner" prefWidth="80"/>
+          </HBox>
+          <CheckBox fx:id="darkModeCheckBox" text="Enable Dark Mode"/>
+        </VBox>
+      </Tab>
+
+      <!-- Tools Settings -->
+      <Tab text="Tools">
+        <VBox spacing="10">
+          <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+          </padding>
+          <HBox spacing="5">
+            <Label text="Default Brush Size:"/>
+            <Spinner fx:id="brushSizeSpinner" prefWidth="80"/>
+          </HBox>
+          <HBox spacing="5">
+            <Label text="Default Color:"/>
+            <ColorPicker fx:id="defaultColorPicker"/>
+          </HBox>
+        </VBox>
+      </Tab>
+
+      <!-- Web Server Settings -->
+      <Tab text="Web Server">
+        <VBox spacing="10">
+          <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+          </padding>
+          <Button fx:id="startServer" onAction="#startServer" text="Start Web Server"/>
+          <Button fx:id="openServerInBrowser" onAction="#openServer" text="Open Web Server"/>
+          <Button fx:id="stopServer" onAction="#stopServer" text="Stop Web Server"/>
+        </VBox>
+      </Tab>
+    </tabs>
+  </TabPane>
+</FlowPane>

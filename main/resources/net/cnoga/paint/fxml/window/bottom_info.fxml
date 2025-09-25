@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
-
-<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.fxml_controllers.window.BottomInfoController">
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.core.fxml_controllers.window.BottomInfoController">
   <Label text="Canvas info will be placed here. Coming Soon!" fx:id="textStatus"/>
 </HBox>

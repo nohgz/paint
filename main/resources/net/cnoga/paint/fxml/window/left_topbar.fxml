@@ -6,7 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <MenuBar xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.fxml_controllers.window.LeftTopbarController">
+  fx:controller="net.cnoga.paint.core.fxml_controllers.window.LeftTopbarController">
   <Menu text="File">
     <MenuItem fx:id="left_topbar_new_file" text="New" onAction="#onFileNew">
       <graphic>

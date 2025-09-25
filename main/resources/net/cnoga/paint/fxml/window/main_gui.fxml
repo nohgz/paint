@@ -4,8 +4,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.fxml_controllers.MainController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.core.fxml_controllers.MainController">
     <!--The items here are core functionality. Everything else can become
      its own separate window or can be added with another class.-->
     <top>

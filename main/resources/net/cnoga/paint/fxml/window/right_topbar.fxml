@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.control.MenuItem?>
-<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.fxml_controllers.window.RightTopbarController">
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.core.fxml_controllers.window.RightTopbarController">
   <ToggleButton fx:id = "right_topbar_tools" onAction="#onOpenTools">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">

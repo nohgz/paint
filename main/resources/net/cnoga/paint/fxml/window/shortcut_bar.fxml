@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Tooltip?>
-<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.fxml_controllers.window.ShortcutBarController">
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.core.fxml_controllers.window.ShortcutBarController">
   <Button fx:id = "shortcut_bar_new" onAction="#onNewFile">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
