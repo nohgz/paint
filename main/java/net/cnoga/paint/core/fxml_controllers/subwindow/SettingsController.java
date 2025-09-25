@@ -1,5 +1,9 @@
 package net.cnoga.paint.core.fxml_controllers.subwindow;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import net.cnoga.paint.core.bus.EventBusPublisher;
@@ -23,10 +27,27 @@ public class SettingsController extends EventBusPublisher {
   }
 
   public void openServer(ActionEvent actionEvent) {
-    System.out.println("[SettingsController] NEW THING");
+    openLink("http://localhost:25565/");
   }
 
   public void stopServer(ActionEvent actionEvent) {
     bus.post(new StopServerRequest());
+  }
+
+
+  // Convenience borrowed from ProgramBrew. should maybe put this in a
+  // util class for dry
+  public static void openLink(String url) {
+    if (Desktop.isDesktopSupported()) {
+      new Thread(() -> {
+        try {
+          Desktop.getDesktop().browse(new URI(url));
+        } catch (IOException | URISyntaxException e) {
+          e.printStackTrace();
+        }
+      }).start();
+    } else {
+      System.err.println("Desktop browsing not supported.");
+    }
   }
 }

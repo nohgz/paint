@@ -15,4 +15,5 @@ module net.cnoga.paint {
   exports net.cnoga.paint.core.fxml_controllers.subwindow;
   exports net.cnoga.paint.core.fxml_controllers;
   opens net.cnoga.paint.core.fxml_controllers to javafx.fxml;
+  exports net.cnoga.paint.core.bus;
 }

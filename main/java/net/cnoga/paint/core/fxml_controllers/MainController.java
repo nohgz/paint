@@ -19,7 +19,7 @@ import net.cnoga.paint.core.fxml_controllers.window.ShortcutBarController;
 import net.cnoga.paint.core.fxml_controllers.window.ToolInfoController;
 import net.cnoga.paint.core.fxml_controllers.window.WorkspaceController;
 import net.cnoga.paint.server.SimpleWebServer;
-import net.cnoga.paint.server.SimpleWebServerBrew;
+import net.cnoga.paint.core.brews.SimpleWebServerBrew;
 
 /**
  * The root JavaFX controller for the application.

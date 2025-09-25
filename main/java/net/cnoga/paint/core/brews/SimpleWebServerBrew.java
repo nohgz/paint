@@ -1,4 +1,4 @@
-package net.cnoga.paint.server;
+package net.cnoga.paint.core.brews;
 
 import java.io.IOException;
 import net.cnoga.paint.core.bus.EventBusPublisher;
@@ -6,10 +6,10 @@ import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.SubscribeEvent;
 import net.cnoga.paint.core.bus.events.request.StartServerRequest;
 import net.cnoga.paint.core.bus.events.request.StopServerRequest;
+import net.cnoga.paint.server.SimpleWebServer;
 
 @EventBusSubscriber
 public class SimpleWebServerBrew extends EventBusPublisher {
-
 
   private final SimpleWebServer server;
   public SimpleWebServerBrew(SimpleWebServer server) {
@@ -30,5 +30,4 @@ public class SimpleWebServerBrew extends EventBusPublisher {
   private void stopServer(StopServerRequest req) {
     server.stop(0);
   }
-
 }

@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import net.cnoga.paint.core.brews.WorkspaceBrew;
 import net.cnoga.paint.core.workspace.Workspace;
@@ -134,7 +136,9 @@ public class SimpleWebServer {
         CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
-          canvas.snapshot(null, fxImage);
+          SnapshotParameters params = new SnapshotParameters();
+          params.setFill(Color.TRANSPARENT);
+          canvas.snapshot(params, fxImage);
           latch.countDown();
         });
 
