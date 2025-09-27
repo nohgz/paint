@@ -1,10 +1,12 @@
 package net.cnoga.paint.core.fxml_controllers.window;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.SubscribeEvent;
+import net.cnoga.paint.core.bus.events.response.AutosaveTimeChangedEvent;
 import net.cnoga.paint.core.bus.events.response.FileOpenedEvent;
 import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
 
@@ -27,6 +29,7 @@ import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
 public class BottomInfoController extends EventBusPublisher {
 
   public Label textStatus;
+  public Label autosaveTimer;
 
   @FXML
   private void initialize() {
@@ -36,5 +39,12 @@ public class BottomInfoController extends EventBusPublisher {
   @SubscribeEvent
   private void onToolChanged(ToolChangedEvent evt) {
     textStatus.setText(evt.tool().getHelpInfo());
+  }
+
+  @SubscribeEvent
+  private void timeChanged(AutosaveTimeChangedEvent evt) {
+    Platform.runLater(() -> {
+      autosaveTimer.setText("Time until Autosave: " + String.valueOf(evt.seconds()));
+    });
   }
 }

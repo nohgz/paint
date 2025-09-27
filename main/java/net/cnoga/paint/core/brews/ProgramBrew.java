@@ -45,7 +45,7 @@ public class ProgramBrew extends EventBusPublisher {
     bus.register(this);
 
     closeProgram = () -> {
-      primaryStage.close();
+      bus.post(new ForceCloseProgramRequest());
     };
 
   }

@@ -60,7 +60,6 @@ public class FileIOBrew extends EventBusPublisher {
     }
   }
 
-  // does the save handling
   @SubscribeEvent
   private void onWorkspaceSavedAs(WorkspaceSavedAsEvent evt) {
     Workspace ws = evt.workspace();
@@ -71,12 +70,27 @@ public class FileIOBrew extends EventBusPublisher {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Save Workspace As...");
 
-    // Add file extension filters
+    String originalExt = "";
+    if (ws.getFile() != null) {
+      originalExt = getFileExtension(ws.getFile().getName()).toLowerCase();
+    }
+
+    boolean originallyLossy = originalExt.equals("jpg") || originalExt.equals("jpeg");
+
     fileChooser.getExtensionFilters().addAll(
       new ExtensionFilter("PNG Image", "*.png"),
-      new ExtensionFilter("JPEG Image", "*.jpg", "*.jpeg"),
       new ExtensionFilter("BMP Image", "*.bmp")
     );
+
+    if (originallyLossy) {
+      fileChooser.getExtensionFilters().add(
+        new ExtensionFilter("JPEG Image", "*.jpg", "*.jpeg")
+      );
+    } else {
+      fileChooser.getExtensionFilters().add(
+        new ExtensionFilter("JPEG Image (Warning: May be lossy)", "*.jpg", "*.jpeg")
+      );
+    }
 
     File file = fileChooser.showSaveDialog(stage);
     if (file != null) {
@@ -89,7 +103,6 @@ public class FileIOBrew extends EventBusPublisher {
       }
     }
   }
-
 
   @SubscribeEvent
   private void onWorkspaceSaved(WorkspaceSavedEvent evt) {
@@ -105,15 +118,14 @@ public class FileIOBrew extends EventBusPublisher {
     }
   }
 
-
-  // does the actual saving
+  // Saving logic
   public void saveWorkspace(Workspace ws) throws IOException, ImageWriteException {
     File file = ws.getFile();
     if (ws == null || file == null) {
       return;
     }
 
-    Canvas base = ws.getBaseLayer(); // TODO: Make this flatten all user-defined layers down. for now this works
+    Canvas base = ws.getBaseLayer();
 
     WritableImage writableImage = new WritableImage(
       (int) base.getWidth(),

@@ -46,7 +46,6 @@ public class EventBusTest {
     }
   }
 
-
   @EventBusSubscriber
   class InvalidMultiSubscriber {
     @SubscribeEvent
@@ -54,7 +53,7 @@ public class EventBusTest {
   }
 
   @Test
-  void testSingleSubscriberReceivevsEvent() {
+  void testSingleSubscriberReceivesEvent() {
     TestSubscriber subscriber = new TestSubscriber();
     EventBus bus = EventBus.getInstance();
     bus.register(subscriber);

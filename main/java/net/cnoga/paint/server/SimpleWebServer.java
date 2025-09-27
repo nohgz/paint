@@ -53,7 +53,7 @@ public class SimpleWebServer {
   /**
    * Stops the HTTP server gracefully.
    *
-   * @param delaySeconds the delay in seconds before forcibly closing existing connections
+   * @param delaySeconds the delay in minutes before forcibly closing existing connections
    */
   public void stop(int delaySeconds) {
     if (server != null) {

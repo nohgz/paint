@@ -11,6 +11,9 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.SpinnerValueFactory?>
+<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <FlowPane xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
   fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.SettingsController"
@@ -23,10 +26,16 @@
           <padding>
             <Insets top="10" right="10" bottom="10" left="10"/>
           </padding>
-          <CheckBox fx:id="autosaveCheckBox" text="Enable Autosave"/>
+          <CheckBox fx:id="autosaveCheckBox" text="Enable Autosave" onAction="#toggleAutosave"/>
           <HBox spacing="5">
             <Label text="Autosave Interval (minutes):"/>
-            <Spinner fx:id="autosaveIntervalSpinner" prefWidth="80"/>
+            <Spinner fx:id="autosaveIntervalSpinner" prefWidth="80">
+              <valueFactory>
+                <SpinnerValueFactory.IntegerSpinnerValueFactory
+                  xmlns="javafx.scene.control"
+                  min="1" max="60" initialValue="5"/>
+              </valueFactory>
+            </Spinner>
           </HBox>
           <CheckBox fx:id="darkModeCheckBox" text="Enable Dark Mode"/>
         </VBox>

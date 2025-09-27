@@ -5,11 +5,16 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Spinner;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
+import net.cnoga.paint.core.bus.events.request.SetAutosaveIntervalRequest;
 import net.cnoga.paint.core.bus.events.request.StartServerRequest;
 import net.cnoga.paint.core.bus.events.request.StopServerRequest;
+import net.cnoga.paint.core.bus.events.request.ToggleAutosaveRequest;
 
 @EventBusSubscriber
 public class SettingsController extends EventBusPublisher {
@@ -17,10 +22,20 @@ public class SettingsController extends EventBusPublisher {
   public Button startServer;
   public Button openServerInBrowser;
   public Button stopServer;
+  public CheckBox autosaveCheckBox;
+  public Spinner autosaveIntervalSpinner;
 
   public SettingsController() {
     bus.register(this);
   }
+
+  @FXML
+  private void initialize() {
+    autosaveIntervalSpinner.valueProperty().addListener((obs, oldVal, newVal) -> {
+      bus.post(new SetAutosaveIntervalRequest((int) newVal));
+    });
+  }
+
 
   public void startServer(ActionEvent actionEvent) {
     bus.post(new StartServerRequest());
@@ -49,5 +64,9 @@ public class SettingsController extends EventBusPublisher {
     } else {
       System.err.println("Desktop browsing not supported.");
     }
+  }
+
+  public void toggleAutosave(ActionEvent actionEvent) {
+    bus.post(new ToggleAutosaveRequest());
   }
 }

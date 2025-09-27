@@ -1,3 +1,19 @@
+Chris' Pain(t) 5.0.0 - 9/26/2025
+
+"The Server and Save Update"
+
+# New Features:
+- Added unit testing for the event bus to ensure that nothing about it changes
+- Added a webserver to present one or more of the images as selected by the user.
+- Added the ability to save in an alternative file format than the one that was the original for the image.
+- Added a warning image features/data loss can happen.
+- The software shall have a timer that allows for autosave.
+
+# Known Issues:
+- The autosave isn't done on the main javaFX thread- so I have to do a bunch of annoying Platform.runlater() BS
+
+# Next Sprint Hopes
+
 Chris' Pain(t) 4.0.0 - 9/22/2025
 
 "The Real Paint Program Update"

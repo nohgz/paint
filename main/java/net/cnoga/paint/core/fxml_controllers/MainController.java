@@ -4,6 +4,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import net.cnoga.paint.core.brews.AutosaveBrew;
 import net.cnoga.paint.core.brews.FileIOBrew;
 import net.cnoga.paint.core.brews.KeystrokeBrew;
 import net.cnoga.paint.core.brews.ProgramBrew;
@@ -59,6 +60,8 @@ public class MainController extends EventBusPublisher {
   private KeystrokeBrew keystrokeBrew;
   private SimpleWebServerBrew simpleWebServerBrew;
 
+  private AutosaveBrew autosaveBrew;
+
   /**
    * Initializes the main controller and wires up the application.
    * <p>
@@ -76,6 +79,7 @@ public class MainController extends EventBusPublisher {
     workspaceBrew = new WorkspaceBrew();
     subwindowBrew = new SubWindowBrew(primaryStage);
     keystrokeBrew = new KeystrokeBrew(primaryScene);
+    autosaveBrew = new AutosaveBrew();
 
     // Connect the stuff in the program to the services
     workspaceController.initWorkspaceService();
