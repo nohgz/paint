@@ -109,7 +109,8 @@ public class ToolInfoController extends EventBusPublisher {
           && !"Brush Size: ".equals(((Label) node).getText()))
     );
 
-    if (config.type() == ShapeType.N_GON) {
+    if (config.type() == ShapeType.N_GON || config.type() == ShapeType.STAR) {
+
       Label sidesLabel = new Label("Sides: ");
       sidesSpinner = new Spinner<>(3, 50, config.sides(), 1);
       sidesSpinner.setEditable(true);

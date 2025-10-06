@@ -14,7 +14,7 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="New Image" showDelay="0.5s"/>
+      <Tooltip text="New Image" showDelay="0.3s"/>
     </tooltip>
   </Button>
 
@@ -26,7 +26,7 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="Open Image" showDelay="0.5s"/>
+      <Tooltip text="Open Image" showDelay="0.3s"/>
     </tooltip>
   </Button>
 
@@ -38,7 +38,7 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="Save Image" showDelay="0.5s"/>
+      <Tooltip text="Save Image" showDelay="0.3s"/>
     </tooltip>
   </Button>
 
@@ -50,7 +50,7 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="Save Image As" showDelay="0.5s"/>
+      <Tooltip text="Save Image As" showDelay="0.3s"/>
     </tooltip>
   </Button>
 
@@ -62,7 +62,7 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="Clear Workspace" showDelay="0.5s"/>
+      <Tooltip text="Clear Workspace" showDelay="0.3s"/>
     </tooltip>
   </Button>
 </HBox>

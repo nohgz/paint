@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 Chris' Pain(t) 5.0.0 - 9/26/2025
 
 "The Server and Save Update"
@@ -6,13 +13,20 @@ Chris' Pain(t) 5.0.0 - 9/26/2025
 - Added unit testing for the event bus to ensure that nothing about it changes
 - Added a webserver to present one or more of the images as selected by the user.
 - Added the ability to save in an alternative file format than the one that was the original for the image.
-- Added a warning image features/data loss can happen.
-- The software shall have a timer that allows for autosave.
+- Added a warning image features/data loss can happen when saving to lossy formats.
+- Added a timer that allows for autosave, which can be toggled on and off in the settings menu.
 
 # Known Issues:
-- The autosave isn't done on the main javaFX thread- so I have to do a bunch of annoying Platform.runlater() BS
+- The autosave isn't done on the main javaFX thread- so I have to do a bunch of annoying Platform.runlater() BS to get
+  it to work. I don't like this..?
 
 # Next Sprint Hopes
+?
+
+# Links
+GitHub - https://github.com/nohgz/paint
+
+--------------------------------------------------
 
 Chris' Pain(t) 4.0.0 - 9/22/2025
 

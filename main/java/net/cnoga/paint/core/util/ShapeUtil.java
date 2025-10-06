@@ -61,6 +61,7 @@ public final class ShapeUtil {
         }
       }
       case N_GON -> drawRegularPolygon(gc, x0, y0, x1, y1, config.sides());
+      case STAR -> drawStar(gc, x0, y0, x1, y1, config.sides());
       case DONUT -> drawDonut(gc, x0, y0, x1, y1);
     }
   }
@@ -108,5 +109,33 @@ public final class ShapeUtil {
     double innerDiameter = outerDiameter / 2;
     gc.strokeOval(centerX - innerDiameter / 2, centerY - innerDiameter / 2,
       innerDiameter, innerDiameter);
+  }
+
+  /**
+   * Draws a star with the given number of points.
+   */
+  public static void drawStar(GraphicsContext gc,
+    double x0, double y0, double x1, double y1,
+    int points) {
+    if (points < 2)
+      return;
+
+    double centerX = (x0 + x1) / 2;
+    double centerY = (y0 + y1) / 2;
+    double outerRadius = Math.min(Math.abs(x1 - x0), Math.abs(y1 - y0)) / 2;
+    double innerRadius = outerRadius * 0.5; // can tweak to make spikes longer/shorter
+
+    int totalVertices = points * 2;
+    double[] xs = new double[totalVertices];
+    double[] ys = new double[totalVertices];
+
+    for (int i = 0; i < totalVertices; i++) {
+      double angle = Math.PI / points * i - Math.PI / 2;
+      double r = (i % 2 == 0) ? outerRadius : innerRadius;
+      xs[i] = centerX + r * Math.cos(angle);
+      ys[i] = centerY + r * Math.sin(angle);
+    }
+
+    gc.strokePolygon(xs, ys, totalVertices);
   }
 }

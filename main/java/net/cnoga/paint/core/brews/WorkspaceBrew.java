@@ -60,9 +60,6 @@ public class WorkspaceBrew extends EventBusPublisher {
     bus.register(this);
     new NewWorkspacePopup();
     new ClearWorkspacePopup();
-
-    // spin up a webserver that can see the workspaces
-
   }
 
   /**

@@ -7,5 +7,6 @@ public enum ShapeType {
   CIRCLE,
   TRIANGLE,
   N_GON,
-  DONUT
+  DONUT,
+  STAR
 }

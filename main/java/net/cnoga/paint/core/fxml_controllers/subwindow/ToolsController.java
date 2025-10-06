@@ -3,6 +3,7 @@ package net.cnoga.paint.core.fxml_controllers.subwindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -34,7 +35,6 @@ import net.cnoga.paint.core.tool.ToolRegistry;
  * @version 1.0
  */
 public class ToolsController extends EventBusPublisher {
-
   private final ToggleGroup toolGroup = new ToggleGroup();
   @FXML
   private GridPane toolGrid;
@@ -73,6 +73,9 @@ public class ToolsController extends EventBusPublisher {
 
       btn.setGraphic(icon);
       btn.setToggleGroup(toolGroup);
+
+      Tooltip tooltip = new Tooltip(tool.getName());
+      Tooltip.install(btn, tooltip);
 
       btn.setOnAction(e -> {
         if (btn.isSelected()) {

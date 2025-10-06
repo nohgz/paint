@@ -48,6 +48,9 @@
         <Image url="@../../icons/menu/settings_icon.png"/>
       </ImageView>
     </graphic>
+    <tooltip>
+      <Tooltip text="Show Settings" showDelay="0.3s"/>
+    </tooltip>
   </ToggleButton>
 
   <Separator orientation="VERTICAL"/>
@@ -58,6 +61,10 @@
         <Image url="@../../icons/menu/help_icon.png"/>
       </ImageView>
     </graphic>
+
+    <tooltip>
+      <Tooltip text="Show Information" showDelay="0.3s"/>
+    </tooltip>
     <items>
       <MenuItem text="Help" onAction="#onOpenHelp">
         <graphic>
