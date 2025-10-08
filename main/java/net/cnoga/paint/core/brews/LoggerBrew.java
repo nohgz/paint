@@ -79,10 +79,6 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     log.info("LoggerBrew shutting down...");
   }
 
-  /* =============================================================
-   *                       EVENT LOGGING
-   * ============================================================= */
-
   private void enqueue(String message) {
     String timestamp = "[" + LocalDateTime.now().format(TS_FORMAT) + "] ";
     logQueue.offer(timestamp + message);

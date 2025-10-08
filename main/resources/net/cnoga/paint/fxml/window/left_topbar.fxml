@@ -56,6 +56,12 @@
   </Menu>
 
   <Menu text="Image">
+
+    <MenuItem fx:id="left_topbar_rotate90" text="Rotate 90" onAction="#onRotate90"/>
+    <MenuItem fx:id="left_topbar_rotate180" text="Rotate 180" onAction="#onRotate180"/>
+    <MenuItem fx:id="left_topbar_rotate270" text="Rotate 270" onAction="#onRotate270"/>
+    <MenuItem fx:id="left_topbar_flipHorizontal" text="Flip Horizontal" onAction="#onFlipHorizontal"/>
+    <MenuItem fx:id="left_topbar_flipVertical" text="Flip Vertical" onAction="#onFlipVertical"/>
   </Menu>
 
 </MenuBar>

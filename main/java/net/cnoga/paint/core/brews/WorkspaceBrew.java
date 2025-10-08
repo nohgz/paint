@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Tab;
@@ -25,6 +26,7 @@ import net.cnoga.paint.core.bus.events.request.FocusWorkspaceRequest;
 import net.cnoga.paint.core.bus.events.request.GetDirtyWorkspacesRequest;
 import net.cnoga.paint.core.bus.events.request.NewWorkspaceRequest;
 import net.cnoga.paint.core.bus.events.request.PasteSelectionRequest;
+import net.cnoga.paint.core.bus.events.request.TransformWorkspaceRequest;
 import net.cnoga.paint.core.bus.events.request.WorkspaceSaveAsRequest;
 import net.cnoga.paint.core.bus.events.request.WorkspaceSaveRequest;
 import net.cnoga.paint.core.bus.events.response.FileOpenedEvent;
@@ -246,6 +248,82 @@ public class WorkspaceBrew extends EventBusPublisher {
       ws.getScrollPane().setPannable(evt.tool() instanceof PanTool);
     }
     this.currentTool = evt.tool();
+  }
+
+  @SubscribeEvent
+  private void onTransformWorkspace(TransformWorkspaceRequest req) {
+    Workspace ws = getActiveWorkspace();
+    if (ws == null) return;
+
+    int degrees = ((req.degrees() % 360) + 360) % 360;
+    if (degrees != 0 && degrees != 90 && degrees != 180 && degrees != 270) {
+      System.err.println("Unsupported rotation: " + degrees);
+      return;
+    }
+
+    // Rotate all layers in-place
+    for (Canvas layer : ws.getLayers()) {
+      rotateAndMirrorInPlace(layer, degrees, req.mirrorX(), req.mirrorY());
+    }
+
+    // Refresh layout (important when size changes)
+    ws.getScrollPane().requestLayout();
+
+    ws.setDirty(true);
+  }
+
+
+  private void rotateAndMirrorInPlace(Canvas canvas, int degrees, boolean mirrorX, boolean mirrorY) {
+    double w = canvas.getWidth();
+    double h = canvas.getHeight();
+
+    SnapshotParameters params = new SnapshotParameters();
+    params.setFill(Color.TRANSPARENT);
+
+    Image snapshot = canvas.snapshot(params, null);
+    GraphicsContext gc = canvas.getGraphicsContext2D();
+
+    // Compute new dimensions
+    double newW = (degrees == 90 || degrees == 270) ? h : w;
+    double newH = (degrees == 90 || degrees == 270) ? w : h;
+
+    // Resize canvas *in place* (this does NOT replace it, just resizes its buffer)
+    canvas.setWidth(newW);
+    canvas.setHeight(newH);
+
+    gc.setTransform(1, 0, 0, 1, 0, 0);
+    gc.clearRect(0, 0, newW, newH);
+
+    gc.save();
+
+    // Set up transforms based on rotation
+    switch (degrees) {
+      case 90 -> {
+        gc.translate(newW, 0);
+        gc.rotate(90);
+      }
+      case 180 -> {
+        gc.translate(newW, newH);
+        gc.rotate(180);
+      }
+      case 270 -> {
+        gc.translate(0, newH);
+        gc.rotate(270);
+      }
+      default -> {} // 0° rotation does nothing
+    }
+
+    // Apply mirrors
+    double scaleX = mirrorX ? -1 : 1;
+    double scaleY = mirrorY ? -1 : 1;
+    gc.scale(scaleX, scaleY);
+
+    // Adjust for mirroring (keeps origin consistent)
+    if (mirrorX) gc.translate(-w, 0);
+    if (mirrorY) gc.translate(0, -h);
+
+    gc.drawImage(snapshot, 0, 0);
+    gc.restore();
   }
 
   /**

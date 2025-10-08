@@ -7,6 +7,7 @@ import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.events.request.CloseProgramRequest;
 import net.cnoga.paint.core.bus.events.request.FileOpenRequest;
 import net.cnoga.paint.core.bus.events.request.ShowNewWorkspacePopupRequest;
+import net.cnoga.paint.core.bus.events.request.TransformWorkspaceRequest;
 import net.cnoga.paint.core.bus.events.request.WorkspaceSaveAsRequest;
 import net.cnoga.paint.core.bus.events.request.WorkspaceSaveRequest;
 
@@ -42,6 +43,7 @@ public class LeftTopbarController extends EventBusPublisher {
   public MenuItem left_topbar_file_save_as;
   public MenuItem left_topbar_exit;
 
+  // ---- FILE ----
   @FXML
   private void onFileNew(ActionEvent event) {
     bus.post(new ShowNewWorkspacePopupRequest());
@@ -65,5 +67,31 @@ public class LeftTopbarController extends EventBusPublisher {
   @FXML
   private void onAppExit(ActionEvent event) {
     bus.post(new CloseProgramRequest());
+  }
+
+  // --- IMAGE ----
+  @FXML
+  private void onRotate90(ActionEvent event) {
+    bus.post(new TransformWorkspaceRequest(90, false, false));
+  }
+
+  @FXML
+  private void onRotate180(ActionEvent event) {
+    bus.post(new TransformWorkspaceRequest(180, false, false));
+  }
+
+  @FXML
+  private void onRotate270(ActionEvent event) {
+    bus.post(new TransformWorkspaceRequest(270, false, false));
+  }
+
+  @FXML
+  public void onFlipHorizontal(ActionEvent actionEvent) {
+    bus.post(new TransformWorkspaceRequest(0, true, false));
+  }
+
+  @FXML
+  public void onFlipVertical(ActionEvent actionEvent) {
+    bus.post(new TransformWorkspaceRequest(0, false, true));
   }
 }

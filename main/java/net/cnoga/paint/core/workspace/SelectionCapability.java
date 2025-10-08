@@ -26,6 +26,8 @@ public class SelectionCapability extends EventBusPublisher {
   private Rectangle2D selectionBounds;
   private double offsetX, offsetY;
   private boolean copyMode = false;
+  private double rotationAngle;
+
 
   public SelectionCapability(Workspace workspace) {
     this.workspace = workspace;

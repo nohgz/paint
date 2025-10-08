@@ -140,6 +140,10 @@ public class Workspace {
     canvasGroup.getChildren().remove(layer);
   }
 
+
+
+
+
   /**
    * Determines if a given layer is one of the reserved layers.
    *
@@ -152,6 +156,18 @@ public class Workspace {
       || layer == getEffectsLayer();
   }
 
+  /**
+   * Replaces all layers in this workspace with the given list.
+   * Preserves the visual stacking order.
+   */
+  public void replaceLayers(List<Canvas> newLayers) {
+    if (newLayers == null || newLayers.size() != layers.size()) {
+      throw new IllegalArgumentException("Layer count mismatch");
+    }
+    layers.clear();
+    layers.addAll(newLayers);
+    canvasGroup.getChildren().setAll(newLayers);
+  }
 
   /**
    * @return true if workspace has unsaved changes
