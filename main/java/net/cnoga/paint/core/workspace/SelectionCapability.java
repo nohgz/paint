@@ -14,6 +14,7 @@ import net.cnoga.paint.core.bus.SubscribeEvent;
 import net.cnoga.paint.core.bus.events.request.CommitSelectionRequest;
 import net.cnoga.paint.core.bus.events.request.CopySelectionRequest;
 import net.cnoga.paint.core.bus.events.request.MoveSelectionRequest;
+import net.cnoga.paint.core.bus.events.request.RotateSelectionRequest;
 import net.cnoga.paint.core.bus.events.request.SelectionRequest;
 import net.cnoga.paint.core.bus.events.response.SelectionPastedEvent;
 import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
@@ -52,6 +53,11 @@ public class SelectionCapability extends EventBusPublisher {
     copyMode = false; // selection means we are cutting by default
 
     previewSelection(selectionBounds.getMinX(), selectionBounds.getMinY());
+  }
+
+  @SubscribeEvent
+  private void onRotateSelectionRequest(RotateSelectionRequest req) {
+    rotateSelection(req.degrees());
   }
 
   @SubscribeEvent
@@ -99,6 +105,53 @@ public class SelectionCapability extends EventBusPublisher {
     selectionBounds = null;
     offsetX = offsetY = 0;
     copyMode = false;
+  }
+
+  /**
+   * Rotates the current selection by the specified angle in degrees.
+   * This updates the buffer in memory, so repeated calls accumulate.
+   */
+  public void rotateSelection(double angleDegrees) {
+    if (buffer == null) {
+      return;
+    }
+
+    rotationAngle = (rotationAngle + angleDegrees) % 360;
+
+    double width = buffer.getWidth();
+    double height = buffer.getHeight();
+
+    // Compute rotated bounds to fit the rotated image
+    double radians = Math.toRadians(angleDegrees);
+    double cos = Math.abs(Math.cos(radians));
+    double sin = Math.abs(Math.sin(radians));
+    double newWidth = width * cos + height * sin;
+    double newHeight = width * sin + height * cos;
+
+    WritableImage rotated = new WritableImage((int) Math.ceil(newWidth), (int) Math.ceil(newHeight));
+
+    GraphicsContext gc = workspace.getEffectsLayer().getGraphicsContext2D();
+    SnapshotParameters params = new SnapshotParameters();
+    params.setFill(Color.TRANSPARENT);
+
+    // Draw rotated image into new buffer
+    javafx.scene.canvas.Canvas tempCanvas = new javafx.scene.canvas.Canvas(newWidth, newHeight);
+    GraphicsContext tempGC = tempCanvas.getGraphicsContext2D();
+
+    tempGC.save();
+    tempGC.translate(newWidth / 2, newHeight / 2);
+    tempGC.rotate(angleDegrees);
+    tempGC.drawImage(buffer, -width / 2, -height / 2);
+    tempGC.restore();
+
+    tempCanvas.snapshot(params, rotated);
+
+    buffer = rotated;
+
+    // Update selection bounds to new image size
+    selectionBounds = new Rectangle2D(selectionBounds.getMinX(), selectionBounds.getMinY(), newWidth, newHeight);
+
+    previewSelection(selectionBounds.getMinX() + offsetX, selectionBounds.getMinY() + offsetY);
   }
 
   private void previewSelection(double x, double y) {

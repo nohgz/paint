@@ -1,9 +1,39 @@
+Chris' Pain(t) 6.0.0 - 10/7/2025
 
+"The Great Rotate Update"
 
+# New Features:
+* 90 degree rotations of the canvas / selection
+* Horizontal + Vertical Mirroring of the canvas. (selection NYI)
+* Autosave Notifications from the OS when the autosave triggers.
+* Tooltips for all buttons
+* N-Sided Star
+* Threaded logging using log4j (version 2.3.2, which is safe from the RCE vulnerability (CVE-2021-44228) )
 
+# Known Issues:
+- Rotations of selections leaves what was there already. Not intentional.
 
+# Polish Round Hopes
+- Theme (Dark/Light/User Defined?) support
+- Tight coupling of the selection stuff.
+- A review of what really needs to be an Event.
+  - I'm hoping to cut down on a few things that *really* shouldn't be events. There are quite a lot.
+- Zoom/UI overhaul
+  - Arbitrary panning of viewport for better drawing experience.
+  - Finally centering the canvas. I really really really hate how it's just sitting there in the top left.
+- Persistent user settings.
+  - I.e. which subwindows (tools, layers) to have open.
+- Layer system
+- Arbitrary angle rotations for selection.
+  - This is an example of Affine-Based things...
+- Panning and selection are blurry. This is because the GraphicsContext tries to screenshot everything and compress it.
+  - I will likely try to first disable this via GraphicsContext2D#setImageSmoothing(false)
+  - But more likely than not I may have to roll with a straight PixelReader/Writer.
 
+# Links
+GitHub - https://github.com/nohgz/paint
 
+--------------------------------------------------
 
 Chris' Pain(t) 5.0.0 - 9/26/2025
 
