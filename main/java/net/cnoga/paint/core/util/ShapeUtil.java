@@ -3,17 +3,12 @@ package net.cnoga.paint.core.util;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * Utility class for shape drawing operations.
+ * Utility methods for creating and rendering common geometric shapes.
  *
- * <p>Provides helper methods for drawing rectangles, ellipses, polygons,
- * and other shapes onto a {@link GraphicsContext}. Coordinates are interpreted as opposite corners
- * of a bounding box.</p>
+ * <p>Supports rectangle, ellipse, polygon, and path generation
+ * with fill and stroke application.</p>
  */
 public final class ShapeUtil {
-
-  private ShapeUtil() {
-    // Prevent instantiation
-  }
 
   /**
    * Draws a shape defined by two bounding coordinates and a ShapeConfig.
@@ -34,12 +29,16 @@ public final class ShapeUtil {
     double height = Math.abs(y1 - y0);
 
     switch (config.type()) {
-      case RECTANGLE -> gc.strokeRect(left, top, width, height);
+      case RECTANGLE -> {
+        gc.strokeRect(left, top, width, height);
+      }
       case SQUARE -> {
         double side = Math.max(width, height);
         gc.strokeRect(left, top, side, side);
       }
-      case ELLIPSE -> gc.strokeOval(left, top, width, height);
+      case ELLIPSE -> {
+        gc.strokeOval(left, top, width, height);
+      }
       case CIRCLE -> {
         double diameter = Math.max(width, height);
         gc.strokeOval(left, top, diameter, diameter);
@@ -62,7 +61,7 @@ public final class ShapeUtil {
       }
       case N_GON -> drawRegularPolygon(gc, x0, y0, x1, y1, config.sides());
       case STAR -> drawStar(gc, x0, y0, x1, y1, config.sides());
-      case DONUT -> drawDonut(gc, x0, y0, x1, y1);
+      case DONUT -> drawDonut(gc, left, top, width, height);
     }
   }
 
@@ -90,12 +89,7 @@ public final class ShapeUtil {
    * Draws a donut: two concentric circles (outer + inner "hole").
    */
   public static void drawDonut(GraphicsContext gc,
-    double x0, double y0, double x1, double y1) {
-
-    double left = Math.min(x0, x1);
-    double top = Math.min(y0, y1);
-    double width = Math.abs(x1 - x0);
-    double height = Math.abs(y1 - y0);
+    double left, double top, double width, double height) {
 
     // Outer circle
     double outerDiameter = Math.max(width, height);

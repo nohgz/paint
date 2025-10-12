@@ -66,6 +66,7 @@ public class UndoRedoCapability extends EventBusPublisher {
 
   private void applyToCanvas(Canvas canvas, WritableImage img) {
     var gc = canvas.getGraphicsContext2D();
+    gc.setImageSmoothing(false);
     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     gc.drawImage(img, 0, 0);
   }

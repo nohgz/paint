@@ -8,44 +8,66 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 /**
- * A simple publish/subscribe event bus.
+ * A simple event bus for program-wide reactive programming tasks.
+ * <p>This implementation uses reflection to discover subscriber methods
+ * annotated with {@link SubscribeEvent} in classes annotated with
+ * {@link EventBusSubscriber}.
+ * </p>
+ *
  * <p>
- * Subscribers register methods to handle events of a specific type, and publishers post events to
- * be delivered to all matching subscribers.
+ * Subscribers register listener methods for specific event types,
+ * and publishers post events that are automatically delivered to all
+ * matching subscribers.
+ * </p>
+ *
+ * <p>Example usage:</p>
+ * <pre>{@code
+ * @EventBusSubscriber
+ * public class ToolManager {
+ *     @SubscribeEvent
+ *     public void onUndo(UndoRequestEvent e) {
+ *         // handle undo
+ *     }
+ * }
+ * }</pre>
  *
  * @author cnoga
- * @version 1.1
+ * @version 1.2
  */
 public class EventBus {
 
+  /** Singleton instance of the global event bus. */
   private static final EventBus INSTANCE = new EventBus();
 
+  /** Map of event type to subscribers interested in that type. */
   private final Map<Class<?>, List<Consumer<?>>> listeners = new ConcurrentHashMap<>();
 
-  // private constructor to enforce singleton
+  /** Private constructor to enforce singleton use. */
   private EventBus() {
   }
 
   /**
-   * Get the global singleton instance of the EventBus.
+   * Returns the shared singleton {@link EventBus} instance.
+   * Only the launcher should be aware of this.
+   * @return global event bus instance
    */
   public static EventBus getInstance() {
     return INSTANCE;
   }
 
   /**
-   * Register all @SubscribeEvent methods in a class marked @EventBusSubscriber. Methods must take
-   * exactly one parameter = event type.
+   * Registers all {@link SubscribeEvent} methods of an {@link EventBusSubscriber}.
+   * <p>
+   * Each annotated method must take exactly one argument.
+   * </p>
    *
-   * @param subscriber - The subscriber to the event bus.
+   * @param subscriber object containing event handler methods.
+   * @throws IllegalArgumentException if the class or methods are misannotated.
    */
   public void register(Object subscriber) {
     Class<?> clazz = subscriber.getClass();
     System.out.println("[EventBus] Registered: " + clazz);
 
-    // Enforce class level annotations, as it doesn't make
-    // sense for a SubscribeEvent method to not be subscribed
-    // to the event bus.
     if (!clazz.isAnnotationPresent(EventBusSubscriber.class)) {
       throw new IllegalArgumentException(
         "Class " + clazz.getName() + " must be annotated with @EventBusSubscriber"
@@ -54,7 +76,6 @@ public class EventBus {
 
     for (Method method : clazz.getDeclaredMethods()) {
       if (method.isAnnotationPresent(SubscribeEvent.class)) {
-        // Check # of params
         Class<?>[] params = method.getParameterTypes();
         if (params.length != 1) {
           throw new IllegalArgumentException(
@@ -66,7 +87,6 @@ public class EventBus {
         Class<?> eventType = params[0];
         method.setAccessible(true);
 
-        // wrap the reflection's call in a consumer
         Consumer<Object> consumer = event -> {
           try {
             method.invoke(subscriber, event);
@@ -77,17 +97,15 @@ public class EventBus {
           }
         };
 
-        listeners
-          .computeIfAbsent(eventType, k -> new ArrayList<>())
-          .add(consumer);
+        listeners.computeIfAbsent(eventType, k -> new ArrayList<>()).add(consumer);
       }
     }
   }
 
   /**
-   * Post an event to all subscribers on the event bus listening for its type.
+   * Publishes an event to all listeners registered for its type.
    *
-   * @param event - The event the bus posts.
+   * @param event the event to post
    */
   @SuppressWarnings("unchecked")
   public <T> void post(T event) {

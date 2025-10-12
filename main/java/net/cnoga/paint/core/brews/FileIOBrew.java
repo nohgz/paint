@@ -30,8 +30,7 @@ import org.apache.commons.imaging.Imaging;
  * Publishes file I/O–related actions to the application's {@link EventBus}.
  * <p>
  * This class connects JavaFX controller actions (e.g., "New", "Open", "Save") with the event-driven
- * backend by posting corresponding events. It also provides simple integration with the JavaFX
- * {@link FileChooser} for file selection and with the {@link Stage} for closing the application.
+ * backend by posting corresponding events.
  * </p>
  *
  * @author cnoga
@@ -43,11 +42,13 @@ public class FileIOBrew extends EventBusPublisher {
 
   private final Stage stage;
 
+  /** Constructs and registers this service with the event bus. */
   public FileIOBrew(Stage stage) {
     this.stage = stage;
     bus.register(this);
   }
 
+  /** Opens a file via FileChooser and posts a FileOpenedEvent. */
   @SubscribeEvent
   private void onOpenFile(FileOpenRequest req) {
     FileChooser chooser = new FileChooser();
@@ -60,6 +61,7 @@ public class FileIOBrew extends EventBusPublisher {
     }
   }
 
+  /** Saves workspace with a new filename, showing FileChooser. */
   @SubscribeEvent
   private void onWorkspaceSavedAs(WorkspaceSavedAsEvent evt) {
     Workspace ws = evt.workspace();
@@ -104,6 +106,7 @@ public class FileIOBrew extends EventBusPublisher {
     }
   }
 
+  /** Saves workspace to its current file. */
   @SubscribeEvent
   private void onWorkspaceSaved(WorkspaceSavedEvent evt) {
     Workspace ws = evt.workspace();
@@ -118,7 +121,7 @@ public class FileIOBrew extends EventBusPublisher {
     }
   }
 
-  // Saving logic
+  /** Saves the workspace to disk based on its file extension. */
   public void saveWorkspace(Workspace ws) throws IOException, ImageWriteException {
     File file = ws.getFile();
     if (ws == null || file == null) {
@@ -154,6 +157,7 @@ public class FileIOBrew extends EventBusPublisher {
     }
   }
 
+  /** Saves a BufferedImage as JPEG. */
   private void saveAsJPEG(BufferedImage bufferedImage, File file) throws IOException {
     BufferedImage rgbImage = new BufferedImage(
       bufferedImage.getWidth(),

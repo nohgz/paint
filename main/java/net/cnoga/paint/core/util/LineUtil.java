@@ -4,11 +4,10 @@ import javafx.scene.canvas.GraphicsContext;
 
 
 /**
- * Utility class for line drawing operations.
+ * Provides low-level line and stroke rendering helpers.
  *
- * <p>Provides helper methods to render smooth lines and circles
- * using a {@link GraphicsContext}. The line drawing uses circle stamping to ensure consistent
- * thickness across different directions.</p>
+ * <p>Handles drawing between points, calculating stroke intersections,
+ * and general line geometry for canvas operations.</p>
  */
 public final class LineUtil {
 

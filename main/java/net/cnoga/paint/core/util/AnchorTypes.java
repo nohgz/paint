@@ -6,9 +6,6 @@ import net.cnoga.paint.core.brews.SubWindowBrew;
  * Enum of anchor positions used for positioning subwindows relative to the main application
  * window.
  *
- * <p>Anchors include top, middle, and bottom positions, each aligned
- * left, center, or right.</p>
- *
  * <p>Used by {@link SubWindowBrew} to determine
  * where subwindows should be placed when shown.</p>
  */

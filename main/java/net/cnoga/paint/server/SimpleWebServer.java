@@ -47,7 +47,7 @@ public class SimpleWebServer {
     server.createContext("/workspace", new WorkspaceHandler(workspaceBrew.getWorkspaces()));
     server.setExecutor(null);
     server.start();
-    System.out.println("[SimpleWebServerServer] running on: " + server.getAddress());
+    System.out.println("[SimpleWebServer] running on: " + server.getAddress());
   }
 
   /**

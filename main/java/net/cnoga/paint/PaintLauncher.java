@@ -62,7 +62,7 @@ public class PaintLauncher extends Application {
     primaryStage.setMaximized(true);
     primaryStage.show();
 
-    // Initial startup state
+    // Initial startup state [TGC: Make this customizable by user choice.]
     bus.post(new ToolChangedEvent(PaintTools.BRUSH));
     bus.post(new NewWorkspaceRequest(800, 600));
     bus.post(new OpenHistoryRequest());

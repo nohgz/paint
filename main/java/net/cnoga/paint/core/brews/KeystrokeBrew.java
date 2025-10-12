@@ -20,11 +20,10 @@ import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
 import net.cnoga.paint.core.tool.PaintTools;
 
 /**
- * Service for handling global keyboard shortcuts within the application.
- *
- * <p>Registers an event filter on the primary {@link Scene} to listen for
- * keystrokes and translate them into high-level events posted on the event bus. This allows
- * decoupling of UI input (keyboard shortcuts) from application logic.</p>
+ * Maps global keyboard shortcuts to application events.
+ * <p>
+ * Attaches to the primary {@link Scene} and posts corresponding event bus requests
+ * for actions like undo/redo, workspace management, selection copy/paste, and tool switching.
  */
 @EventBusSubscriber
 public class KeystrokeBrew extends EventBusPublisher {
@@ -42,9 +41,7 @@ public class KeystrokeBrew extends EventBusPublisher {
     initStrokes();
   }
 
-  /**
-   * Initializes all keyboard shortcuts by attaching an event filter to the primary scene.
-   */
+  /** Attaches keyboard event filters to the scene to handle shortcuts. */
   private void initStrokes() {
     primaryScene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
 

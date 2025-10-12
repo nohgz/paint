@@ -2,6 +2,7 @@ package net.cnoga.paint.core.workspace;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -28,7 +29,6 @@ public class SelectionCapability extends EventBusPublisher {
   private double offsetX, offsetY;
   private boolean copyMode = false;
   private double rotationAngle;
-
 
   public SelectionCapability(Workspace workspace) {
     this.workspace = workspace;
@@ -135,9 +135,10 @@ public class SelectionCapability extends EventBusPublisher {
     params.setFill(Color.TRANSPARENT);
 
     // Draw rotated image into new buffer
-    javafx.scene.canvas.Canvas tempCanvas = new javafx.scene.canvas.Canvas(newWidth, newHeight);
+    Canvas tempCanvas = new Canvas(newWidth, newHeight);
     GraphicsContext tempGC = tempCanvas.getGraphicsContext2D();
 
+    tempGC.setImageSmoothing(false);
     tempGC.save();
     tempGC.translate(newWidth / 2, newHeight / 2);
     tempGC.rotate(angleDegrees);

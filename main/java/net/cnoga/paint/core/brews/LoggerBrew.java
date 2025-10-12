@@ -15,11 +15,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.*;
 
 /**
- * LoggerBrew
- *
- * A background logger that listens for system events on the EventBus and asynchronously writes them
- * to a timestamped session log file. Console output is still handled by Log4j, but file persistence
- * happens on a separate thread to avoid blocking the JavaFX or event threads.
+ * Background logger that writes application events to timestamped session log files.
+ * <p>
+ * Listens to events on the EventBus and asynchronously writes them to disk to
+ * avoid blocking the JavaFX or event threads. Console logging is still handled via Log4j.
+ * </p>
  */
 @EventBusSubscriber
 public class LoggerBrew extends EventBusPublisher implements Runnable {
@@ -35,6 +35,7 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
   private final File logFile;
   private volatile boolean running = true;
 
+  /** Creates a LoggerBrew instance and starts the background logging thread. */
   public LoggerBrew() {
     bus.register(this);
 
@@ -57,6 +58,7 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     log.info("LoggerBrew initialized. Logging to {}", logFile.getAbsolutePath());
   }
 
+  /** Main background loop that writes queued log messages to the session file. */
   @Override
   public void run() {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
@@ -73,12 +75,17 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
       Thread.currentThread().interrupt();
     }
   }
-
+  /** Stops the logging thread gracefully. */
   public void shutdown() {
     running = false;
     log.info("LoggerBrew shutting down...");
   }
 
+  /**
+   * Adds a message to the background logging queue with a timestamp.
+   *
+   * @param message the message to log
+   */
   private void enqueue(String message) {
     String timestamp = "[" + LocalDateTime.now().format(TS_FORMAT) + "] ";
     logQueue.offer(timestamp + message);

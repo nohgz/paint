@@ -1,6 +1,11 @@
 package net.cnoga.paint.core.util;
 
-
+/**
+ * Immutable record defining basic shape drawing configuration.
+ *
+ * <p>Includes fill, stroke, color, and geometric parameters for
+ * consistent states across classes.</p>
+ */
 public record ShapeConfig(ShapeType type, int sides, boolean isRightTriangle) {
 
   // Default configs for common shapes

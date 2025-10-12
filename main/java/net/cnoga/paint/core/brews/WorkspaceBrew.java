@@ -40,11 +40,11 @@ import net.cnoga.paint.core.tool.Tool;
 import net.cnoga.paint.core.workspace.Workspace;
 
 /**
- * Service that manages the lifecycle and state of {@link Workspace} instances.
+ * Manages the lifecycle and state of all {@link Workspace} instances.
  * <p>
- * This class is responsible for creating, opening, closing, and saving workspaces, as well as
- * maintaining the {@link TabPane} UI that holds them.
- * </p>
+ * Handles creating, opening, closing, clearing, saving, and transforming workspaces,
+ * as well as managing their tabs in the UI. Integrates with the EventBus to respond
+ * to workspace-related events.
  */
 @EventBusSubscriber
 public class WorkspaceBrew extends EventBusPublisher {
@@ -66,8 +66,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Brings the requested workspace to the front.
-   *
-   * @param req the event containing the workspace to focus
+   * @param req contains the workspace to focus
    */
   @SubscribeEvent
   private void onFocusWorkspace(FocusWorkspaceRequest req) {
@@ -123,6 +122,7 @@ public class WorkspaceBrew extends EventBusPublisher {
     });
   }
 
+  /** Handles pasting at the last mouse location. */
   @SubscribeEvent
   private void onPasteSelection(PasteSelectionRequest req) {
     bus.post(new SelectionPastedEvent(lastMouseX, lastMouseY));
@@ -144,6 +144,7 @@ public class WorkspaceBrew extends EventBusPublisher {
     addWorkspaceTab(ws);
   }
 
+  /** Clears the currently active workspace. */
   @SubscribeEvent
   private void onClearWorkspace(ClearWorkspaceRequest req) {
     Workspace ws = getActiveWorkspace();
@@ -161,10 +162,9 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
   /**
-   * Creates a workspace from a file (e.g., opening an image).
-   *
-   * @param evt event containing the file to open
-   * @throws FileNotFoundException if the file cannot be read
+   * Opens a workspace from a file.
+   * @param evt contains the file to open
+   * @throws FileNotFoundException if file cannot be read
    */
   @SubscribeEvent
   private void onFileOpened(FileOpenedEvent evt) throws FileNotFoundException {
@@ -178,9 +178,8 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
   /**
-   * Handles closing the currently active workspace, prompting the user if it has unsaved changes.
-   *
-   * @param req event requesting to close the active workspace
+   * Closes the currently active workspace, prompting to save if dirty.
+   * @param req event requesting close
    */
   @SubscribeEvent
   private void onCloseCurrentWorkspace(CloseCurrentWorkspaceRequest req) {
@@ -209,10 +208,8 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
   /**
-   * Saves the currently active workspace. If no file is associated with it, triggers a "Save As"
-   * event.
-   *
-   * @param req event requesting a save
+   * Saves the currently active workspace or triggers "Save As".
+   * @param req event requesting save
    */
   @SubscribeEvent
   private void onWorkspaceSave(WorkspaceSaveRequest req) {
@@ -226,9 +223,8 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
   /**
-   * Forces a "Save As" operation for the current workspace.
-   *
-   * @param req event requesting "Save As"
+   * Forces "Save As" for the current workspace.
+   * @param req event requesting save as
    */
   @SubscribeEvent
   private void onWorkspaceSaveAs(WorkspaceSaveAsRequest req) {
@@ -237,10 +233,8 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
   /**
-   * Updates the current tool and applies panning behavior to all workspaces when switching to or
-   * from the {@link PanTool}.
-   *
-   * @param evt event indicating the tool change
+   * Updates the current tool and scroll behavior for PanTool.
+   * @param evt tool change event
    */
   @SubscribeEvent
   private void onToolChanged(ToolChangedEvent evt) {
@@ -250,6 +244,10 @@ public class WorkspaceBrew extends EventBusPublisher {
     this.currentTool = evt.tool();
   }
 
+  /**
+   * Transforms the active workspace (rotate/mirror).
+   * @param req contains degrees and mirroring options
+   */
   @SubscribeEvent
   private void onTransformWorkspace(TransformWorkspaceRequest req) {
     Workspace ws = getActiveWorkspace();
@@ -273,6 +271,18 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
 
+
+  /**
+   * Rotates and mirrors a canvas in place.
+   * <p>
+   * This method resizes the canvas buffer if necessary and applies rotation and mirroring
+   * without replacing the canvas node.
+   *
+   * @param canvas the {@link Canvas} to transform
+   * @param degrees rotation in degrees (90 degree increments)
+   * @param mirrorX whether to mirror horizontally
+   * @param mirrorY whether to mirror vertically
+   */
   private void rotateAndMirrorInPlace(Canvas canvas, int degrees, boolean mirrorX, boolean mirrorY) {
     double w = canvas.getWidth();
     double h = canvas.getHeight();
@@ -327,9 +337,8 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
   /**
-   * Adds a workspace to the list and creates a corresponding tab in the UI.
-   *
-   * @param ws the workspace to add
+   * Adds a workspace to the internal list and creates a corresponding tab in the UI.
+   * @param ws the {@link Workspace} to add
    */
   private void addWorkspaceTab(Workspace ws) {
     workspaces.add(ws);
@@ -345,9 +354,8 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
   /**
-   * Gets the currently active workspace, or {@code null} if none is selected.
-   *
-   * @return the active workspace, or null
+   * Returns the currently active workspace, or {@code null} if no workspace is selected.
+   * @return the active {@link Workspace}, or {@code null} if none
    */
   public Workspace getActiveWorkspace() {
     int index = workspaceTabPane.getSelectionModel().getSelectedIndex();
@@ -355,9 +363,8 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
   /**
-   * Responds to requests for dirty workspaces by posting them back on the bus.
-   *
-   * @param req event requesting dirty workspaces
+   * Handles a request to retrieve all dirty (unsaved) workspaces and posts them on the EventBus.
+   * @param req the {@link GetDirtyWorkspacesRequest} event
    */
   @SubscribeEvent
   private void onGetDirtyWorkspaces(GetDirtyWorkspacesRequest req) {
@@ -366,8 +373,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Returns all workspaces that have unsaved changes.
-   *
-   * @return list of dirty workspaces
+   * @return a list of dirty {@link Workspace} instances
    */
   public List<Workspace> getDirtyWorkspaces() {
     return workspaces.stream().filter(Workspace::isDirty).toList();
@@ -375,7 +381,6 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Returns all open workspaces.
-   *
    * @return list of workspaces
    */
   public List<Workspace> getWorkspaces() {

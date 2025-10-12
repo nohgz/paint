@@ -90,6 +90,7 @@ public class Workspace {
     layers.add(base);
     layers.add(effects);
 
+
     canvasGroup.getChildren().addAll(transparency, base, effects);
   }
 
@@ -104,6 +105,7 @@ public class Workspace {
   private Canvas createLayer(String debugName, double width, double height) {
     Canvas canvas = new Canvas(width, height);
     canvas.setId(debugName);
+    canvas.getGraphicsContext2D().setImageSmoothing(false);
     return canvas;
   }
 
@@ -139,10 +141,6 @@ public class Workspace {
     layers.remove(layer);
     canvasGroup.getChildren().remove(layer);
   }
-
-
-
-
 
   /**
    * Determines if a given layer is one of the reserved layers.

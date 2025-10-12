@@ -20,22 +20,10 @@ import net.cnoga.paint.core.bus.events.request.OpenToolsRequest;
 import net.cnoga.paint.core.util.AnchorTypes;
 
 /**
- * Service responsible for creating and managing all auxiliary subwindows in the application (e.g.,
- * History, Layers, Tools, Settings, About, Help, Changelog).
- *
- * <p>This service subscribes to UI interaction events and toggles the corresponding
- * subwindows. Each subwindow is lazily created on first use, positioned relative to the main
- * application stage, and either shown, hidden, or brought to the front depending on the current
- * state.</p>
- *
- * <p>Responsibilities:</p>
- * <ul>
- *   <li>Managing the lifecycle of subwindows (creation, showing, hiding).</li>
- *   <li>Synchronizing toggle button states with subwindow visibility.</li>
- *   <li>Ensuring subwindows are consistently spawned at predefined anchor points
- *       relative to the main stage.</li>
- *   <li>Handling modal and non-modal subwindows appropriately.</li>
- * </ul>
+ * Manages all auxiliary subwindows (History, Layers, Tools, Settings, About, Help, Changelog).
+ * <p>
+ * Listens for UI events and lazily creates, shows, hides, or toggles subwindows while syncing
+ * toggle button states and positioning relative to the main stage.
  */
 @EventBusSubscriber
 public class SubWindowBrew extends EventBusPublisher {
@@ -57,11 +45,13 @@ public class SubWindowBrew extends EventBusPublisher {
   private Boolean layersOpen = false;
   private Boolean settingsOpen = false;
 
+  /** Constructs the Brew bound to the main application stage. */
   public SubWindowBrew(Stage stage) {
     this.mainStage = stage;
     bus.register(this);
   }
 
+  /** Initializes subwindow service with the provided toggle buttons. */
   @SubscribeEvent
   private void initSubWindowService(InitSubWindowServiceRequest req) {
     this.historyButton = req.historyButton();
@@ -70,6 +60,7 @@ public class SubWindowBrew extends EventBusPublisher {
     this.settingsButton = req.settingsButton();
   }
 
+  /** Shows the History subwindow on request. */
   @SubscribeEvent
   private void onOpenHistory(OpenHistoryRequest req) {
     if (historyStage == null) {
@@ -96,6 +87,7 @@ public class SubWindowBrew extends EventBusPublisher {
     historyOpen = !historyOpen;
   }
 
+  /** Shows the Layers subwindow on request. */
   @SubscribeEvent
   private void onOpenLayers(OpenLayersRequest req) {
     if (layersStage == null) {
@@ -123,6 +115,7 @@ public class SubWindowBrew extends EventBusPublisher {
     layersOpen = !layersOpen;
   }
 
+  /** Shows the Tools subwindow on request. */
   @SubscribeEvent
   private void onOpenTools(OpenToolsRequest req) {
     if (toolsStage == null) {
@@ -149,6 +142,8 @@ public class SubWindowBrew extends EventBusPublisher {
     toolsOpen = !toolsOpen;
   }
 
+
+  /** Shows the Settings subwindow on request. */
   @SubscribeEvent
   private void onOpenSettings(OpenSettingsRequest req) {
     if (settingsStage == null) {
@@ -174,6 +169,7 @@ public class SubWindowBrew extends EventBusPublisher {
     settingsOpen = !settingsOpen;
   }
 
+  /** Shows the About subwindow on request. */
   @SubscribeEvent
   private void onOpenAbout(OpenAboutRequest evt) {
     if (aboutStage == null) {
@@ -191,7 +187,7 @@ public class SubWindowBrew extends EventBusPublisher {
     aboutStage.toFront();
   }
 
-
+  /** Shows the Help subwindow on request. */
   @SubscribeEvent
   private void onOpenHelp(OpenHelpRequest evt) {
     if (helpStage == null) {
@@ -209,6 +205,7 @@ public class SubWindowBrew extends EventBusPublisher {
     helpStage.toFront();
   }
 
+  /** Shows the Changelog subwindow on request. */
   @SubscribeEvent
   private void onOpenChangelog(OpenChangelogRequest evt) {
     if (changelogStage == null) {

@@ -1,18 +1,14 @@
 package net.cnoga.paint.core.bus;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
- * Marks a class as a subscriber to the global event bus.
+ * Declares that a class contains event listener methods for the global event bus.
  * <p>
- * Classes annotated with {@code @EventBusSubscriber} are discovered and automatically registered so
- * their methods annotated with {@link SubscribeEvent} can receive events.
+ * Classes annotated with {@link EventBusSubscriber} can define methods annotated
+ * with {@link SubscribeEvent} to receive specific event types.
+ * </p>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface EventBusSubscriber {
-
-}
+public @interface EventBusSubscriber { }

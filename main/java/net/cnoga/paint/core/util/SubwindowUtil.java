@@ -22,11 +22,6 @@ import javafx.stage.StageStyle;
  * </ul>
  */
 public final class SubwindowUtil {
-
-  private SubwindowUtil() {
-    // Utility class: prevent instantiation
-  }
-
   /**
    * Creates a new subwindow from an FXML file.
    *

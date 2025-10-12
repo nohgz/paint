@@ -12,6 +12,7 @@ Chris' Pain(t) 6.0.0 - 10/7/2025
 
 # Known Issues:
 - Rotations of selections leaves what was there already. Not intentional.
+- There is still a hanging thread that isn't closed when the program is shut down. Likely culprit is the autosave daemon.
 
 # Polish Round Hopes
 - Theme (Dark/Light/User Defined?) support
