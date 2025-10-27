@@ -2,15 +2,15 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
-<ScrollPane xmlns="http://javafx.com/javafx"
-  xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.HelpController"
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+  fitToHeight="true"
+  fitToWidth="true"
   prefHeight="400.0" prefWidth="600.0"
-  fitToWidth="true" fitToHeight="true">
+  xmlns="http://javafx.com/javafx" fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.HelpController">
 
-  <TextArea fx:id="helpTextArea"
-    editable="false"
-    wrapText="true"
+  <TextArea editable="false"
+    prefHeight="380.0"
     prefWidth="580.0"
-    prefHeight="380.0"/>
+    wrapText="true"
+    fx:id="helpTextArea"/>
 </ScrollPane>

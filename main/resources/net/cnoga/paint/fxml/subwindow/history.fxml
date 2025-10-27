@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane xmlns="http://javafx.com/javafx"
-  xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.HistoryController"
-  prefHeight="200.0" prefWidth="200.0">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+  prefHeight="200.0"
+  prefWidth="200.0"
+  xmlns="http://javafx.com/javafx" fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.HistoryController">
 </BorderPane>

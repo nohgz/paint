@@ -22,6 +22,7 @@ import javafx.stage.StageStyle;
  * </ul>
  */
 public final class SubwindowUtil {
+
   /**
    * Creates a new subwindow from an FXML file.
    *

@@ -8,65 +8,17 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.core.fxml_controllers.window.RightTopbarController">
-  <ToggleButton fx:id = "right_topbar_tools" onAction="#onOpenTools">
-    <graphic>
-      <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../../icons/menu/tools_icon.png"/>
-      </ImageView>
-    </graphic>
-    <tooltip>
-      <Tooltip text="Show Tools" showDelay="0.5s"/>
-    </tooltip>
-  </ToggleButton>
-
-  <ToggleButton fx:id = "right_topbar_layers" onAction="#onOpenLayers">
-    <graphic>
-      <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../../icons/menu/layers_icon.png"/>
-      </ImageView>
-    </graphic>
-    <tooltip>
-      <Tooltip text="Show Layers" showDelay="0.5s"/>
-    </tooltip>
-  </ToggleButton>
-
-  <ToggleButton fx:id = "right_topbar_history" onAction="#onOpenHistory">
-    <graphic>
-      <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../../icons/menu/history_icon.png"/>
-      </ImageView>
-    </graphic>
-    <tooltip>
-      <Tooltip text="Show History" showDelay="0.5s"/>
-    </tooltip>
-  </ToggleButton>
-
-  <ToggleButton fx:id = "right_topbar_settings" onAction="#onOpenSettings">
-    <graphic>
-      <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../../icons/menu/settings_icon.png"/>
-      </ImageView>
-    </graphic>
-    <tooltip>
-      <Tooltip text="Show Settings" showDelay="0.3s"/>
-    </tooltip>
-  </ToggleButton>
-
-  <Separator orientation="VERTICAL"/>
-
-  <MenuButton fx:id = "right_topbar_help">
+<HBox xmlns:fx="http://javafx.com/fxml"
+  fx:controller="net.cnoga.paint.core.fxml_controllers.window.RightTopbarController">
+  <MenuButton fx:id="right_topbar_help">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/help_icon.png"/>
       </ImageView>
     </graphic>
 
-    <tooltip>
-      <Tooltip text="Show Information" showDelay="0.3s"/>
-    </tooltip>
     <items>
-      <MenuItem text="Help" onAction="#onOpenHelp">
+      <MenuItem onAction="#onOpenHelp" text="Help">
         <graphic>
           <ImageView fitHeight="16" fitWidth="16">
             <Image url="@../../icons/menu/help_icon.png"/>
@@ -74,7 +26,7 @@
         </graphic>
       </MenuItem>
 
-      <MenuItem text="Changelog" onAction="#onOpenChangelog">
+      <MenuItem onAction="#onOpenChangelog" text="Changelog">
         <graphic>
           <ImageView fitHeight="16" fitWidth="16">
             <Image url="@../../icons/menu/changelog.png"/>
@@ -82,7 +34,7 @@
         </graphic>
       </MenuItem>
 
-      <MenuItem text="About" onAction="#onOpenAbout">
+      <MenuItem onAction="#onOpenAbout" text="About">
         <graphic>
           <ImageView fitHeight="16" fitWidth="16">
             <Image url="@../../icons/menu/documentation.png"/>
@@ -90,7 +42,7 @@
         </graphic>
       </MenuItem>
 
-      <MenuItem text="GitHub" onAction="#onOpenGithub">
+      <MenuItem onAction="#onOpenGithub" text="GitHub">
         <graphic>
           <ImageView fitHeight="16" fitWidth="16">
             <Image url="@../../icons/menu/github.png"/>
@@ -99,6 +51,55 @@
       </MenuItem>
 
     </items>
+    <tooltip>
+      <Tooltip showDelay="0.3s" text="Show Information"/>
+    </tooltip>
   </MenuButton>
+
+  <Separator orientation="VERTICAL"/>
+
+  <ToggleButton onAction="#onOpenHistory" fx:id="right_topbar_history">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../../icons/menu/history_icon.png"/>
+      </ImageView>
+    </graphic>
+    <tooltip>
+      <Tooltip showDelay="0.5s" text="Show History"/>
+    </tooltip>
+  </ToggleButton>
+
+  <ToggleButton onAction="#onOpenSettings" fx:id="right_topbar_settings">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../../icons/menu/settings_icon.png"/>
+      </ImageView>
+    </graphic>
+    <tooltip>
+      <Tooltip showDelay="0.3s" text="Show Settings"/>
+    </tooltip>
+  </ToggleButton>
+
+  <ToggleButton onAction="#onOpenTools" fx:id="right_topbar_tools">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../../icons/menu/tools_icon.png"/>
+      </ImageView>
+    </graphic>
+    <tooltip>
+      <Tooltip showDelay="0.5s" text="Show Tools"/>
+    </tooltip>
+  </ToggleButton>
+
+  <ToggleButton onAction="#onOpenLayers" fx:id="right_topbar_layers">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../../icons/menu/layers_icon.png"/>
+      </ImageView>
+    </graphic>
+    <tooltip>
+      <Tooltip showDelay="0.5s" text="Show Layers"/>
+    </tooltip>
+  </ToggleButton>
 
 </HBox>

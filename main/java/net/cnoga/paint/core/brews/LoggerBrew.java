@@ -1,24 +1,40 @@
 package net.cnoga.paint.core.brews;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.SubscribeEvent;
-import net.cnoga.paint.core.bus.events.request.*;
-import net.cnoga.paint.core.bus.events.response.*;
+import net.cnoga.paint.core.bus.events.request.ClearWorkspaceRequest;
+import net.cnoga.paint.core.bus.events.request.CloseCurrentWorkspaceRequest;
+import net.cnoga.paint.core.bus.events.request.FocusWorkspaceRequest;
+import net.cnoga.paint.core.bus.events.request.NewWorkspaceRequest;
+import net.cnoga.paint.core.bus.events.request.PasteSelectionRequest;
+import net.cnoga.paint.core.bus.events.request.WorkspaceSaveRequest;
+import net.cnoga.paint.core.bus.events.response.ColorChangedEvent;
+import net.cnoga.paint.core.bus.events.response.FileOpenedEvent;
+import net.cnoga.paint.core.bus.events.response.SelectionPastedEvent;
+import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
+import net.cnoga.paint.core.bus.events.response.WorkspaceSavedAsEvent;
+import net.cnoga.paint.core.bus.events.response.WorkspaceSavedEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.*;
-import java.nio.file.*;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.util.concurrent.*;
 
 /**
  * Background logger that writes application events to timestamped session log files.
  * <p>
- * Listens to events on the EventBus and asynchronously writes them to disk to
- * avoid blocking the JavaFX or event threads. Console logging is still handled via Log4j.
+ * Listens to events on the EventBus and asynchronously writes them to disk to avoid blocking the
+ * JavaFX or event threads. Console logging is still handled via Log4j.
  * </p>
  */
 @EventBusSubscriber
@@ -35,7 +51,9 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
   private final File logFile;
   private volatile boolean running = true;
 
-  /** Creates a LoggerBrew instance and starts the background logging thread. */
+  /**
+   * Creates a LoggerBrew instance and starts the background logging thread.
+   */
   public LoggerBrew() {
     bus.register(this);
 
@@ -58,7 +76,9 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     log.info("LoggerBrew initialized. Logging to {}", logFile.getAbsolutePath());
   }
 
-  /** Main background loop that writes queued log messages to the session file. */
+  /**
+   * Main background loop that writes queued log messages to the session file.
+   */
   @Override
   public void run() {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
@@ -75,7 +95,10 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
       Thread.currentThread().interrupt();
     }
   }
-  /** Stops the logging thread gracefully. */
+
+  /**
+   * Stops the logging thread gracefully.
+   */
   public void shutdown() {
     running = false;
     log.info("LoggerBrew shutting down...");

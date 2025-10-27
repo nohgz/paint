@@ -18,8 +18,8 @@ import net.cnoga.paint.core.tool.ToolRegistry;
  *
  * <p>This controller builds and manages the grid of available drawing tools,
  * each represented by a toggle button with an icon. Selecting a tool posts a
- * {@link ToolChangedEvent} to the application {@link net.cnoga.paint.core.bus.EventBus}, allowing the
- * workspace to update its interaction mode accordingly.</p>
+ * {@link ToolChangedEvent} to the application {@link net.cnoga.paint.core.bus.EventBus}, allowing
+ * the workspace to update its interaction mode accordingly.</p>
  *
  * <p>The grid is automatically populated at initialization based on all tools
  * registered in {@link ToolRegistry}.</p>
@@ -35,6 +35,7 @@ import net.cnoga.paint.core.tool.ToolRegistry;
  * @version 1.0
  */
 public class ToolsController extends EventBusPublisher {
+
   private final ToggleGroup toolGroup = new ToggleGroup();
   @FXML
   private GridPane toolGrid;

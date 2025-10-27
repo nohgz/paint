@@ -1,10 +1,10 @@
 /**
- * Provides a lightweight, annotation-driven event bus for decoupled communication
- * between components of the paint application.
+ * Provides a lightweight, annotation-driven event bus for decoupled communication between
+ * components of the paint application.
  *
  * <p>This package implements a simple publish/subscribe mechanism where event
- * producers post arbitrary event objects and listeners automatically receive
- * them if they have subscribed via annotated methods.</p>
+ * producers post arbitrary event objects and listeners automatically receive them if they have
+ * subscribed via annotated methods.</p>
  *
  * <h2>Usage</h2>
  * <p>To define an event listener:</p>
@@ -19,8 +19,8 @@
  * }</pre>
  *
  * <p>To publish an event:</p>
- * 1. Extend the {@link net.cnoga.paint.core.bus.EventBusPublisher} class.
- * 2. Register your subclass to the bus
+ * 1. Extend the {@link net.cnoga.paint.core.bus.EventBusPublisher} class. 2. Register your subclass
+ * to the bus
  * <pre>{@code
  * EventBus.getInstance().post(new UndoRequestEvent());
  * }</pre>

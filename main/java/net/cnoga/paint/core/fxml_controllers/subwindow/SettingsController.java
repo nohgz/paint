@@ -29,27 +29,6 @@ public class SettingsController extends EventBusPublisher {
     bus.register(this);
   }
 
-  @FXML
-  private void initialize() {
-    autosaveIntervalSpinner.valueProperty().addListener((obs, oldVal, newVal) -> {
-      bus.post(new SetAutosaveIntervalRequest((int) newVal));
-    });
-  }
-
-
-  public void startServer(ActionEvent actionEvent) {
-    bus.post(new StartServerRequest());
-  }
-
-  public void openServer(ActionEvent actionEvent) {
-    openLink("http://localhost:25565/");
-  }
-
-  public void stopServer(ActionEvent actionEvent) {
-    bus.post(new StopServerRequest());
-  }
-
-
   // Convenience borrowed from ProgramBrew. should maybe put this in a
   // util class for dry
   public static void openLink(String url) {
@@ -64,6 +43,25 @@ public class SettingsController extends EventBusPublisher {
     } else {
       System.err.println("Desktop browsing not supported.");
     }
+  }
+
+  @FXML
+  private void initialize() {
+    autosaveIntervalSpinner.valueProperty().addListener((obs, oldVal, newVal) -> {
+      bus.post(new SetAutosaveIntervalRequest((int) newVal));
+    });
+  }
+
+  public void startServer(ActionEvent actionEvent) {
+    bus.post(new StartServerRequest());
+  }
+
+  public void openServer(ActionEvent actionEvent) {
+    openLink("http://localhost:25565/");
+  }
+
+  public void stopServer(ActionEvent actionEvent) {
+    bus.post(new StopServerRequest());
   }
 
   public void toggleAutosave(ActionEvent actionEvent) {

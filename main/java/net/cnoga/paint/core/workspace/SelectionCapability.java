@@ -23,6 +23,7 @@ import net.cnoga.paint.core.tool.MoveTool;
 
 @EventBusSubscriber
 public class SelectionCapability extends EventBusPublisher {
+
   private final Workspace workspace;
   private WritableImage buffer;
   private Rectangle2D selectionBounds;
@@ -108,8 +109,8 @@ public class SelectionCapability extends EventBusPublisher {
   }
 
   /**
-   * Rotates the current selection by the specified angle in degrees.
-   * This updates the buffer in memory, so repeated calls accumulate.
+   * Rotates the current selection by the specified angle in degrees. This updates the buffer in
+   * memory, so repeated calls accumulate.
    */
   public void rotateSelection(double angleDegrees) {
     if (buffer == null) {
@@ -128,7 +129,8 @@ public class SelectionCapability extends EventBusPublisher {
     double newWidth = width * cos + height * sin;
     double newHeight = width * sin + height * cos;
 
-    WritableImage rotated = new WritableImage((int) Math.ceil(newWidth), (int) Math.ceil(newHeight));
+    WritableImage rotated = new WritableImage((int) Math.ceil(newWidth),
+      (int) Math.ceil(newHeight));
 
     GraphicsContext gc = workspace.getEffectsLayer().getGraphicsContext2D();
     SnapshotParameters params = new SnapshotParameters();
@@ -150,7 +152,8 @@ public class SelectionCapability extends EventBusPublisher {
     buffer = rotated;
 
     // Update selection bounds to new image size
-    selectionBounds = new Rectangle2D(selectionBounds.getMinX(), selectionBounds.getMinY(), newWidth, newHeight);
+    selectionBounds = new Rectangle2D(selectionBounds.getMinX(), selectionBounds.getMinY(),
+      newWidth, newHeight);
 
     previewSelection(selectionBounds.getMinX() + offsetX, selectionBounds.getMinY() + offsetY);
   }

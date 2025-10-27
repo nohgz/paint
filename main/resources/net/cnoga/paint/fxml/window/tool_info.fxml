@@ -7,19 +7,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <HBox xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.core.fxml_controllers.window.ToolInfoController"
-  alignment="CENTER_LEFT">
+  alignment="CENTER_LEFT"
+  fx:controller="net.cnoga.paint.core.fxml_controllers.window.ToolInfoController">
 
-  <Label text="Tool:" fx:id="toolInfoCaption"/>
-  <ImageView fitHeight="16" fitWidth="16" fx:id="toolInfoIcon"/>
-  <Separator orientation="VERTICAL"/>
-
+  <ColorPicker fx:id="toolColorPicker"/>
   <HBox fx:id="toolSpecificThings">
 
   </HBox>
+  <ImageView fitHeight="16" fitWidth="16" fx:id="toolInfoIcon"/>
+
+  <Label text="Tool:" fx:id="toolInfoCaption"/>
 
   <!-- Spacer to push ColorPicker to the right -->
   <Region HBox.hgrow="ALWAYS"/>
 
-  <ColorPicker fx:id="toolColorPicker" />
+  <Separator orientation="VERTICAL"/>
 </HBox>

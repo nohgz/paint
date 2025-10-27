@@ -18,20 +18,29 @@ public class SimpleWebServerBrew extends EventBusPublisher {
 
   private final SimpleWebServer server;
 
-  /** Constructs the Brew with a given server instance. */
+  /**
+   * Constructs the Brew with a given server instance.
+   */
   public SimpleWebServerBrew(SimpleWebServer server) {
     bus.register(this);
     this.server = server;
   }
 
-  /** Starts the web server when a StartServerRequest is received. */
+  /**
+   * Starts the web server when a StartServerRequest is received.
+   */
   @SubscribeEvent
   private void startServer(StartServerRequest req) {
-    try { server.start(); }
-    catch (IOException e) { e.printStackTrace(); }
+    try {
+      server.start();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
-  /** Stops the web server when a StopServerRequest is received. */
+  /**
+   * Stops the web server when a StopServerRequest is received.
+   */
   @SubscribeEvent
   private void stopServer(StopServerRequest req) {
     server.stop(0);

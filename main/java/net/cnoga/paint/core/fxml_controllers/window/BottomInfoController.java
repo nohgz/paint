@@ -44,7 +44,7 @@ public class BottomInfoController extends EventBusPublisher {
   @SubscribeEvent
   private void timeChanged(AutosaveTimeChangedEvent evt) {
     Platform.runLater(() -> {
-      autosaveTimer.setText("Time until Autosave: " + String.valueOf(evt.seconds()));
+      autosaveTimer.setText("Time until Autosave: " + evt.seconds());
     });
   }
 }

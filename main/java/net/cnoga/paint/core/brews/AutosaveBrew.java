@@ -1,8 +1,14 @@
 package net.cnoga.paint.core.brews;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 import java.awt.image.BufferedImage;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
@@ -26,23 +32,31 @@ public class AutosaveBrew extends EventBusPublisher {
 
   private boolean isEnabled;
   private int intervalSeconds;
-  private ScheduledExecutorService scheduler;
+  private final ScheduledExecutorService scheduler;
 
-  /** Scheduled task handle for the autosave action. */
+  /**
+   * Scheduled task handle for the autosave action.
+   */
   private ScheduledFuture<?> autosaveHandle;
 
-  /** Scheduled task handle for the countdown timer. */
+  /**
+   * Scheduled task handle for the countdown timer.
+   */
   private ScheduledFuture<?> countdownHandle;
 
-  /** Remaining time until the next autosave in seconds. */
+  /**
+   * Remaining time until the next autosave in seconds.
+   */
   private volatile int timeLeft;
 
-  /** System tray icon used for notifications. May be null if tray unsupported. */
+  /**
+   * System tray icon used for notifications. May be null if tray unsupported.
+   */
   private TrayIcon trayIcon;
 
   /**
-   * Constructs an {@code AutosaveBrew} with default settings.
-   * Registers the instance to the event bus and initializes the system tray icon.
+   * Constructs an {@code AutosaveBrew} with default settings. Registers the instance to the event
+   * bus and initializes the system tray icon.
    */
   public AutosaveBrew() {
     bus.register(this);
@@ -70,7 +84,9 @@ public class AutosaveBrew extends EventBusPublisher {
   @SubscribeEvent
   private void onSetInterval(SetAutosaveIntervalRequest req) {
     this.intervalSeconds = req.minutes() * 60;
-    if (isEnabled) restartAutosave();
+    if (isEnabled) {
+      restartAutosave();
+    }
   }
 
   /**
@@ -132,7 +148,9 @@ public class AutosaveBrew extends EventBusPublisher {
     countdownHandle = scheduler.scheduleAtFixedRate(() -> {
       timeLeft--;
       bus.post(new AutosaveTimeChangedEvent(timeLeft));
-      if (timeLeft <= 0) timeLeft = intervalSeconds;
+      if (timeLeft <= 0) {
+        timeLeft = intervalSeconds;
+      }
     }, 1, 1, TimeUnit.SECONDS);
   }
 
@@ -141,8 +159,12 @@ public class AutosaveBrew extends EventBusPublisher {
    */
   private void stopAutosave() {
     isEnabled = false;
-    if (autosaveHandle != null) autosaveHandle.cancel(false);
-    if (countdownHandle != null) countdownHandle.cancel(false);
+    if (autosaveHandle != null) {
+      autosaveHandle.cancel(false);
+    }
+    if (countdownHandle != null) {
+      countdownHandle.cancel(false);
+    }
   }
 
   /**
@@ -188,7 +210,9 @@ public class AutosaveBrew extends EventBusPublisher {
    * @param message Notification body
    */
   private void publishSystemNotification(String title, String message) {
-    if (trayIcon == null) return;
+    if (trayIcon == null) {
+      return;
+    }
     try {
       trayIcon.displayMessage(title, message, TrayIcon.MessageType.INFO);
     } catch (Exception e) {

@@ -8,7 +8,7 @@
 <MenuBar xmlns:fx="http://javafx.com/fxml"
   fx:controller="net.cnoga.paint.core.fxml_controllers.window.LeftTopbarController">
   <Menu text="File">
-    <MenuItem fx:id="left_topbar_new_file" text="New" onAction="#onFileNew">
+    <MenuItem onAction="#onFileNew" text="New" fx:id="left_topbar_new_file">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
           <Image url="@../../icons/menu/new_icon.png"/>
@@ -16,7 +16,7 @@
       </graphic>
     </MenuItem>
 
-    <MenuItem fx:id="left_topbar_file_open" text="Open" onAction="#onFileOpen">
+    <MenuItem onAction="#onFileOpen" text="Open" fx:id="left_topbar_file_open">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
           <Image url="@../../icons/menu/open_icon.png"/>
@@ -24,7 +24,7 @@
       </graphic>
     </MenuItem>
 
-    <MenuItem fx:id="left_topbar_file_save" text="Save" onAction="#onFileSave">
+    <MenuItem onAction="#onFileSave" text="Save" fx:id="left_topbar_file_save">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
           <Image url="@../../icons/menu/save_icon.png"/>
@@ -32,7 +32,7 @@
       </graphic>
     </MenuItem>
 
-    <MenuItem fx:id="left_topbar_file_save_as" text="Save As" onAction="#onFileSaveAs">
+    <MenuItem onAction="#onFileSaveAs" text="Save As" fx:id="left_topbar_file_save_as">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
           <Image url="@../../icons/menu/save_as_icon.png"/>
@@ -40,7 +40,7 @@
       </graphic>
     </MenuItem>
 
-    <MenuItem fx:id="left_topbar_exit" text="Exit Pain(t)" onAction="#onAppExit">
+    <MenuItem onAction="#onAppExit" text="Exit Pain(t)" fx:id="left_topbar_exit">
       <graphic>
         <ImageView fitHeight="16" fitWidth="16">
           <Image url="@../../icons/menu/exit_icon.png"/>
@@ -57,11 +57,12 @@
 
   <Menu text="Image">
 
-    <MenuItem fx:id="left_topbar_rotate90" text="Rotate 90" onAction="#onRotate90"/>
-    <MenuItem fx:id="left_topbar_rotate180" text="Rotate 180" onAction="#onRotate180"/>
-    <MenuItem fx:id="left_topbar_rotate270" text="Rotate 270" onAction="#onRotate270"/>
-    <MenuItem fx:id="left_topbar_flipHorizontal" text="Flip Horizontal" onAction="#onFlipHorizontal"/>
-    <MenuItem fx:id="left_topbar_flipVertical" text="Flip Vertical" onAction="#onFlipVertical"/>
+    <MenuItem onAction="#onRotate90" text="Rotate 90" fx:id="left_topbar_rotate90"/>
+    <MenuItem onAction="#onRotate180" text="Rotate 180" fx:id="left_topbar_rotate180"/>
+    <MenuItem onAction="#onRotate270" text="Rotate 270" fx:id="left_topbar_rotate270"/>
+    <MenuItem onAction="#onFlipHorizontal" text="Flip Horizontal"
+      fx:id="left_topbar_flipHorizontal"/>
+    <MenuItem onAction="#onFlipVertical" text="Flip Vertical" fx:id="left_topbar_flipVertical"/>
   </Menu>
 
 </MenuBar>

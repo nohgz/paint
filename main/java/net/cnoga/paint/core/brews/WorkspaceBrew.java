@@ -42,9 +42,9 @@ import net.cnoga.paint.core.workspace.Workspace;
 /**
  * Manages the lifecycle and state of all {@link Workspace} instances.
  * <p>
- * Handles creating, opening, closing, clearing, saving, and transforming workspaces,
- * as well as managing their tabs in the UI. Integrates with the EventBus to respond
- * to workspace-related events.
+ * Handles creating, opening, closing, clearing, saving, and transforming workspaces, as well as
+ * managing their tabs in the UI. Integrates with the EventBus to respond to workspace-related
+ * events.
  */
 @EventBusSubscriber
 public class WorkspaceBrew extends EventBusPublisher {
@@ -66,6 +66,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Brings the requested workspace to the front.
+   *
    * @param req contains the workspace to focus
    */
   @SubscribeEvent
@@ -122,7 +123,9 @@ public class WorkspaceBrew extends EventBusPublisher {
     });
   }
 
-  /** Handles pasting at the last mouse location. */
+  /**
+   * Handles pasting at the last mouse location.
+   */
   @SubscribeEvent
   private void onPasteSelection(PasteSelectionRequest req) {
     bus.post(new SelectionPastedEvent(lastMouseX, lastMouseY));
@@ -144,7 +147,9 @@ public class WorkspaceBrew extends EventBusPublisher {
     addWorkspaceTab(ws);
   }
 
-  /** Clears the currently active workspace. */
+  /**
+   * Clears the currently active workspace.
+   */
   @SubscribeEvent
   private void onClearWorkspace(ClearWorkspaceRequest req) {
     Workspace ws = getActiveWorkspace();
@@ -163,6 +168,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Opens a workspace from a file.
+   *
    * @param evt contains the file to open
    * @throws FileNotFoundException if file cannot be read
    */
@@ -179,6 +185,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Closes the currently active workspace, prompting to save if dirty.
+   *
    * @param req event requesting close
    */
   @SubscribeEvent
@@ -209,6 +216,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Saves the currently active workspace or triggers "Save As".
+   *
    * @param req event requesting save
    */
   @SubscribeEvent
@@ -224,6 +232,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Forces "Save As" for the current workspace.
+   *
    * @param req event requesting save as
    */
   @SubscribeEvent
@@ -234,6 +243,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Updates the current tool and scroll behavior for PanTool.
+   *
    * @param evt tool change event
    */
   @SubscribeEvent
@@ -246,12 +256,15 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Transforms the active workspace (rotate/mirror).
+   *
    * @param req contains degrees and mirroring options
    */
   @SubscribeEvent
   private void onTransformWorkspace(TransformWorkspaceRequest req) {
     Workspace ws = getActiveWorkspace();
-    if (ws == null) return;
+    if (ws == null) {
+      return;
+    }
 
     int degrees = ((req.degrees() % 360) + 360) % 360;
     if (degrees != 0 && degrees != 90 && degrees != 180 && degrees != 270) {
@@ -271,19 +284,19 @@ public class WorkspaceBrew extends EventBusPublisher {
   }
 
 
-
   /**
    * Rotates and mirrors a canvas in place.
    * <p>
-   * This method resizes the canvas buffer if necessary and applies rotation and mirroring
-   * without replacing the canvas node.
+   * This method resizes the canvas buffer if necessary and applies rotation and mirroring without
+   * replacing the canvas node.
    *
-   * @param canvas the {@link Canvas} to transform
+   * @param canvas  the {@link Canvas} to transform
    * @param degrees rotation in degrees (90 degree increments)
    * @param mirrorX whether to mirror horizontally
    * @param mirrorY whether to mirror vertically
    */
-  private void rotateAndMirrorInPlace(Canvas canvas, int degrees, boolean mirrorX, boolean mirrorY) {
+  private void rotateAndMirrorInPlace(Canvas canvas, int degrees, boolean mirrorX,
+    boolean mirrorY) {
     double w = canvas.getWidth();
     double h = canvas.getHeight();
 
@@ -320,7 +333,8 @@ public class WorkspaceBrew extends EventBusPublisher {
         gc.translate(0, newH);
         gc.rotate(270);
       }
-      default -> {} // 0° rotation does nothing
+      default -> {
+      } // 0° rotation does nothing
     }
 
     // Apply mirrors
@@ -329,8 +343,12 @@ public class WorkspaceBrew extends EventBusPublisher {
     gc.scale(scaleX, scaleY);
 
     // Adjust for mirroring (keeps origin consistent)
-    if (mirrorX) gc.translate(-w, 0);
-    if (mirrorY) gc.translate(0, -h);
+    if (mirrorX) {
+      gc.translate(-w, 0);
+    }
+    if (mirrorY) {
+      gc.translate(0, -h);
+    }
 
     gc.drawImage(snapshot, 0, 0);
     gc.restore();
@@ -338,6 +356,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Adds a workspace to the internal list and creates a corresponding tab in the UI.
+   *
    * @param ws the {@link Workspace} to add
    */
   private void addWorkspaceTab(Workspace ws) {
@@ -355,6 +374,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Returns the currently active workspace, or {@code null} if no workspace is selected.
+   *
    * @return the active {@link Workspace}, or {@code null} if none
    */
   public Workspace getActiveWorkspace() {
@@ -364,6 +384,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Handles a request to retrieve all dirty (unsaved) workspaces and posts them on the EventBus.
+   *
    * @param req the {@link GetDirtyWorkspacesRequest} event
    */
   @SubscribeEvent
@@ -373,6 +394,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Returns all workspaces that have unsaved changes.
+   *
    * @return a list of dirty {@link Workspace} instances
    */
   public List<Workspace> getDirtyWorkspaces() {
@@ -381,6 +403,7 @@ public class WorkspaceBrew extends EventBusPublisher {
 
   /**
    * Returns all open workspaces.
+   *
    * @return list of workspaces
    */
   public List<Workspace> getWorkspaces() {

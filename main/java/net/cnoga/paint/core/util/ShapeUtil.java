@@ -111,8 +111,9 @@ public final class ShapeUtil {
   public static void drawStar(GraphicsContext gc,
     double x0, double y0, double x1, double y1,
     int points) {
-    if (points < 2)
+    if (points < 2) {
       return;
+    }
 
     double centerX = (x0 + x1) / 2;
     double centerY = (y0 + y1) / 2;

@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.GridPane?>
 <GridPane
   xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.ToolsController"
-  fx:id="toolGrid"
-  prefWidth="60" prefHeight="200">
+  prefHeight="200"
+  prefWidth="60"
+  fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.ToolsController" fx:id="toolGrid">
 </GridPane>

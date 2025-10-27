@@ -1,72 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
-<?import javafx.scene.control.SpinnerValueFactory?>
-<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
-<FlowPane xmlns="http://javafx.com/javafx"
-  xmlns:fx="http://javafx.com/fxml"
-  fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.SettingsController"
-  prefHeight="400.0" prefWidth="600.0">
-  <TabPane tabClosingPolicy="UNAVAILABLE" side="LEFT">
+<FlowPane xmlns:fx="http://javafx.com/fxml"
+  prefHeight="400.0"
+  prefWidth="600.0"
+  xmlns="http://javafx.com/javafx" fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.SettingsController">
+  <TabPane side="LEFT" tabClosingPolicy="UNAVAILABLE">
     <!-- User Interface Settings -->
     <tabs>
       <Tab text="User Interface">
         <VBox spacing="10">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10"/>
-          </padding>
-          <CheckBox fx:id="autosaveCheckBox" text="Enable Autosave" onAction="#toggleAutosave"/>
+          <CheckBox onAction="#toggleAutosave" text="Enable Autosave" fx:id="autosaveCheckBox"/>
+          <CheckBox text="Enable Dark Mode" fx:id="darkModeCheckBox"/>
           <HBox spacing="5">
             <Label text="Autosave Interval (minutes):"/>
-            <Spinner fx:id="autosaveIntervalSpinner" prefWidth="80">
+            <Spinner prefWidth="80" fx:id="autosaveIntervalSpinner">
               <valueFactory>
                 <SpinnerValueFactory.IntegerSpinnerValueFactory
-                  xmlns="javafx.scene.control"
-                  min="1" max="60" initialValue="5"/>
+                  initialValue="5"
+                  max="60" min="1" xmlns="javafx.scene.control"/>
               </valueFactory>
             </Spinner>
           </HBox>
-          <CheckBox fx:id="darkModeCheckBox" text="Enable Dark Mode"/>
+          <padding>
+            <Insets bottom="10" left="10" right="10" top="10"/>
+          </padding>
         </VBox>
       </Tab>
 
       <!-- Tools Settings -->
       <Tab text="Tools">
         <VBox spacing="10">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10"/>
-          </padding>
           <HBox spacing="5">
             <Label text="Default Brush Size:"/>
-            <Spinner fx:id="brushSizeSpinner" prefWidth="80"/>
+            <Spinner prefWidth="80" fx:id="brushSizeSpinner"/>
           </HBox>
           <HBox spacing="5">
-            <Label text="Default Color:"/>
             <ColorPicker fx:id="defaultColorPicker"/>
+            <Label text="Default Color:"/>
           </HBox>
+          <padding>
+            <Insets bottom="10" left="10" right="10" top="10"/>
+          </padding>
         </VBox>
       </Tab>
 
       <!-- Web Server Settings -->
       <Tab text="Web Server">
         <VBox spacing="10">
+          <Button onAction="#startServer" text="Start Web Server" fx:id="startServer"/>
+          <Button onAction="#openServer" text="Open Web Server" fx:id="openServerInBrowser"/>
+          <Button onAction="#stopServer" text="Stop Web Server" fx:id="stopServer"/>
           <padding>
-            <Insets top="10" right="10" bottom="10" left="10"/>
+            <Insets bottom="10" left="10" right="10" top="10"/>
           </padding>
-          <Button fx:id="startServer" onAction="#startServer" text="Start Web Server"/>
-          <Button fx:id="openServerInBrowser" onAction="#openServer" text="Open Web Server"/>
-          <Button fx:id="stopServer" onAction="#stopServer" text="Stop Web Server"/>
         </VBox>
       </Tab>
     </tabs>

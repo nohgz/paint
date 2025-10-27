@@ -4,33 +4,34 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.core.fxml_controllers.MainController">
-    <!--The items here are core functionality. Everything else can become
-     its own separate window or can be added with another class.-->
-    <top>
-        <VBox>
-            <!--Main Toolbars-->
-            <HBox>
-                <fx:include source="left_topbar.fxml" fx:id="leftTopbar"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <fx:include source="right_topbar.fxml" fx:id="rightTopbar"/>
-            </HBox>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+  fx:controller="net.cnoga.paint.core.fxml_controllers.MainController">
+  <!--The items here are core functionality. Everything else can become
+   its own separate window or can be added with another class.-->
+  <bottom>
+    <fx:include source="bottom_info.fxml" fx:id="bottomInfo"/>
+  </bottom>
 
-            <!--Shortcuts-->
-            <fx:include source="shortcut_bar.fxml" fx:id="shortcutBar"/>
+  <!-- Workspace -->
+  <center>
+    <fx:include source="workspace.fxml" fx:id="workspace"/>
+  </center>
 
-            <!--Tool Info-->
-            <fx:include source="tool_info.fxml" fx:id="toolInfo"/>
-        </VBox>
-    </top>
+  <!-- Info Logging -->
+  <top>
+    <VBox>
+      <!--Main Toolbars-->
+      <HBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <fx:include source="left_topbar.fxml" fx:id="leftTopbar"/>
+        <fx:include source="right_topbar.fxml" fx:id="rightTopbar"/>
+      </HBox>
 
-    <!-- Workspace -->
-    <center>
-        <fx:include source="workspace.fxml" fx:id="workspace"/>
-    </center>
+      <!--Shortcuts-->
+      <fx:include source="shortcut_bar.fxml" fx:id="shortcutBar"/>
 
-    <!-- Info Logging -->
-    <bottom>
-        <fx:include source="bottom_info.fxml" fx:id="bottomInfo"/>
-    </bottom>
+      <!--Tool Info-->
+      <fx:include source="tool_info.fxml" fx:id="toolInfo"/>
+    </VBox>
+  </top>
 </BorderPane>

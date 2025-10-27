@@ -40,7 +40,9 @@ public class SimpleWebServer {
     workspaceBrew = brew;
   }
 
-  /** Starts the HTTP server on port 25565. */
+  /**
+   * Starts the HTTP server on port 25565.
+   */
   public void start() throws IOException {
     server = HttpServer.create(new InetSocketAddress(25565), 0);
     server.createContext("/", new IndexHandler());
@@ -63,8 +65,11 @@ public class SimpleWebServer {
     }
   }
 
-  /** Simple handler serving HTML with workspace links. */
+  /**
+   * Simple handler serving HTML with workspace links.
+   */
   private static class IndexHandler implements HttpHandler {
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
       if (!"GET".equals(exchange.getRequestMethod())) {
@@ -75,7 +80,8 @@ public class SimpleWebServer {
       List<Workspace> workspaces = workspaceBrew.getWorkspaces();
       StringBuilder html = new StringBuilder("<html><body><h1>Workspaces</h1><ul>");
       for (int i = 0; i < workspaces.size(); i++) {
-        html.append("<li><a href=\"/workspace/").append(i).append("\">Workspace ").append(i).append("</a></li>");
+        html.append("<li><a href=\"/workspace/").append(i).append("\">Workspace ").append(i)
+          .append("</a></li>");
       }
       html.append("</ul></body></html>");
 
@@ -91,69 +97,69 @@ public class SimpleWebServer {
   /**
    * Handler that returns a PNG snapshot of a workspace.
    */
-    private record WorkspaceHandler(List<Workspace> workspaces) implements HttpHandler {
+  private record WorkspaceHandler(List<Workspace> workspaces) implements HttpHandler {
 
     @Override
-      public void handle(HttpExchange exchange) throws IOException {
-        String[] parts = exchange.getRequestURI().getPath().split("/");
-        if (parts.length < 3) {
-          exchange.sendResponseHeaders(400, -1);
-          return;
-        }
-
-        int id;
-        try {
-          id = Integer.parseInt(parts[2]);
-        } catch (NumberFormatException e) {
-          exchange.sendResponseHeaders(400, -1);
-          return;
-        }
-
-        if (id < 0 || id >= workspaces.size()) {
-          exchange.sendResponseHeaders(404, -1);
-          return;
-        }
-
-        File snapshot = snapshotWorkspace(workspaces.get(id).getBaseLayer());
-        exchange.getResponseHeaders().set("Content-Type", Files.probeContentType(snapshot.toPath()));
-        exchange.sendResponseHeaders(200, snapshot.length());
-
-        try (FileInputStream fis = new FileInputStream(snapshot);
-          OutputStream os = exchange.getResponseBody()) {
-          byte[] buffer = new byte[1024];
-          int read;
-          while ((read = fis.read(buffer)) != -1) {
-            os.write(buffer, 0, read);
-          }
-        }
+    public void handle(HttpExchange exchange) throws IOException {
+      String[] parts = exchange.getRequestURI().getPath().split("/");
+      if (parts.length < 3) {
+        exchange.sendResponseHeaders(400, -1);
+        return;
       }
 
-      /**
-       * Captures a snapshot of a Canvas safely on the JavaFX Application Thread.
-       */
-      private File snapshotWorkspace(Canvas canvas) throws IOException {
-        WritableImage fxImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
-        CountDownLatch latch = new CountDownLatch(1);
+      int id;
+      try {
+        id = Integer.parseInt(parts[2]);
+      } catch (NumberFormatException e) {
+        exchange.sendResponseHeaders(400, -1);
+        return;
+      }
 
-        Platform.runLater(() -> {
-          SnapshotParameters params = new SnapshotParameters();
-          params.setFill(Color.TRANSPARENT);
-          canvas.snapshot(params, fxImage);
-          latch.countDown();
-        });
+      if (id < 0 || id >= workspaces.size()) {
+        exchange.sendResponseHeaders(404, -1);
+        return;
+      }
 
-        try {
-          latch.await();
-        } catch (InterruptedException e) {
-          Thread.currentThread().interrupt();
-          throw new IOException("Snapshot interrupted", e);
+      File snapshot = snapshotWorkspace(workspaces.get(id).getBaseLayer());
+      exchange.getResponseHeaders().set("Content-Type", Files.probeContentType(snapshot.toPath()));
+      exchange.sendResponseHeaders(200, snapshot.length());
+
+      try (FileInputStream fis = new FileInputStream(snapshot);
+        OutputStream os = exchange.getResponseBody()) {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = fis.read(buffer)) != -1) {
+          os.write(buffer, 0, read);
         }
-
-        BufferedImage img = SwingFXUtils.fromFXImage(fxImage, null);
-        File file = new File("workspace_snapshots", "workspace.png");
-        file.getParentFile().mkdirs();
-        ImageIO.write(img, "png", file);
-        return file;
       }
     }
+
+    /**
+     * Captures a snapshot of a Canvas safely on the JavaFX Application Thread.
+     */
+    private File snapshotWorkspace(Canvas canvas) throws IOException {
+      WritableImage fxImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+      CountDownLatch latch = new CountDownLatch(1);
+
+      Platform.runLater(() -> {
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        canvas.snapshot(params, fxImage);
+        latch.countDown();
+      });
+
+      try {
+        latch.await();
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        throw new IOException("Snapshot interrupted", e);
+      }
+
+      BufferedImage img = SwingFXUtils.fromFXImage(fxImage, null);
+      File file = new File("workspace_snapshots", "workspace.png");
+      file.getParentFile().mkdirs();
+      ImageIO.write(img, "png", file);
+      return file;
+    }
+  }
 }

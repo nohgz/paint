@@ -1,56 +1,14 @@
 package net.cnoga.paint.test;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import net.cnoga.paint.core.bus.EventBus;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.SubscribeEvent;
+import org.junit.jupiter.api.Test;
 
 public class EventBusTest {
-
-  static record TestEvent(String message) {
-
-  }
-
-  @EventBusSubscriber
-  static class TestSubscriber {
-    String lastMessage;
-
-    @SubscribeEvent
-    public void onTestEvent(TestEvent evt) {
-      lastMessage = evt.message;
-    }
-  }
-
-  @EventBusSubscriber
-  static class TestMultiSubscriber {
-    int count = 0;
-    int count2 = 0;
-
-    @SubscribeEvent
-    private void handle(TestEvent evt) {
-      count++;
-    }
-
-    @SubscribeEvent
-    private void handle2(TestEvent evt) {
-      count2 += 2;
-    }
-  }
-
-  @EventBusSubscriber
-  static class InvalidSubscriber {
-    @SubscribeEvent
-    public void shouldFail() {
-    }
-  }
-
-  @EventBusSubscriber
-  class InvalidMultiSubscriber {
-    @SubscribeEvent
-    public void badHandler(TestEvent e, String extra) {}
-  }
 
   @Test
   void testSingleSubscriberReceivesEvent() {
@@ -90,5 +48,53 @@ public class EventBusTest {
     InvalidMultiSubscriber bad = new InvalidMultiSubscriber();
 
     assertThrows(IllegalArgumentException.class, () -> bus.register(bad));
+  }
+
+  record TestEvent(String message) {
+
+  }
+
+  @EventBusSubscriber
+  static class TestSubscriber {
+
+    String lastMessage;
+
+    @SubscribeEvent
+    public void onTestEvent(TestEvent evt) {
+      lastMessage = evt.message;
+    }
+  }
+
+  @EventBusSubscriber
+  static class TestMultiSubscriber {
+
+    int count = 0;
+    int count2 = 0;
+
+    @SubscribeEvent
+    private void handle(TestEvent evt) {
+      count++;
+    }
+
+    @SubscribeEvent
+    private void handle2(TestEvent evt) {
+      count2 += 2;
+    }
+  }
+
+  @EventBusSubscriber
+  static class InvalidSubscriber {
+
+    @SubscribeEvent
+    public void shouldFail() {
+    }
+  }
+
+  @EventBusSubscriber
+  class InvalidMultiSubscriber {
+
+    @SubscribeEvent
+    public void badHandler(TestEvent e, String extra) {
+    }
   }
 }

@@ -45,13 +45,17 @@ public class SubWindowBrew extends EventBusPublisher {
   private Boolean layersOpen = false;
   private Boolean settingsOpen = false;
 
-  /** Constructs the Brew bound to the main application stage. */
+  /**
+   * Constructs the Brew bound to the main application stage.
+   */
   public SubWindowBrew(Stage stage) {
     this.mainStage = stage;
     bus.register(this);
   }
 
-  /** Initializes subwindow service with the provided toggle buttons. */
+  /**
+   * Initializes subwindow service with the provided toggle buttons.
+   */
   @SubscribeEvent
   private void initSubWindowService(InitSubWindowServiceRequest req) {
     this.historyButton = req.historyButton();
@@ -60,7 +64,9 @@ public class SubWindowBrew extends EventBusPublisher {
     this.settingsButton = req.settingsButton();
   }
 
-  /** Shows the History subwindow on request. */
+  /**
+   * Shows the History subwindow on request.
+   */
   @SubscribeEvent
   private void onOpenHistory(OpenHistoryRequest req) {
     if (historyStage == null) {
@@ -87,7 +93,9 @@ public class SubWindowBrew extends EventBusPublisher {
     historyOpen = !historyOpen;
   }
 
-  /** Shows the Layers subwindow on request. */
+  /**
+   * Shows the Layers subwindow on request.
+   */
   @SubscribeEvent
   private void onOpenLayers(OpenLayersRequest req) {
     if (layersStage == null) {
@@ -115,7 +123,9 @@ public class SubWindowBrew extends EventBusPublisher {
     layersOpen = !layersOpen;
   }
 
-  /** Shows the Tools subwindow on request. */
+  /**
+   * Shows the Tools subwindow on request.
+   */
   @SubscribeEvent
   private void onOpenTools(OpenToolsRequest req) {
     if (toolsStage == null) {
@@ -143,7 +153,9 @@ public class SubWindowBrew extends EventBusPublisher {
   }
 
 
-  /** Shows the Settings subwindow on request. */
+  /**
+   * Shows the Settings subwindow on request.
+   */
   @SubscribeEvent
   private void onOpenSettings(OpenSettingsRequest req) {
     if (settingsStage == null) {
@@ -169,7 +181,9 @@ public class SubWindowBrew extends EventBusPublisher {
     settingsOpen = !settingsOpen;
   }
 
-  /** Shows the About subwindow on request. */
+  /**
+   * Shows the About subwindow on request.
+   */
   @SubscribeEvent
   private void onOpenAbout(OpenAboutRequest evt) {
     if (aboutStage == null) {
@@ -187,7 +201,9 @@ public class SubWindowBrew extends EventBusPublisher {
     aboutStage.toFront();
   }
 
-  /** Shows the Help subwindow on request. */
+  /**
+   * Shows the Help subwindow on request.
+   */
   @SubscribeEvent
   private void onOpenHelp(OpenHelpRequest evt) {
     if (helpStage == null) {
@@ -205,7 +221,9 @@ public class SubWindowBrew extends EventBusPublisher {
     helpStage.toFront();
   }
 
-  /** Shows the Changelog subwindow on request. */
+  /**
+   * Shows the Changelog subwindow on request.
+   */
   @SubscribeEvent
   private void onOpenChangelog(OpenChangelogRequest evt) {
     if (changelogStage == null) {

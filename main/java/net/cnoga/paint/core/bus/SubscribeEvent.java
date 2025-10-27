@@ -8,9 +8,8 @@ import java.lang.annotation.Target;
 /**
  * Marks a method as an event handler for a specific event type.
  * <p>
- * Methods annotated with {@link SubscribeEvent} must have exactly one
- * parameter representing the event type. They will be invoked whenever
- * that event is posted to the {@link EventBus}.
+ * Methods annotated with {@link SubscribeEvent} must have exactly one parameter representing the
+ * event type. They will be invoked whenever that event is posted to the {@link EventBus}.
  * </p>
  *
  * <p>Example:</p>
@@ -23,4 +22,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface SubscribeEvent { }
+public @interface SubscribeEvent {
+
+}

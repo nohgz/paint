@@ -22,8 +22,8 @@ import net.cnoga.paint.core.tool.PaintTools;
 /**
  * Maps global keyboard shortcuts to application events.
  * <p>
- * Attaches to the primary {@link Scene} and posts corresponding event bus requests
- * for actions like undo/redo, workspace management, selection copy/paste, and tool switching.
+ * Attaches to the primary {@link Scene} and posts corresponding event bus requests for actions like
+ * undo/redo, workspace management, selection copy/paste, and tool switching.
  */
 @EventBusSubscriber
 public class KeystrokeBrew extends EventBusPublisher {
@@ -41,7 +41,9 @@ public class KeystrokeBrew extends EventBusPublisher {
     initStrokes();
   }
 
-  /** Attaches keyboard event filters to the scene to handle shortcuts. */
+  /**
+   * Attaches keyboard event filters to the scene to handle shortcuts.
+   */
   private void initStrokes() {
     primaryScene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
 

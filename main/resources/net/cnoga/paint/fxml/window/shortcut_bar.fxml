@@ -5,8 +5,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.cnoga.paint.core.fxml_controllers.window.ShortcutBarController">
-  <Button fx:id = "shortcut_bar_new" onAction="#onNewFile">
+<HBox xmlns:fx="http://javafx.com/fxml"
+  fx:controller="net.cnoga.paint.core.fxml_controllers.window.ShortcutBarController">
+  <Button onAction="#onNewFile" fx:id="shortcut_bar_new">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/new_icon.png"/>
@@ -14,11 +15,11 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="New Image" showDelay="0.3s"/>
+      <Tooltip showDelay="0.3s" text="New Image"/>
     </tooltip>
   </Button>
 
-  <Button fx:id = "shortcut_bar_open" onAction="#onFileOpen">
+  <Button onAction="#onFileOpen" fx:id="shortcut_bar_open">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/open_icon.png"/>
@@ -26,11 +27,11 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="Open Image" showDelay="0.3s"/>
+      <Tooltip showDelay="0.3s" text="Open Image"/>
     </tooltip>
   </Button>
 
-  <Button fx:id = "shortcut_bar_save" onAction="#onFileSave">
+  <Button onAction="#onFileSave" fx:id="shortcut_bar_save">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/save_icon.png"/>
@@ -38,11 +39,11 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="Save Image" showDelay="0.3s"/>
+      <Tooltip showDelay="0.3s" text="Save Image"/>
     </tooltip>
   </Button>
 
-  <Button fx:id = "shortcut_bar_save_as" onAction="#onFileSaveAs">
+  <Button onAction="#onFileSaveAs" fx:id="shortcut_bar_save_as">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/save_as_icon.png"/>
@@ -50,11 +51,11 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="Save Image As" showDelay="0.3s"/>
+      <Tooltip showDelay="0.3s" text="Save Image As"/>
     </tooltip>
   </Button>
 
-  <Button fx:id = "shortcut_bar_clear_workspace" onAction="#onClearWorkspace">
+  <Button onAction="#onClearWorkspace" fx:id="shortcut_bar_clear_workspace">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/clear_workspace_icon.png"/>
@@ -62,7 +63,7 @@
     </graphic>
 
     <tooltip>
-      <Tooltip text="Clear Workspace" showDelay="0.3s"/>
+      <Tooltip showDelay="0.3s" text="Clear Workspace"/>
     </tooltip>
   </Button>
 </HBox>

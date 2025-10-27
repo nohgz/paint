@@ -2,8 +2,8 @@
 
 <?import javafx.scene.control.TabPane?>
 <TabPane xmlns:fx="http://javafx.com/fxml"
-fx:id="workspaceTabPane"
-fx:controller="net.cnoga.paint.core.fxml_controllers.window.WorkspaceController"
-side="BOTTOM">
+  side="BOTTOM"
+  fx:controller="net.cnoga.paint.core.fxml_controllers.window.WorkspaceController"
+  fx:id="workspaceTabPane">
 
 </TabPane>

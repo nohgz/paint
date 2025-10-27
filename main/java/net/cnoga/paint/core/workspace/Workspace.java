@@ -23,25 +23,23 @@ public class Workspace {
   private final StackPane stackPane;
   private final Group canvasGroup;
 
-
   // Content
   private final List<Canvas> layers = new ArrayList<>();
-  private File currentFile;
-  private boolean dirty;
-  private UUID uuid;
   private final String displayName;
-
   // Capabilities
   private final ZoomCapability zoomCapability;
   private final UndoRedoCapability undoRedoCapability;
   private final SelectionCapability selectionCapability;
+  private File currentFile;
+  private boolean dirty;
+  private UUID uuid;
 
   /**
    * Creates a new workspace with a given name and initial canvas size.
    *
-   * @param displayName   the display name of this workspace
-   * @param width  the width of the canvas
-   * @param height the height of the canvas
+   * @param displayName the display name of this workspace
+   * @param width       the width of the canvas
+   * @param height      the height of the canvas
    * @throws IllegalArgumentException if width or height are non-positive
    */
   public Workspace(String displayName, double width, double height) {
@@ -89,7 +87,6 @@ public class Workspace {
     layers.add(transparency);
     layers.add(base);
     layers.add(effects);
-
 
     canvasGroup.getChildren().addAll(transparency, base, effects);
   }
@@ -155,8 +152,8 @@ public class Workspace {
   }
 
   /**
-   * Replaces all layers in this workspace with the given list.
-   * Preserves the visual stacking order.
+   * Replaces all layers in this workspace with the given list. Preserves the visual stacking
+   * order.
    */
   public void replaceLayers(List<Canvas> newLayers) {
     if (newLayers == null || newLayers.size() != layers.size()) {

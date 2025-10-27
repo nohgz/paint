@@ -10,14 +10,12 @@ import java.util.function.Consumer;
 /**
  * A simple event bus for program-wide reactive programming tasks.
  * <p>This implementation uses reflection to discover subscriber methods
- * annotated with {@link SubscribeEvent} in classes annotated with
- * {@link EventBusSubscriber}.
+ * annotated with {@link SubscribeEvent} in classes annotated with {@link EventBusSubscriber}.
  * </p>
  *
  * <p>
- * Subscribers register listener methods for specific event types,
- * and publishers post events that are automatically delivered to all
- * matching subscribers.
+ * Subscribers register listener methods for specific event types, and publishers post events that
+ * are automatically delivered to all matching subscribers.
  * </p>
  *
  * <p>Example usage:</p>
@@ -36,19 +34,26 @@ import java.util.function.Consumer;
  */
 public class EventBus {
 
-  /** Singleton instance of the global event bus. */
+  /**
+   * Singleton instance of the global event bus.
+   */
   private static final EventBus INSTANCE = new EventBus();
 
-  /** Map of event type to subscribers interested in that type. */
+  /**
+   * Map of event type to subscribers interested in that type.
+   */
   private final Map<Class<?>, List<Consumer<?>>> listeners = new ConcurrentHashMap<>();
 
-  /** Private constructor to enforce singleton use. */
+  /**
+   * Private constructor to enforce singleton use.
+   */
   private EventBus() {
   }
 
   /**
-   * Returns the shared singleton {@link EventBus} instance.
-   * Only the launcher should be aware of this.
+   * Returns the shared singleton {@link EventBus} instance. Only the launcher should be aware of
+   * this.
+   *
    * @return global event bus instance
    */
   public static EventBus getInstance() {
