@@ -1,5 +1,6 @@
 package net.cnoga.paint.core.tool;
 
+import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
@@ -21,8 +22,8 @@ public class DropperTool extends Tool {
   public DropperTool() {
     super.name = "Dropper";
     super.helpInfo = "[Dropper] Left click to pick a color on the canvas.";
-    super.iconPath = getClass()
-      .getResource("/net/cnoga/paint/icons/tools/dropper.png")
+    super.iconPath = Objects.requireNonNull(getClass()
+        .getResource("/net/cnoga/paint/icons/tools/dropper.png"))
       .toExternalForm();
   }
 
@@ -53,8 +54,8 @@ public class DropperTool extends Tool {
   }
 
   /**
-   * Captures the canvas at the given coordinates and posts a
-   * {@link net.cnoga.paint.events.request.ColorChangedEvent} with the detected color.
+   * Captures the canvas at the given coordinates and posts a {@link ColorChangedEvent} with the
+   * detected color.
    *
    * @param gc the graphics context whose canvas is sampled
    * @param x  x-coordinate of the pixel

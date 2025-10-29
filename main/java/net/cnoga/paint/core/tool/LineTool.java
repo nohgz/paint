@@ -2,6 +2,7 @@ package net.cnoga.paint.core.tool;
 
 import static net.cnoga.paint.core.util.LineUtil.drawLineWithCircles;
 
+import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.events.response.ColorChangedEvent;
@@ -26,8 +27,8 @@ public class LineTool extends Tool implements ColorCapability, WidthCapability {
   public LineTool() {
     super.name = "Line";
     super.helpInfo = "[Line] Click and hold to draw a line.";
-    super.iconPath = getClass()
-      .getResource("/net/cnoga/paint/icons/tools/line.png")
+    super.iconPath = Objects.requireNonNull(getClass()
+        .getResource("/net/cnoga/paint/icons/tools/line.png"))
       .toExternalForm();
   }
 

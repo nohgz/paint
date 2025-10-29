@@ -4,12 +4,16 @@ import static net.cnoga.paint.core.util.SubwindowUtil.createSubwindow;
 import static net.cnoga.paint.core.util.SubwindowUtil.createToggledSubwindow;
 import static net.cnoga.paint.core.util.SubwindowUtil.setSubwindowSpawnPoint;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.SubscribeEvent;
 import net.cnoga.paint.core.bus.events.init.InitSubWindowServiceRequest;
+import net.cnoga.paint.core.bus.events.request.ChangeThemeRequest;
 import net.cnoga.paint.core.bus.events.request.OpenAboutRequest;
 import net.cnoga.paint.core.bus.events.request.OpenChangelogRequest;
 import net.cnoga.paint.core.bus.events.request.OpenHelpRequest;
@@ -51,6 +55,31 @@ public class SubWindowBrew extends EventBusPublisher {
   public SubWindowBrew(Stage stage) {
     this.mainStage = stage;
     bus.register(this);
+  }
+
+  @SubscribeEvent
+  @SuppressWarnings("unused")
+  private void onThemeChange(ChangeThemeRequest req) {
+    String stylesheet = Objects.requireNonNull(
+      getClass().getResource(req.theme())
+    ).toExternalForm();
+
+    List<Stage> subStages = Arrays.asList(
+      historyStage,
+      toolsStage,
+      layersStage,
+      settingsStage,
+      helpStage,
+      changelogStage,
+      aboutStage
+    );
+
+    for (Stage stage : subStages) {
+      if (stage != null && stage.getScene() != null) {
+        stage.getScene().getStylesheets().clear();
+        stage.getScene().getStylesheets().add(stylesheet);
+      }
+    }
   }
 
   /**

@@ -1,5 +1,6 @@
 package net.cnoga.paint.core.tool;
 
+import java.util.Objects;
 import java.util.Optional;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.TextInputDialog;
@@ -19,16 +20,14 @@ import net.cnoga.paint.core.tool.capabilities.WidthCapability;
 @EventBusSubscriber
 public class TextTool extends Tool implements WidthCapability, ColorCapability {
 
-  private double lastX, lastY;
-
   /**
    * Constructs a new Text tool with its icon and help text.
    */
   public TextTool() {
     super.name = "Text";
     super.helpInfo = "[Text] Left click to start text creation.";
-    super.iconPath = getClass()
-      .getResource("/net/cnoga/paint/icons/tools/text.png")
+    super.iconPath = Objects.requireNonNull(getClass()
+        .getResource("/net/cnoga/paint/icons/tools/text.png"))
       .toExternalForm();
   }
 

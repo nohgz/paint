@@ -3,6 +3,7 @@ package net.cnoga.paint.core.tool;
 import static net.cnoga.paint.core.util.LineUtil.drawLineWithCircles;
 import static net.cnoga.paint.core.util.LineUtil.roundLineCap;
 
+import java.util.Objects;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
@@ -30,8 +31,8 @@ public class BrushTool extends Tool implements ColorCapability, WidthCapability 
   public BrushTool() {
     super.name = "Paintbrush";
     super.helpInfo = "[Paintbrush] Left click to draw with the selected color.";
-    super.iconPath = getClass()
-      .getResource("/net/cnoga/paint/icons/tools/brush.png")
+    super.iconPath = Objects.requireNonNull(getClass()
+        .getResource("/net/cnoga/paint/icons/tools/brush.png"))
       .toExternalForm();
   }
 

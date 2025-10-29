@@ -20,28 +20,13 @@ import net.cnoga.paint.core.bus.EventBusSubscriber;
  * handling. Uses a lazy initialization strategy to ensure subclass fields are fully initialized
  * before the UI is built.
  * </p>
- *
- * <h2>Behavior</h2>
- * <ul>
- *   <li>All popups have a minimum size to maintain visual consistency.</li>
- *   <li>Only one popup can be active at a time. If a new popup is shown,
- *       the previous one will be closed.</li>
- *   <li>The button bar is an {@link HBox} with equally spaced buttons,
- *       ensuring consistent layout across dialogs.</li>
- * </ul>
- *
- * <h2>Usage</h2>
+ * <p>
  * Subclasses should implement:
  * <ul>
  *   <li>{@link #buildContent()} to provide the main UI content.</li>
  *   <li>{@link #onConfirm()} to handle the confirmation action.</li>
  *   <li>Optionally override {@link #buildButtonBar()} to customize buttons.</li>
  * </ul>
- *
- * <p>
- * The dialog UI is constructed lazily on the first call to {@link #show()},
- * preventing issues with uninitialized subclass fields during construction.
- * </p>
  */
 @EventBusSubscriber
 public abstract class AbstractInputPopup extends EventBusPublisher {

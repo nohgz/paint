@@ -30,10 +30,9 @@ import net.cnoga.paint.core.bus.events.response.WorkspaceSavedEvent;
 @EventBusSubscriber
 public class AutosaveBrew extends EventBusPublisher {
 
+  private final ScheduledExecutorService scheduler;
   private boolean isEnabled;
   private int intervalSeconds;
-  private final ScheduledExecutorService scheduler;
-
   /**
    * Scheduled task handle for the autosave action.
    */
@@ -70,6 +69,7 @@ public class AutosaveBrew extends EventBusPublisher {
    * Toggles autosave on or off in response to a {@link ToggleAutosaveRequest}.
    */
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onToggleAutosave(ToggleAutosaveRequest req) {
     if (isEnabled) {
       stopAutosave();
@@ -82,6 +82,7 @@ public class AutosaveBrew extends EventBusPublisher {
    * Sets the autosave interval from a {@link SetAutosaveIntervalRequest}.
    */
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onSetInterval(SetAutosaveIntervalRequest req) {
     this.intervalSeconds = req.minutes() * 60;
     if (isEnabled) {
@@ -93,6 +94,7 @@ public class AutosaveBrew extends EventBusPublisher {
    * Restarts autosave when the workspace is saved.
    */
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onSave(WorkspaceSavedEvent evt) {
     restartAutosave();
   }
@@ -102,6 +104,7 @@ public class AutosaveBrew extends EventBusPublisher {
    * Restarts autosave when the workspace is saved as.
    */
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onSavedAs(WorkspaceSavedAsEvent evt) {
     restartAutosave();
   }
@@ -110,6 +113,7 @@ public class AutosaveBrew extends EventBusPublisher {
    * Stops autosave when the program closes.
    */
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onProgramClose(CloseProgramRequest req) {
     stopAutosave();
   }
@@ -118,6 +122,7 @@ public class AutosaveBrew extends EventBusPublisher {
    * Stops autosave when the program force closes.
    */
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onProgramForceClose(ForceCloseProgramRequest req) {
     stopAutosave();
   }
@@ -140,7 +145,7 @@ public class AutosaveBrew extends EventBusPublisher {
     // schedule autosave task
     autosaveHandle = scheduler.scheduleAtFixedRate(() -> {
       Platform.runLater(() -> bus.post(new WorkspaceSaveRequest()));
-      publishSystemNotification("Pain(t)", "Your workspace has been saved.");
+      publishAutosaveNotification();
       timeLeft = intervalSeconds;
     }, intervalSeconds, intervalSeconds, TimeUnit.SECONDS);
 
@@ -205,18 +210,15 @@ public class AutosaveBrew extends EventBusPublisher {
    * <p>
    * Does nothing if the system tray is not available.
    * </p>
-   *
-   * @param title   Notification title
-   * @param message Notification body
    */
-  private void publishSystemNotification(String title, String message) {
+  private void publishAutosaveNotification() {
     if (trayIcon == null) {
       return;
     }
     try {
-      trayIcon.displayMessage(title, message, TrayIcon.MessageType.INFO);
+      trayIcon.displayMessage("Pain(t)", "Your workspace has been saved.", TrayIcon.MessageType.INFO);
     } catch (Exception e) {
-      System.out.println("[AutosaveBrew] Failed to display system notification: " + e.getMessage());
+      System.out.println("[AutosaveBrew] Failed to display autosave notification: " + e.getMessage());
     }
   }
 }

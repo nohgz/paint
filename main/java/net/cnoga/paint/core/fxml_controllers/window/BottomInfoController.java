@@ -37,11 +37,13 @@ public class BottomInfoController extends EventBusPublisher {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onToolChanged(ToolChangedEvent evt) {
     textStatus.setText(evt.tool().getHelpInfo());
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void timeChanged(AutosaveTimeChangedEvent evt) {
     Platform.runLater(() -> {
       autosaveTimer.setText("Time until Autosave: " + evt.seconds());

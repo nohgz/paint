@@ -10,8 +10,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
+import net.cnoga.paint.core.tool.PaintTools;
 import net.cnoga.paint.core.tool.Tool;
-import net.cnoga.paint.core.tool.ToolRegistry;
 
 /**
  * JavaFX controller for the tool palette in the main workspace.
@@ -21,8 +21,6 @@ import net.cnoga.paint.core.tool.ToolRegistry;
  * {@link ToolChangedEvent} to the application {@link net.cnoga.paint.core.bus.EventBus}, allowing
  * the workspace to update its interaction mode accordingly.</p>
  *
- * <p>The grid is automatically populated at initialization based on all tools
- * registered in {@link ToolRegistry}.</p>
  *
  * <h3>Layout:</h3>
  * <ul>
@@ -65,7 +63,7 @@ public class ToolsController extends EventBusPublisher {
   private void populateTools() {
     int col = 0, row = 0;
 
-    for (Tool tool : ToolRegistry.getAll().values()) {
+    for (Tool tool : PaintTools.ALL_TOOLS) {
       ToggleButton btn = new ToggleButton();
 
       ImageView icon = new ImageView(tool.getIconPath());

@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
@@ -20,19 +19,13 @@ public class Workspace {
 
   // FXML Defined Stuff
   private final ScrollPane scrollPane;
-  private final StackPane stackPane;
   private final Group canvasGroup;
 
   // Content
   private final List<Canvas> layers = new ArrayList<>();
   private final String displayName;
-  // Capabilities
-  private final ZoomCapability zoomCapability;
-  private final UndoRedoCapability undoRedoCapability;
-  private final SelectionCapability selectionCapability;
   private File currentFile;
   private boolean dirty;
-  private UUID uuid;
 
   /**
    * Creates a new workspace with a given name and initial canvas size.
@@ -47,17 +40,19 @@ public class Workspace {
       throw new IllegalArgumentException("Canvas size must be positive");
     }
 
-    this.stackPane = new StackPane();
+    // FXML Definitions
+    StackPane stackPane = new StackPane();
     this.canvasGroup = new Group();
     this.scrollPane = new ScrollPane(stackPane);
-    this.zoomCapability = new ZoomCapability(scrollPane, canvasGroup);
     this.displayName = displayName;
 
     stackPane.getChildren().add(canvasGroup);
     setupDefaultLayers(width, height);
 
-    this.undoRedoCapability = new UndoRedoCapability(this); // add in UUID here?
-    this.selectionCapability = new SelectionCapability(this); // add in workspace UUID?
+    // Capabilities
+    ZoomCapability zoomCapability = new ZoomCapability(scrollPane, canvasGroup);
+    UndoRedoCapability undoRedoCapability = new UndoRedoCapability(this);
+    SelectionCapability selectionCapability = new SelectionCapability(this);
   }
 
   /**
@@ -152,19 +147,6 @@ public class Workspace {
   }
 
   /**
-   * Replaces all layers in this workspace with the given list. Preserves the visual stacking
-   * order.
-   */
-  public void replaceLayers(List<Canvas> newLayers) {
-    if (newLayers == null || newLayers.size() != layers.size()) {
-      throw new IllegalArgumentException("Layer count mismatch");
-    }
-    layers.clear();
-    layers.addAll(newLayers);
-    canvasGroup.getChildren().setAll(newLayers);
-  }
-
-  /**
    * @return true if workspace has unsaved changes
    */
   public boolean isDirty() {
@@ -224,14 +206,14 @@ public class Workspace {
    * @return the effects layer
    */
   public Canvas getEffectsLayer() {
-    return layers.get(layers.size() - 1);
+    return layers.getLast();
   }
 
   /**
    * @return the transparency/background layer
    */
   public Canvas getTransparencyLayer() {
-    return layers.get(0);
+    return layers.getFirst();
   }
 
   /**

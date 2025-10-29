@@ -1,5 +1,6 @@
 package net.cnoga.paint.core.tool;
 
+import java.util.Objects;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -14,8 +15,8 @@ public class SelectionTool extends Tool {
   public SelectionTool() {
     super.name = "Selection";
     super.helpInfo = "[Selection] Left click and drag to create a selection.";
-    super.iconPath = getClass()
-      .getResource("/net/cnoga/paint/icons/tools/select.png")
+    super.iconPath = Objects.requireNonNull(getClass()
+        .getResource("/net/cnoga/paint/icons/tools/select.png"))
       .toExternalForm();
     super.isMutator = false;
   }

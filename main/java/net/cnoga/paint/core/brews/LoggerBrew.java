@@ -115,6 +115,7 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onFileOpened(FileOpenedEvent evt) {
     String msg = "Opened file: " + evt.file().getAbsolutePath();
     log.info(msg);
@@ -122,13 +123,15 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onColorChanged(ColorChangedEvent evt) {
     String msg = "Color changed to " + evt.color();
-    log.debug(msg);
+    log.info(msg);
     enqueue(msg);
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onWorkspaceSaved(WorkspaceSavedEvent evt) {
     String msg = "Workspace '" + evt.workspace().getName() + "' saved successfully.";
     log.info(msg);
@@ -136,6 +139,7 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onWorkspaceSavedAs(WorkspaceSavedAsEvent evt) {
     String msg = "Workspace '" + evt.workspace().getName() + "' saved as new file.";
     log.info(msg);
@@ -143,20 +147,23 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onToolChanged(ToolChangedEvent evt) {
     String msg = "Tool changed: " + evt.tool().getName();
-    log.debug(msg);
+    log.info(msg);
     enqueue(msg);
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onSelectionPasted(SelectionPastedEvent evt) {
     String msg = String.format("Selection pasted at (%.2f, %.2f)", evt.x(), evt.y());
-    log.debug(msg);
+    log.info(msg);
     enqueue(msg);
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onNewWorkspace(NewWorkspaceRequest evt) {
     String msg = "New workspace created (" + evt.width() + "x" + evt.height() + ")";
     log.info(msg);
@@ -164,6 +171,7 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onClearWorkspace(ClearWorkspaceRequest evt) {
     String msg = "Workspace cleared.";
     log.info(msg);
@@ -171,6 +179,7 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onCloseCurrentWorkspace(CloseCurrentWorkspaceRequest evt) {
     String msg = "Current workspace closed.";
     log.info(msg);
@@ -178,6 +187,7 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onWorkspaceSaveRequest(WorkspaceSaveRequest evt) {
     String msg = "Save request issued for active workspace.";
     log.info(msg);
@@ -185,13 +195,15 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onPasteSelection(PasteSelectionRequest evt) {
     String msg = "Paste selection requested.";
-    log.debug(msg);
+    log.info(msg);
     enqueue(msg);
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onFocusWorkspace(FocusWorkspaceRequest evt) {
     String msg = "Focused workspace: " + evt.workspace().getName();
     log.info(msg);

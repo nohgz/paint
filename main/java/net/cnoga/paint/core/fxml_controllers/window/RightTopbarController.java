@@ -48,35 +48,35 @@ public class RightTopbarController extends EventBusPublisher {
     bus.register(this);
   }
 
-  public void onOpenTools(ActionEvent actionEvent) {
+  public void onOpenTools() {
     bus.post(new OpenToolsRequest());
   }
 
-  public void onOpenLayers(ActionEvent actionEvent) {
+  public void onOpenLayers() {
     bus.post(new OpenLayersRequest());
   }
 
-  public void onOpenHistory(ActionEvent actionEvent) {
+  public void onOpenHistory() {
     bus.post(new OpenHistoryRequest());
   }
 
-  public void onOpenSettings(ActionEvent actionEvent) {
+  public void onOpenSettings() {
     bus.post(new OpenSettingsRequest());
   }
 
-  public void onOpenChangelog(ActionEvent actionEvent) {
+  public void onOpenChangelog() {
     bus.post(new OpenChangelogRequest());
   }
 
-  public void onOpenHelp(ActionEvent actionEvent) {
+  public void onOpenHelp() {
     bus.post(new OpenHelpRequest());
   }
 
-  public void onOpenAbout(ActionEvent actionEvent) {
+  public void onOpenAbout() {
     bus.post(new OpenAboutRequest());
   }
 
-  public void onOpenGithub(ActionEvent actionEvent) {
+  public void onOpenGithub() {
     bus.post(new OpenGitHubRequest());
   }
 

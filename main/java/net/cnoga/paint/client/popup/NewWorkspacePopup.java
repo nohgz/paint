@@ -45,7 +45,6 @@ public class NewWorkspacePopup extends AbstractInputPopup {
         throw new NumberFormatException("Canvas is too large!");
       }
     } catch (NumberFormatException e) {
-      // post a new popup, but thats a todo
       System.out.println("[NewWorkspacePopup.onConfirm] Caught invalid numerical input!");
     }
   }

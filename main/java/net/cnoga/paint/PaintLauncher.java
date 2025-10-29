@@ -1,12 +1,14 @@
 package net.cnoga.paint;
 
 import java.io.IOException;
+import java.util.Objects;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.cnoga.paint.core.bus.EventBus;
+import net.cnoga.paint.core.bus.events.request.ChangeThemeRequest;
 import net.cnoga.paint.core.bus.events.request.NewWorkspaceRequest;
 import net.cnoga.paint.core.bus.events.request.OpenHistoryRequest;
 import net.cnoga.paint.core.bus.events.request.OpenLayersRequest;
@@ -50,13 +52,8 @@ public class PaintLauncher extends Application {
     mainController.init(primaryStage, primaryScene);
 
     // Then the cosmetics
-    try {
-      primaryStage.getIcons().add(new Image(
-        PaintLauncher.class.getResourceAsStream("icons/paint_icon.png")));
-    } catch (NullPointerException nullPointerException) {
-      System.err.println("Cannot find icon from path specified.");
-    }
-
+    primaryStage.getIcons().add(new Image(
+      Objects.requireNonNull(PaintLauncher.class.getResourceAsStream("icons/paint_icon.png"))));
     primaryStage.setTitle("Pain(t)");
     primaryStage.setScene(primaryScene);
     primaryStage.setMaximized(true);

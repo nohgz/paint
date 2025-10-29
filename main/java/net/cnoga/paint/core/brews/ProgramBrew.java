@@ -5,6 +5,8 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Objects;
 import javafx.stage.Stage;
 import net.cnoga.paint.client.popup.ProgramSaveWarningPopup;
 import net.cnoga.paint.core.bus.EventBusPublisher;
@@ -103,6 +105,7 @@ public class ProgramBrew extends EventBusPublisher {
   @SubscribeEvent
   private void onThemeChange(ChangeThemeRequest req) {
     primaryStage.getScene().getStylesheets().clear();
-    primaryStage.getScene().getStylesheets().add(getClass().getResource(req.theme()).toExternalForm());
+    primaryStage.getScene().getStylesheets()
+      .add(Objects.requireNonNull(getClass().getResource(req.theme())).toExternalForm());
   }
 }

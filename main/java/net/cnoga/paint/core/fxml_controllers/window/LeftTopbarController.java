@@ -43,29 +43,28 @@ public class LeftTopbarController extends EventBusPublisher {
   public MenuItem left_topbar_file_save_as;
   public MenuItem left_topbar_exit;
 
-  // ---- FILE ----
   @FXML
-  private void onFileNew(ActionEvent event) {
+  private void onFileNew() {
     bus.post(new ShowNewWorkspacePopupRequest());
   }
 
   @FXML
-  private void onFileOpen(ActionEvent event) {
+  private void onFileOpen() {
     bus.post(new FileOpenRequest());
   }
 
   @FXML
-  private void onFileSave(ActionEvent event) {
+  private void onFileSave() {
     bus.post(new WorkspaceSaveRequest());
   }
 
   @FXML
-  private void onFileSaveAs(ActionEvent event) {
+  private void onFileSaveAs() {
     bus.post(new WorkspaceSaveAsRequest());
   }
 
   @FXML
-  private void onAppExit(ActionEvent event) {
+  private void onAppExit() {
     bus.post(new CloseProgramRequest());
   }
 

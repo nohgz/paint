@@ -11,6 +11,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
+import net.cnoga.paint.core.bus.events.request.ChangeThemeRequest;
 import net.cnoga.paint.core.bus.events.request.SetAutosaveIntervalRequest;
 import net.cnoga.paint.core.bus.events.request.StartServerRequest;
 import net.cnoga.paint.core.bus.events.request.StopServerRequest;
@@ -24,6 +25,7 @@ public class SettingsController extends EventBusPublisher {
   public Button stopServer;
   public CheckBox autosaveCheckBox;
   public Spinner autosaveIntervalSpinner;
+  public CheckBox darkModeCheckBox;
 
   public SettingsController() {
     bus.register(this);
@@ -66,5 +68,15 @@ public class SettingsController extends EventBusPublisher {
 
   public void toggleAutosave(ActionEvent actionEvent) {
     bus.post(new ToggleAutosaveRequest());
+  }
+
+  private boolean isDark = false;
+  public void toggleTheme() {
+    isDark = !isDark;
+    if (isDark) {
+      bus.post(new ChangeThemeRequest("/net/cnoga/paint/themes/mocha.css"));
+    } else {
+      bus.post(new ChangeThemeRequest("/net/cnoga/paint/themes/latte.css"));
+    }
   }
 }

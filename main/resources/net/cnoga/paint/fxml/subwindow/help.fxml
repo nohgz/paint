@@ -6,7 +6,8 @@
   fitToHeight="true"
   fitToWidth="true"
   prefHeight="400.0" prefWidth="600.0"
-  xmlns="http://javafx.com/javafx" fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.HelpController">
+  xmlns="http://javafx.com/javafx"
+  fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.HelpController">
 
   <TextArea editable="false"
     prefHeight="380.0"

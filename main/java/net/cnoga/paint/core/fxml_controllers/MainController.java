@@ -14,6 +14,7 @@ import net.cnoga.paint.core.brews.SubWindowBrew;
 import net.cnoga.paint.core.brews.WorkspaceBrew;
 import net.cnoga.paint.core.bus.EventBus;
 import net.cnoga.paint.core.bus.EventBusPublisher;
+import net.cnoga.paint.core.bus.events.request.ChangeThemeRequest;
 import net.cnoga.paint.core.bus.events.request.CloseProgramRequest;
 import net.cnoga.paint.core.fxml_controllers.window.BottomInfoController;
 import net.cnoga.paint.core.fxml_controllers.window.LeftTopbarController;
@@ -54,15 +55,6 @@ public class MainController extends EventBusPublisher {
   @FXML
   private WorkspaceController workspaceController;
 
-  private WorkspaceBrew workspaceBrew;
-  private FileIOBrew fileIOBrew;
-  private ProgramBrew programBrew;
-  private SubWindowBrew subwindowBrew;
-  private KeystrokeBrew keystrokeBrew;
-  private SimpleWebServerBrew simpleWebServerBrew;
-  private LoggerBrew loggerBrew;
-  private AutosaveBrew autosaveBrew;
-
   /**
    * Initializes the main controller and wires up the application.
    * <p>
@@ -72,16 +64,8 @@ public class MainController extends EventBusPublisher {
    *
    * @param primaryStage the primary JavaFX stage
    */
-  public void init(Stage primaryStage, Scene primaryScene) {
-    // Why the fuck is this init method here?
-    // The services the program runs
-    fileIOBrew = new FileIOBrew(primaryStage);
-    programBrew = new ProgramBrew(primaryStage);
-    workspaceBrew = new WorkspaceBrew();
-    subwindowBrew = new SubWindowBrew(primaryStage);
-    keystrokeBrew = new KeystrokeBrew(primaryScene);
-    autosaveBrew = new AutosaveBrew();
-    loggerBrew = new LoggerBrew();
+  public void init(Stage primaryStage, Scene primaryScene) throws IOException {
+    initializeBrews(primaryStage, primaryScene);
 
     // Connect the stuff in the program to the services
     workspaceController.initWorkspaceService();
@@ -92,13 +76,17 @@ public class MainController extends EventBusPublisher {
       windowEvent.consume();
       bus.post(new CloseProgramRequest());
     });
+  }
 
-    // create and launch the web server
-    try {
-      SimpleWebServer server = new SimpleWebServer(workspaceBrew);
-      this.simpleWebServerBrew = new SimpleWebServerBrew(server);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  private void initializeBrews(Stage primaryStage, Scene primaryScene) throws IOException {
+    FileIOBrew fileIOBrew = new FileIOBrew(primaryStage);
+    ProgramBrew programBrew = new ProgramBrew(primaryStage);
+    WorkspaceBrew workspaceBrew = new WorkspaceBrew();
+    SubWindowBrew subwindowBrew = new SubWindowBrew(primaryStage);
+    KeystrokeBrew keystrokeBrew = new KeystrokeBrew(primaryScene);
+    AutosaveBrew autosaveBrew = new AutosaveBrew();
+    LoggerBrew loggerBrew = new LoggerBrew();
+    SimpleWebServerBrew simpleWebServerBrew = new SimpleWebServerBrew(
+      new SimpleWebServer(workspaceBrew));
   }
 }

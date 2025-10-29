@@ -1,5 +1,6 @@
 package net.cnoga.paint.core.tool;
 
+import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.SubscribeEvent;
@@ -19,8 +20,8 @@ public class ShapesTool extends Tool implements WidthCapability, ColorCapability
   public ShapesTool() {
     super.name = "Shape";
     super.helpInfo = "[Shape] Left click and drag to draw the selected shape.";
-    super.iconPath = getClass()
-      .getResource("/net/cnoga/paint/icons/tools/shapes.png")
+    super.iconPath = Objects.requireNonNull(getClass()
+        .getResource("/net/cnoga/paint/icons/tools/shapes.png"))
       .toExternalForm();
   }
 
@@ -53,6 +54,7 @@ public class ShapesTool extends Tool implements WidthCapability, ColorCapability
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   public void onShapeChanged(ShapeChangedEvent evt) {
     this.shapeConfig = evt.shapeConfig();
   }

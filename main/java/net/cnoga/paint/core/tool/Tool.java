@@ -1,5 +1,6 @@
 package net.cnoga.paint.core.tool;
 
+import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import net.cnoga.paint.core.bus.EventBusPublisher;
@@ -46,7 +47,7 @@ public class Tool extends EventBusPublisher {
    * Path to the tool’s icon resource.
    */
   protected String iconPath =
-    getClass().getResource("/net/cnoga/paint/icons/tools/tool.png").toExternalForm();
+    Objects.requireNonNull(getClass().getResource("/net/cnoga/paint/icons/tools/tool.png")).toExternalForm();
 
   /**
    * Constructs a new {@code Tool} and registers it on the global event bus.
@@ -64,11 +65,13 @@ public class Tool extends EventBusPublisher {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onColorChanged(ColorChangedEvent evt) {
     currentColor = evt.color();
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onWidthChanged(WidthChangedEvent evt) {
     currentWidth = evt.width();
   }

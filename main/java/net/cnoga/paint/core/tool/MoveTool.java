@@ -1,5 +1,6 @@
 package net.cnoga.paint.core.tool;
 
+import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.SubscribeEvent;
@@ -14,8 +15,8 @@ public class MoveTool extends Tool {
   public MoveTool() {
     super.name = "Move";
     super.helpInfo = "[Move] Left click and drag to move the selection.";
-    super.iconPath = getClass()
-      .getResource("/net/cnoga/paint/icons/tools/move.png")
+    super.iconPath = Objects.requireNonNull(getClass()
+        .getResource("/net/cnoga/paint/icons/tools/move.png"))
       .toExternalForm();
   }
 

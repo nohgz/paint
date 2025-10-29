@@ -1,5 +1,6 @@
 package net.cnoga.paint.core.tool;
 
+import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.events.response.WidthChangedEvent;
@@ -22,8 +23,8 @@ public class EraserTool extends Tool implements WidthCapability {
   public EraserTool() {
     super.name = "Eraser";
     super.helpInfo = "[Eraser] Left click to erase pixels.";
-    super.iconPath = getClass()
-      .getResource("/net/cnoga/paint/icons/tools/eraser.png")
+    super.iconPath = Objects.requireNonNull(getClass()
+        .getResource("/net/cnoga/paint/icons/tools/eraser.png"))
       .toExternalForm();
   }
 

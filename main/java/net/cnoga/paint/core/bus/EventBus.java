@@ -71,7 +71,6 @@ public class EventBus {
    */
   public void register(Object subscriber) {
     Class<?> clazz = subscriber.getClass();
-    System.out.println("[EventBus] Registered: " + clazz);
 
     if (!clazz.isAnnotationPresent(EventBusSubscriber.class)) {
       throw new IllegalArgumentException(
