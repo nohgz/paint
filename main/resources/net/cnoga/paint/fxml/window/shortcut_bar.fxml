@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <HBox xmlns:fx="http://javafx.com/fxml"
   fx:controller="net.cnoga.paint.core.fxml_controllers.window.ShortcutBarController">
-  <Button onAction="#onNewFile" fx:id="shortcut_bar_new">
+  <Button onAction="#onNewFile">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/new_icon.png"/>
@@ -19,7 +19,7 @@
     </tooltip>
   </Button>
 
-  <Button onAction="#onFileOpen" fx:id="shortcut_bar_open">
+  <Button onAction="#onFileOpen">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/open_icon.png"/>
@@ -31,7 +31,7 @@
     </tooltip>
   </Button>
 
-  <Button onAction="#onFileSave" fx:id="shortcut_bar_save">
+  <Button onAction="#onFileSave">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/save_icon.png"/>
@@ -43,7 +43,7 @@
     </tooltip>
   </Button>
 
-  <Button onAction="#onFileSaveAs" fx:id="shortcut_bar_save_as">
+  <Button onAction="#onFileSaveAs">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/save_as_icon.png"/>
@@ -55,7 +55,7 @@
     </tooltip>
   </Button>
 
-  <Button onAction="#onClearWorkspace" fx:id="shortcut_bar_clear_workspace">
+  <Button onAction="#onClearWorkspace">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
         <Image url="@../../icons/menu/clear_workspace_icon.png"/>

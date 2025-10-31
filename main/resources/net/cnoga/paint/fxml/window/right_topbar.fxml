@@ -10,6 +10,31 @@
 <?import javafx.scene.layout.HBox?>
 <HBox xmlns:fx="http://javafx.com/fxml"
   fx:controller="net.cnoga.paint.core.fxml_controllers.window.RightTopbarController">
+
+  <ToggleButton onAction="#onOpenSettings" fx:id="right_topbar_settings">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../../icons/menu/settings_icon.png"/>
+      </ImageView>
+    </graphic>
+    <tooltip>
+      <Tooltip showDelay="0.3s" text="Show Settings"/>
+    </tooltip>
+  </ToggleButton>
+
+  <ToggleButton onAction="#onOpenTools" fx:id="right_topbar_tools">
+    <graphic>
+      <ImageView fitHeight="16" fitWidth="16">
+        <Image url="@../../icons/menu/tools_icon.png"/>
+      </ImageView>
+    </graphic>
+    <tooltip>
+      <Tooltip showDelay="0.5s" text="Show Tools"/>
+    </tooltip>
+  </ToggleButton>
+
+  <Separator orientation="VERTICAL"/>
+
   <MenuButton fx:id="right_topbar_help">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
@@ -56,27 +81,4 @@
     </tooltip>
   </MenuButton>
 
-  <Separator orientation="VERTICAL"/>
-
-  <ToggleButton onAction="#onOpenSettings" fx:id="right_topbar_settings">
-    <graphic>
-      <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../../icons/menu/settings_icon.png"/>
-      </ImageView>
-    </graphic>
-    <tooltip>
-      <Tooltip showDelay="0.3s" text="Show Settings"/>
-    </tooltip>
-  </ToggleButton>
-
-  <ToggleButton onAction="#onOpenTools" fx:id="right_topbar_tools">
-    <graphic>
-      <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../../icons/menu/tools_icon.png"/>
-      </ImageView>
-    </graphic>
-    <tooltip>
-      <Tooltip showDelay="0.5s" text="Show Tools"/>
-    </tooltip>
-  </ToggleButton>
 </HBox>

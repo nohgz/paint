@@ -19,12 +19,6 @@ import net.cnoga.paint.core.bus.events.request.WorkspaceSaveRequest;
  * @version 1.0
  */
 public class ShortcutBarController extends EventBusPublisher {
-
-  public Button shortcut_bar_new;
-  public Button shortcut_bar_open;
-  public Button shortcut_bar_save;
-  public Button shortcut_bar_save_as;
-
   @FXML
   private void onNewFile(ActionEvent event) {
     bus.post(new ShowNewWorkspacePopupRequest());

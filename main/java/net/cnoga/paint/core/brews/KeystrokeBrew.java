@@ -6,6 +6,7 @@ import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.events.request.CloseCurrentWorkspaceRequest;
 import net.cnoga.paint.core.bus.events.request.CloseProgramRequest;
+import net.cnoga.paint.core.bus.events.request.CommitSelectionRequest;
 import net.cnoga.paint.core.bus.events.request.CopySelectionRequest;
 import net.cnoga.paint.core.bus.events.request.FileOpenRequest;
 import net.cnoga.paint.core.bus.events.request.ForceCloseProgramRequest;
@@ -145,6 +146,10 @@ public class KeystrokeBrew extends EventBusPublisher {
       switch (keyEvent.getCode()) {
         case SPACE -> {
           bus.post(new ToolChangedEvent(PaintTools.PAN));
+          keyEvent.consume();
+        }
+        case ESCAPE -> {
+          bus.post(new CommitSelectionRequest());
           keyEvent.consume();
         }
       }

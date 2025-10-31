@@ -22,8 +22,8 @@
     <VBox>
       <!--Main Toolbars-->
       <HBox>
-        <Region HBox.hgrow="ALWAYS"/>
         <fx:include source="left_topbar.fxml" fx:id="leftTopbar"/>
+        <Region HBox.hgrow="ALWAYS"/>
         <fx:include source="right_topbar.fxml" fx:id="rightTopbar"/>
       </HBox>
 

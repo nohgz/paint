@@ -12,55 +12,36 @@
   fx:controller="net.cnoga.paint.core.fxml_controllers.subwindow.SettingsController">
   <TabPane side="LEFT" tabClosingPolicy="UNAVAILABLE">
     <!-- User Interface Settings -->
-    <tabs>
-      <Tab text="User Interface">
-        <VBox spacing="10">
-          <CheckBox onAction="#toggleAutosave" text="Enable Autosave" fx:id="autosaveCheckBox"/>
-          <CheckBox onAction="#toggleTheme" text="Enable Dark Mode" fx:id="darkModeCheckBox"/>
-          <HBox spacing="5">
-            <Label text="Autosave Interval (minutes):"/>
-            <Spinner prefWidth="80" fx:id="autosaveIntervalSpinner">
-              <valueFactory>
-                <SpinnerValueFactory.IntegerSpinnerValueFactory
-                  initialValue="5"
-                  max="60" min="1" xmlns="javafx.scene.control"/>
-              </valueFactory>
-            </Spinner>
-          </HBox>
-          <padding>
-            <Insets bottom="10" left="10" right="10" top="10"/>
-          </padding>
-        </VBox>
-      </Tab>
+    <Tab text="User Interface">
+      <VBox spacing="10">
+        <CheckBox onAction="#toggleAutosave" text="Enable Autosave" fx:id="autosaveCheckBox"/>
+        <CheckBox onAction="#toggleTheme" text="Enable Dark Mode" fx:id="darkModeCheckBox"/>
+        <HBox spacing="5">
+          <Label text="Autosave Interval (minutes):"/>
+          <Spinner prefWidth="80" fx:id="autosaveIntervalSpinner">
+            <valueFactory>
+              <SpinnerValueFactory.IntegerSpinnerValueFactory
+                initialValue="5"
+                max="60" min="1" xmlns="javafx.scene.control"/>
+            </valueFactory>
+          </Spinner>
+        </HBox>
+        <padding>
+          <Insets bottom="10" left="10" right="10" top="10"/>
+        </padding>
+      </VBox>
+    </Tab>
 
-      <!-- Tools Settings -->
-      <Tab text="Tools">
-        <VBox spacing="10">
-          <HBox spacing="5">
-            <Label text="Default Brush Size:"/>
-            <Spinner prefWidth="80" fx:id="brushSizeSpinner"/>
-          </HBox>
-          <HBox spacing="5">
-            <ColorPicker fx:id="defaultColorPicker"/>
-            <Label text="Default Color:"/>
-          </HBox>
-          <padding>
-            <Insets bottom="10" left="10" right="10" top="10"/>
-          </padding>
-        </VBox>
-      </Tab>
-
-      <!-- Web Server Settings -->
-      <Tab text="Web Server">
-        <VBox spacing="10">
-          <Button onAction="#startServer" text="Start Web Server" fx:id="startServer"/>
-          <Button onAction="#openServer" text="Open Web Server" fx:id="openServerInBrowser"/>
-          <Button onAction="#stopServer" text="Stop Web Server" fx:id="stopServer"/>
-          <padding>
-            <Insets bottom="10" left="10" right="10" top="10"/>
-          </padding>
-        </VBox>
-      </Tab>
-    </tabs>
+    <!-- Web Server Settings -->
+    <Tab text="Web Server">
+      <VBox spacing="10">
+        <Button onAction="#startServer" text="Start Web Server" fx:id="startServer"/>
+        <Button onAction="#openServer" text="Open Web Server" fx:id="openServerInBrowser"/>
+        <Button onAction="#stopServer" text="Stop Web Server" fx:id="stopServer"/>
+        <padding>
+          <Insets bottom="10" left="10" right="10" top="10"/>
+        </padding>
+      </VBox>
+    </Tab>
   </TabPane>
 </FlowPane>

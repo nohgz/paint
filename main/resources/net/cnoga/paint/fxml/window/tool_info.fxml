@@ -10,16 +10,16 @@
   alignment="CENTER_LEFT"
   fx:controller="net.cnoga.paint.core.fxml_controllers.window.ToolInfoController">
 
-  <ColorPicker fx:id="toolColorPicker"/>
-  <HBox fx:id="toolSpecificThings">
-
-  </HBox>
+  <Label text="Tool:" fx:id="toolInfoCaption"/>
   <ImageView fitHeight="16" fitWidth="16" fx:id="toolInfoIcon"/>
 
-  <Label text="Tool:" fx:id="toolInfoCaption"/>
+  <Separator orientation="VERTICAL"/>
+
+  <HBox fx:id="toolSpecificThings"/>
 
   <!-- Spacer to push ColorPicker to the right -->
   <Region HBox.hgrow="ALWAYS"/>
 
-  <Separator orientation="VERTICAL"/>
+
+  <ColorPicker fx:id="toolColorPicker"/>
 </HBox>
