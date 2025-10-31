@@ -58,17 +58,6 @@
 
   <Separator orientation="VERTICAL"/>
 
-  <ToggleButton onAction="#onOpenHistory" fx:id="right_topbar_history">
-    <graphic>
-      <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../../icons/menu/history_icon.png"/>
-      </ImageView>
-    </graphic>
-    <tooltip>
-      <Tooltip showDelay="0.5s" text="Show History"/>
-    </tooltip>
-  </ToggleButton>
-
   <ToggleButton onAction="#onOpenSettings" fx:id="right_topbar_settings">
     <graphic>
       <ImageView fitHeight="16" fitWidth="16">
@@ -90,16 +79,4 @@
       <Tooltip showDelay="0.5s" text="Show Tools"/>
     </tooltip>
   </ToggleButton>
-
-  <ToggleButton onAction="#onOpenLayers" fx:id="right_topbar_layers">
-    <graphic>
-      <ImageView fitHeight="16" fitWidth="16">
-        <Image url="@../../icons/menu/layers_icon.png"/>
-      </ImageView>
-    </graphic>
-    <tooltip>
-      <Tooltip showDelay="0.5s" text="Show Layers"/>
-    </tooltip>
-  </ToggleButton>
-
 </HBox>

@@ -27,166 +27,121 @@ import net.cnoga.paint.core.bus.events.response.WorkspaceSavedEvent;
  * <p>
  * Supports start/stop, countdown notifications, and optional system tray alerts.
  */
+
 @EventBusSubscriber
 public class AutosaveBrew extends EventBusPublisher {
 
-  private final ScheduledExecutorService scheduler;
   private boolean isEnabled;
-  private int intervalSeconds;
-  /**
-   * Scheduled task handle for the autosave action.
-   */
-  private ScheduledFuture<?> autosaveHandle;
-
-  /**
-   * Scheduled task handle for the countdown timer.
-   */
-  private ScheduledFuture<?> countdownHandle;
-
-  /**
-   * Remaining time until the next autosave in seconds.
-   */
+  private int intervalSeconds = 60;
   private volatile int timeLeft;
 
-  /**
-   * System tray icon used for notifications. May be null if tray unsupported.
-   */
+  private ScheduledExecutorService autosaveExecutor;
+  private ScheduledExecutorService countdownExecutor;
+  private ScheduledFuture<?> autosaveHandle;
+  private ScheduledFuture<?> countdownHandle;
+
   private TrayIcon trayIcon;
 
-  /**
-   * Constructs an {@code AutosaveBrew} with default settings. Registers the instance to the event
-   * bus and initializes the system tray icon.
-   */
   public AutosaveBrew() {
     bus.register(this);
-    this.isEnabled = false;
-    this.intervalSeconds = 60;
-    this.scheduler = Executors.newSingleThreadScheduledExecutor();
-    setupSystemTray();
+    isEnabled = false;
   }
 
-  /**
-   * Toggles autosave on or off in response to a {@link ToggleAutosaveRequest}.
-   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onToggleAutosave(ToggleAutosaveRequest req) {
-    if (isEnabled) {
-      stopAutosave();
-    } else {
-      startAutosave();
-    }
+    if (isEnabled) stopAutosave();
+    else startAutosave();
   }
 
-  /**
-   * Sets the autosave interval from a {@link SetAutosaveIntervalRequest}.
-   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onSetInterval(SetAutosaveIntervalRequest req) {
-    this.intervalSeconds = req.minutes() * 60;
-    if (isEnabled) {
-      restartAutosave();
-    }
+    intervalSeconds = req.minutes() * 60;
+    if (isEnabled) restartAutosave();
   }
 
-  /**
-   * Restarts autosave when the workspace is saved.
-   */
   @SubscribeEvent
   @SuppressWarnings("unused")
-  private void onSave(WorkspaceSavedEvent evt) {
-    restartAutosave();
-  }
+  private void onSave(WorkspaceSavedEvent evt) { restartAutosave(); }
 
-
-  /**
-   * Restarts autosave when the workspace is saved as.
-   */
   @SubscribeEvent
   @SuppressWarnings("unused")
-  private void onSavedAs(WorkspaceSavedAsEvent evt) {
-    restartAutosave();
-  }
+  private void onSavedAs(WorkspaceSavedAsEvent evt) { restartAutosave(); }
 
-  /**
-   * Stops autosave when the program closes.
-   */
   @SubscribeEvent
   @SuppressWarnings("unused")
-  private void onProgramClose(CloseProgramRequest req) {
-    stopAutosave();
-  }
+  private void onProgramClose(CloseProgramRequest req) { stopAutosave(); }
 
-  /**
-   * Stops autosave when the program force closes.
-   */
   @SubscribeEvent
   @SuppressWarnings("unused")
-  private void onProgramForceClose(ForceCloseProgramRequest req) {
-    stopAutosave();
-  }
+  private void onProgramForceClose(ForceCloseProgramRequest req) { stopAutosave(); }
 
-  /**
-   * Stops and immediately restarts the autosave process.
-   */
   private void restartAutosave() {
     stopAutosave();
     startAutosave();
   }
 
-  /**
-   * Starts the autosave and countdown tasks.
-   */
-  private void startAutosave() {
+  public void startAutosave() {
+    if (isEnabled) return;
     isEnabled = true;
     timeLeft = intervalSeconds;
 
-    // schedule autosave task
-    autosaveHandle = scheduler.scheduleAtFixedRate(() -> {
+    setupSystemTray();
+
+    // Create new executors for this cycle
+    autosaveExecutor = Executors.newSingleThreadScheduledExecutor();
+    countdownExecutor = Executors.newSingleThreadScheduledExecutor();
+
+    // Autosave task
+    autosaveHandle = autosaveExecutor.scheduleAtFixedRate(() -> {
+      if (!isEnabled) return;
       Platform.runLater(() -> bus.post(new WorkspaceSaveRequest()));
       publishAutosaveNotification();
       timeLeft = intervalSeconds;
     }, intervalSeconds, intervalSeconds, TimeUnit.SECONDS);
 
-    // schedule countdown
-    countdownHandle = scheduler.scheduleAtFixedRate(() -> {
+    // Countdown task
+    countdownHandle = countdownExecutor.scheduleAtFixedRate(() -> {
+      if (!isEnabled) return;
       timeLeft--;
       bus.post(new AutosaveTimeChangedEvent(timeLeft));
-      if (timeLeft <= 0) {
-        timeLeft = intervalSeconds;
-      }
+      if (timeLeft <= 0) timeLeft = intervalSeconds;
     }, 1, 1, TimeUnit.SECONDS);
   }
 
-  /**
-   * Stops the autosave and countdown tasks.
-   */
-  private void stopAutosave() {
+  public void stopAutosave() {
     isEnabled = false;
+
     if (autosaveHandle != null) {
-      autosaveHandle.cancel(false);
+      autosaveHandle.cancel(true);
+      autosaveHandle = null;
     }
     if (countdownHandle != null) {
-      countdownHandle.cancel(false);
+      countdownHandle.cancel(true);
+      countdownHandle = null;
+    }
+
+    if (autosaveExecutor != null) {
+      autosaveExecutor.shutdownNow();
+      autosaveExecutor = null;
+    }
+    if (countdownExecutor != null) {
+      countdownExecutor.shutdownNow();
+      countdownExecutor = null;
+    }
+
+    if (trayIcon != null) {
+      SystemTray.getSystemTray().remove(trayIcon);
+      trayIcon = null;
     }
   }
 
-  /**
-   * Initializes the system tray icon for autosave notifications.
-   * <p>
-   * If the system tray is not supported, notifications will be disabled.
-   * </p>
-   */
   private void setupSystemTray() {
-    if (!SystemTray.isSupported()) {
-      System.out.println("[AutosaveBrew] System tray not supported; notifications disabled.");
-      return;
-    }
+    if (!SystemTray.isSupported()) return;
 
     SystemTray tray = SystemTray.getSystemTray();
     try {
-      // simple placeholder icon
       BufferedImage iconImage = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
       Graphics2D g = iconImage.createGraphics();
       g.setColor(Color.GRAY);
@@ -202,19 +157,12 @@ public class AutosaveBrew extends EventBusPublisher {
 
     } catch (Exception e) {
       System.out.println("[AutosaveBrew] Could not initialize system tray: " + e.getMessage());
+      trayIcon = null;
     }
   }
 
-  /**
-   * Displays a system notification via the tray icon.
-   * <p>
-   * Does nothing if the system tray is not available.
-   * </p>
-   */
   private void publishAutosaveNotification() {
-    if (trayIcon == null) {
-      return;
-    }
+    if (trayIcon == null) return;
     try {
       trayIcon.displayMessage("Pain(t)", "Your workspace has been saved.", TrayIcon.MessageType.INFO);
     } catch (Exception e) {

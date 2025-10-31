@@ -17,6 +17,7 @@ import net.cnoga.paint.core.bus.events.request.CloseProgramRequest;
 import net.cnoga.paint.core.bus.events.request.ForceCloseProgramRequest;
 import net.cnoga.paint.core.bus.events.request.GetDirtyWorkspacesRequest;
 import net.cnoga.paint.core.bus.events.request.OpenGitHubRequest;
+import net.cnoga.paint.core.bus.events.request.StopServerRequest;
 import net.cnoga.paint.core.bus.events.response.GotDirtyWorkspacesEvent;
 
 /**

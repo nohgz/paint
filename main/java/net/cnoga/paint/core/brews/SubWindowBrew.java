@@ -33,20 +33,14 @@ import net.cnoga.paint.core.util.AnchorTypes;
 public class SubWindowBrew extends EventBusPublisher {
 
   private final Stage mainStage;
-  private Stage historyStage;
-  private Stage layersStage;
   private Stage toolsStage;
   private Stage settingsStage;
   private Stage helpStage;
   private Stage changelogStage;
   private Stage aboutStage;
-  private ToggleButton historyButton;
   private ToggleButton toolsButton;
-  private ToggleButton layersButton;
   private ToggleButton settingsButton;
-  private Boolean historyOpen = false;
   private Boolean toolsOpen = false;
-  private Boolean layersOpen = false;
   private Boolean settingsOpen = false;
 
   /**
@@ -65,9 +59,7 @@ public class SubWindowBrew extends EventBusPublisher {
     ).toExternalForm();
 
     List<Stage> subStages = Arrays.asList(
-      historyStage,
       toolsStage,
-      layersStage,
       settingsStage,
       helpStage,
       changelogStage,
@@ -87,69 +79,8 @@ public class SubWindowBrew extends EventBusPublisher {
    */
   @SubscribeEvent
   private void initSubWindowService(InitSubWindowServiceRequest req) {
-    this.historyButton = req.historyButton();
     this.toolsButton = req.toolsButton();
-    this.layersButton = req.layersButton();
     this.settingsButton = req.settingsButton();
-  }
-
-  /**
-   * Shows the History subwindow on request.
-   */
-  @SubscribeEvent
-  private void onOpenHistory(OpenHistoryRequest req) {
-    if (historyStage == null) {
-      historyStage = createToggledSubwindow(
-        "History",
-        "/net/cnoga/paint/fxml/subwindow/history.fxml",
-        mainStage,
-        true,
-        200.0,
-        0.0,
-        historyButton);
-
-      setSubwindowSpawnPoint(historyStage, mainStage, AnchorTypes.BOTTOM_LEFT);
-    }
-
-    if (historyOpen) {
-      historyStage.hide();
-      historyButton.setSelected(false);
-    } else {
-      historyStage.show();
-      historyStage.toFront();
-      historyButton.setSelected(true);
-    }
-    historyOpen = !historyOpen;
-  }
-
-  /**
-   * Shows the Layers subwindow on request.
-   */
-  @SubscribeEvent
-  private void onOpenLayers(OpenLayersRequest req) {
-    if (layersStage == null) {
-      layersStage = createToggledSubwindow(
-        "Layers",
-        "/net/cnoga/paint/fxml/subwindow/layers.fxml",
-        mainStage,
-        true,
-        500.0d,
-        0.0d,
-        layersButton);
-
-      setSubwindowSpawnPoint(layersStage, mainStage, AnchorTypes.MIDDLE_RIGHT);
-    }
-
-    if (layersOpen) {
-      layersStage.hide();
-      layersButton.setSelected(false);
-    } else {
-      layersStage.show();
-      layersStage.toFront();
-      layersButton.setSelected(true);
-    }
-
-    layersOpen = !layersOpen;
   }
 
   /**
@@ -167,7 +98,7 @@ public class SubWindowBrew extends EventBusPublisher {
         0.0d,
         toolsButton);
 
-      setSubwindowSpawnPoint(toolsStage, mainStage, AnchorTypes.TOP_LEFT);
+      setSubwindowSpawnPoint(toolsStage, mainStage, AnchorTypes.TOP_RIGHT);
     }
 
     if (toolsOpen) {
@@ -196,7 +127,7 @@ public class SubWindowBrew extends EventBusPublisher {
         0.0,
         0.0,
         settingsButton);
-      setSubwindowSpawnPoint(settingsStage, mainStage, AnchorTypes.MIDDLE_CENTER);
+      setSubwindowSpawnPoint(settingsStage, mainStage, AnchorTypes.TOP_RIGHT);
     }
 
     if (settingsOpen) {

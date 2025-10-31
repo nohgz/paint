@@ -31,8 +31,6 @@ public class SettingsController extends EventBusPublisher {
     bus.register(this);
   }
 
-  // Convenience borrowed from ProgramBrew. should maybe put this in a
-  // util class for dry
   public static void openLink(String url) {
     if (Desktop.isDesktopSupported()) {
       new Thread(() -> {
@@ -49,24 +47,25 @@ public class SettingsController extends EventBusPublisher {
 
   @FXML
   private void initialize() {
+    autosaveIntervalSpinner.setEditable(true);
     autosaveIntervalSpinner.valueProperty().addListener((obs, oldVal, newVal) -> {
       bus.post(new SetAutosaveIntervalRequest((int) newVal));
     });
   }
 
-  public void startServer(ActionEvent actionEvent) {
+  public void startServer() {
     bus.post(new StartServerRequest());
   }
 
-  public void openServer(ActionEvent actionEvent) {
+  public void openServer() {
     openLink("http://localhost:25565/");
   }
 
-  public void stopServer(ActionEvent actionEvent) {
+  public void stopServer() {
     bus.post(new StopServerRequest());
   }
 
-  public void toggleAutosave(ActionEvent actionEvent) {
+  public void toggleAutosave() {
     bus.post(new ToggleAutosaveRequest());
   }
 
