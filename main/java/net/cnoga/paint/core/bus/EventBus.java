@@ -28,9 +28,6 @@ import java.util.function.Consumer;
  *     }
  * }
  * }</pre>
- *
- * @author cnoga
- * @version 1.2
  */
 public class EventBus {
 

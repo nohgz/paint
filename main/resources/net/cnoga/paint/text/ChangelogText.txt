@@ -1,3 +1,18 @@
+Chris' Pain(t) 6.7.0 - 10/31/2025
+
+"The Final Turn-in"
+
+# New Features:
+* Dark + Light mode support found in settings menu.
+* Removed clutter that wasn't going to be implemented.
+* Javadoc documentation for the code.
+* Many more key binds to things.
+
+# Fixes:
+* Hanging thread no longer an issue. Program closes gracefully.
+* Most blurry rotations + selections fixed. Edge cases still slightly annoying.
+
+
 Chris' Pain(t) 6.0.0 - 10/7/2025
 
 "The Great Rotate Update"

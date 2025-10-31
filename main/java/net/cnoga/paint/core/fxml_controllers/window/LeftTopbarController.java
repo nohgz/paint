@@ -29,8 +29,8 @@ import net.cnoga.paint.core.bus.events.request.WorkspaceSaveRequest;
  *   <li>Post appropriate file- and app-related events.</li>
  * </ul>
  *
- * @author cnoga
- * @version 1.1
+ *
+ *   1.1
  */
 
 public class LeftTopbarController extends EventBusPublisher {

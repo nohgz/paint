@@ -21,9 +21,6 @@ import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
  * <ul>
  *   <li>{@link FileOpenedEvent} → Updates the panel to show the opened file name.</li>
  * </ul>
- *
- * @author cnoga
- * @version 1.1
  */
 @EventBusSubscriber
 public class BottomInfoController extends EventBusPublisher {

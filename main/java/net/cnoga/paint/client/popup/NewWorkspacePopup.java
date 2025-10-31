@@ -50,6 +50,7 @@ public class NewWorkspacePopup extends AbstractInputPopup {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onOpen(ShowNewWorkspacePopupRequest req) {
     super.show();
   }

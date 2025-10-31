@@ -6,6 +6,6 @@
 <HBox xmlns:fx="http://javafx.com/fxml"
   fx:controller="net.cnoga.paint.core.fxml_controllers.window.BottomInfoController">
   <Label text="Canvas info will be placed here. Coming Soon!" fx:id="textStatus"/>
-  <Label fx:id="autosaveTimer"/>
   <Region HBox.hgrow="ALWAYS"/>
+  <Label fx:id="autosaveTimer"/>
 </HBox>

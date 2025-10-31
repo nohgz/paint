@@ -10,6 +10,7 @@ import net.cnoga.paint.core.bus.events.request.CommitSelectionRequest;
 import net.cnoga.paint.core.bus.events.request.CopySelectionRequest;
 import net.cnoga.paint.core.bus.events.request.FileOpenRequest;
 import net.cnoga.paint.core.bus.events.request.ForceCloseProgramRequest;
+import net.cnoga.paint.core.bus.events.request.MoveSelectionRequest;
 import net.cnoga.paint.core.bus.events.request.PasteSelectionRequest;
 import net.cnoga.paint.core.bus.events.request.RedoRequest;
 import net.cnoga.paint.core.bus.events.request.ResizeWorkspaceRequest;
@@ -150,6 +151,22 @@ public class KeystrokeBrew extends EventBusPublisher {
         }
         case ESCAPE -> {
           bus.post(new CommitSelectionRequest());
+          keyEvent.consume();
+        }
+        case LEFT -> {
+          bus.post(new MoveSelectionRequest(-10, 0));
+          keyEvent.consume();
+        }
+        case RIGHT -> {
+          bus.post(new MoveSelectionRequest(10, 0));
+          keyEvent.consume();
+        }
+        case UP -> {
+          bus.post(new MoveSelectionRequest(0, -10));
+          keyEvent.consume();
+        }
+        case DOWN -> {
+          bus.post(new MoveSelectionRequest(0, 10));
           keyEvent.consume();
         }
       }

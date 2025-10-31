@@ -13,8 +13,8 @@ import net.cnoga.paint.core.brews.WorkspaceBrew;
  * See {@link WorkspaceBrew} for an implementation of a listener that implements this logic.
  *
  * @param file the file to open and display.
- * @author cnoga
- * @version 1.0
+ *
+ *
  */
 public record FileOpenedEvent(File file) {
   // Left empty.

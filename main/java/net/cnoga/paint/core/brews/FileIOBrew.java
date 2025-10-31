@@ -33,8 +33,8 @@ import org.apache.commons.imaging.Imaging;
  * backend by posting corresponding events.
  * </p>
  *
- * @author cnoga
- * @version 1.0
+ *
+ *
  */
 
 @EventBusSubscriber
@@ -54,6 +54,7 @@ public class FileIOBrew extends EventBusPublisher {
    * Opens a file via FileChooser and posts a FileOpenedEvent.
    */
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onOpenFile(FileOpenRequest req) {
     FileChooser chooser = new FileChooser();
     chooser.setTitle("Open");
@@ -69,6 +70,7 @@ public class FileIOBrew extends EventBusPublisher {
    * Saves workspace with a new filename, showing FileChooser.
    */
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onWorkspaceSavedAs(WorkspaceSavedAsEvent evt) {
     Workspace ws = evt.workspace();
     if (ws == null) {
@@ -134,7 +136,7 @@ public class FileIOBrew extends EventBusPublisher {
    */
   public void saveWorkspace(Workspace ws) throws IOException, ImageWriteException {
     File file = ws.getFile();
-    if (ws == null || file == null) {
+    if (file == null) {
       return;
     }
 

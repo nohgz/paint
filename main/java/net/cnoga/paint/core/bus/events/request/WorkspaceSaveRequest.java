@@ -13,8 +13,8 @@ import net.cnoga.paint.core.brews.WorkspaceBrew;
  * <p>
  * See {@link WorkspaceBrew} for an implementation of a listener implementing this logic.
  *
- * @author cnoga
- * @version 1.0
+ *
+ *
  */
 public record WorkspaceSaveRequest() {
 

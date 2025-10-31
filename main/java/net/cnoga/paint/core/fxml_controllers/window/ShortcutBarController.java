@@ -2,7 +2,6 @@ package net.cnoga.paint.core.fxml_controllers.window;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.events.request.FileOpenRequest;
 import net.cnoga.paint.core.bus.events.request.ShowClearWorkspacePopupRequest;
@@ -15,8 +14,8 @@ import net.cnoga.paint.core.bus.events.request.WorkspaceSaveRequest;
  * <p>
  * Provides quick access to frequently used file operations (new, open, save) for convenience.
  *
- * @author cnoga
- * @version 1.0
+ *
+ *
  */
 public class ShortcutBarController extends EventBusPublisher {
   @FXML

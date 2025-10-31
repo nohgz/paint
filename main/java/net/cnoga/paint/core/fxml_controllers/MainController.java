@@ -36,8 +36,8 @@ import net.cnoga.paint.server.SimpleWebServer;
  *   <li>Creates and registers services such as {@link WorkspaceBrew}.</li>
  * </ul>
  *
- * @author cnoga
- * @version 1.1
+ *
+ *
  */
 public class MainController extends EventBusPublisher {
 

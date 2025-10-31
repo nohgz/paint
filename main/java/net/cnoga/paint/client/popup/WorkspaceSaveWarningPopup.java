@@ -88,6 +88,7 @@ public class WorkspaceSaveWarningPopup extends AbstractInputPopup {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   protected void onOpen(ShowWorkspaceSaveWarningPopupRequest req) {
     show();
   }

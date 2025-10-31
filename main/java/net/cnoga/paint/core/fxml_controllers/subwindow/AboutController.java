@@ -15,8 +15,8 @@ import javafx.scene.control.TextArea;
  * <p>This controller is automatically initialized by the FXML loader
  * when the "About" dialog view is created.</p>
  *
- * @author cnoga
- * @version 1.0
+ *
+ *
  */
 public class AboutController {
 

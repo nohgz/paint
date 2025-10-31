@@ -31,8 +31,8 @@ import net.cnoga.paint.core.bus.events.request.OpenToolsRequest;
  *   <li>Initializing sub-window services with UI component references.</li>
  * </ul>
  *
- * @author cnoga
- * @version 1.0
+ *
+ *
  */
 @EventBusSubscriber
 public class RightTopbarController extends EventBusPublisher {

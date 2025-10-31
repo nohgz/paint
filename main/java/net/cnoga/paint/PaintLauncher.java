@@ -28,8 +28,8 @@ import net.cnoga.paint.core.tool.PaintTools;
  * beyond JavaFX initialization.
  * </p>
  *
- * @author cnoga
- * @version 1.0
+ *
+ *   1.0
  */
 public class PaintLauncher extends Application {
 

@@ -29,8 +29,8 @@ import net.cnoga.paint.core.tool.Tool;
  *   <li>Each cell contains a toggle button with the tool's icon.</li>
  * </ul>
  *
- * @author cnoga
- * @version 1.0
+ *
+ *
  */
 public class ToolsController extends EventBusPublisher {
 
