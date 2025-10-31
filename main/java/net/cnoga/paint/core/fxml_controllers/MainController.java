@@ -14,7 +14,6 @@ import net.cnoga.paint.core.brews.SubWindowBrew;
 import net.cnoga.paint.core.brews.WorkspaceBrew;
 import net.cnoga.paint.core.bus.EventBus;
 import net.cnoga.paint.core.bus.EventBusPublisher;
-import net.cnoga.paint.core.bus.events.request.ChangeThemeRequest;
 import net.cnoga.paint.core.bus.events.request.CloseProgramRequest;
 import net.cnoga.paint.core.fxml_controllers.window.BottomInfoController;
 import net.cnoga.paint.core.fxml_controllers.window.LeftTopbarController;

@@ -39,15 +39,6 @@ public class TextTool extends Tool implements WidthCapability, ColorCapability {
    * @param x         x-coordinate of the cursor
    * @param y         y-coordinate of the cursor
    */
-  @Override
-  public void onMousePressed(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
-    // Intentionally Empty
-  }
-
-  @Override
-  public void onMouseDragged(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {
-    // Intentionally Empty
-  }
 
   @Override
   public void onMouseReleased(GraphicsContext gc, GraphicsContext effectsGc, double x, double y) {

@@ -32,6 +32,7 @@ public class ClearWorkspacePopup extends AbstractInputPopup {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onOpen(ShowClearWorkspacePopupRequest req) {
     bus.post(new SaveStateRequest());
     super.show();

@@ -1,7 +1,6 @@
 package net.cnoga.paint.core.fxml_controllers.window;
 
 
-import javafx.event.ActionEvent;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ToggleButton;
 import net.cnoga.paint.core.bus.EventBusPublisher;

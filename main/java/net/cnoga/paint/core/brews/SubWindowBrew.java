@@ -17,8 +17,6 @@ import net.cnoga.paint.core.bus.events.request.ChangeThemeRequest;
 import net.cnoga.paint.core.bus.events.request.OpenAboutRequest;
 import net.cnoga.paint.core.bus.events.request.OpenChangelogRequest;
 import net.cnoga.paint.core.bus.events.request.OpenHelpRequest;
-import net.cnoga.paint.core.bus.events.request.OpenHistoryRequest;
-import net.cnoga.paint.core.bus.events.request.OpenLayersRequest;
 import net.cnoga.paint.core.bus.events.request.OpenSettingsRequest;
 import net.cnoga.paint.core.bus.events.request.OpenToolsRequest;
 import net.cnoga.paint.core.util.AnchorTypes;

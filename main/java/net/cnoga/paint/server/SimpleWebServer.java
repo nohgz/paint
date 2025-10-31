@@ -34,9 +34,8 @@ public class SimpleWebServer {
    * Constructs the server and starts it.
    *
    * @param brew the WorkspaceBrew providing the workspaces
-   * @throws IOException if the server cannot start
    */
-  public SimpleWebServer(WorkspaceBrew brew) throws IOException {
+  public SimpleWebServer(WorkspaceBrew brew) {
     workspaceBrew = brew;
   }
 

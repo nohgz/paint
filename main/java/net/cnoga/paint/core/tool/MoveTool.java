@@ -3,8 +3,6 @@ package net.cnoga.paint.core.tool;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
-import net.cnoga.paint.core.bus.SubscribeEvent;
-import net.cnoga.paint.core.bus.events.init.InitWorkspaceBrewRequest;
 import net.cnoga.paint.core.bus.events.request.MoveSelectionRequest;
 
 @EventBusSubscriber
@@ -20,11 +18,6 @@ public class MoveTool extends Tool {
       .toExternalForm();
   }
 
-  @SubscribeEvent
-  private void onInitWorkspaceBrew(InitWorkspaceBrewRequest req) {
-
-  }
-
   @Override
   public void onMousePressed(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
     lastX = x;
@@ -38,10 +31,5 @@ public class MoveTool extends Tool {
     lastX = x;
     lastY = y;
     bus.post(new MoveSelectionRequest(dx, dy));
-  }
-
-  @Override
-  public void onMouseReleased(GraphicsContext gc, GraphicsContext effects_gc, double x, double y) {
-    // do nothing?
   }
 }

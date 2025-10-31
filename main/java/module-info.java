@@ -5,7 +5,6 @@ module net.cnoga.paint {
   requires org.apache.commons.imaging;
   requires jdk.httpserver;
   requires log4j.api;
-  requires log4j.core;
 
   opens net.cnoga.paint to javafx.fxml;
   opens net.cnoga.paint.core.bus to javafx.fxml;

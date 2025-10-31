@@ -5,7 +5,6 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Objects;
 import javafx.stage.Stage;
 import net.cnoga.paint.client.popup.ProgramSaveWarningPopup;
@@ -17,7 +16,6 @@ import net.cnoga.paint.core.bus.events.request.CloseProgramRequest;
 import net.cnoga.paint.core.bus.events.request.ForceCloseProgramRequest;
 import net.cnoga.paint.core.bus.events.request.GetDirtyWorkspacesRequest;
 import net.cnoga.paint.core.bus.events.request.OpenGitHubRequest;
-import net.cnoga.paint.core.bus.events.request.StopServerRequest;
 import net.cnoga.paint.core.bus.events.response.GotDirtyWorkspacesEvent;
 
 /**

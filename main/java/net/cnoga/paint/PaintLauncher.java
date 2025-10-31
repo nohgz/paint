@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.cnoga.paint.core.bus.EventBus;
-import net.cnoga.paint.core.bus.events.request.ChangeThemeRequest;
 import net.cnoga.paint.core.bus.events.request.NewWorkspaceRequest;
 import net.cnoga.paint.core.bus.events.request.OpenHistoryRequest;
 import net.cnoga.paint.core.bus.events.request.OpenLayersRequest;

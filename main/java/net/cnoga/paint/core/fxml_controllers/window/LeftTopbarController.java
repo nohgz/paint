@@ -70,27 +70,27 @@ public class LeftTopbarController extends EventBusPublisher {
 
   // --- IMAGE ----
   @FXML
-  private void onRotate90(ActionEvent event) {
+  private void onRotate90() {
     bus.post(new TransformWorkspaceRequest(90, false, false));
   }
 
   @FXML
-  private void onRotate180(ActionEvent event) {
+  private void onRotate180() {
     bus.post(new TransformWorkspaceRequest(180, false, false));
   }
 
   @FXML
-  private void onRotate270(ActionEvent event) {
+  private void onRotate270() {
     bus.post(new TransformWorkspaceRequest(270, false, false));
   }
 
   @FXML
-  public void onFlipHorizontal(ActionEvent actionEvent) {
+  public void onFlipHorizontal() {
     bus.post(new TransformWorkspaceRequest(0, true, false));
   }
 
   @FXML
-  public void onFlipVertical(ActionEvent actionEvent) {
+  public void onFlipVertical() {
     bus.post(new TransformWorkspaceRequest(0, false, true));
   }
 }
