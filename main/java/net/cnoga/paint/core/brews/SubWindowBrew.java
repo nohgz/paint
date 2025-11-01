@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.SubscribeEvent;
-import net.cnoga.paint.core.bus.events.init.InitSubWindowServiceRequest;
+import net.cnoga.paint.core.bus.events.request.InitSubWindowServiceRequest;
 import net.cnoga.paint.core.bus.events.request.ChangeThemeRequest;
 import net.cnoga.paint.core.bus.events.request.OpenAboutRequest;
 import net.cnoga.paint.core.bus.events.request.OpenChangelogRequest;

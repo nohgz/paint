@@ -139,34 +139,22 @@ public final class SubwindowUtil {
 
   private static double calculateX(double baseX, double mainWidth, double subWidth,
     AnchorTypes anchor) {
-    switch (anchor) {
-      case TOP_CENTER:
-      case MIDDLE_CENTER:
-      case BOTTOM_CENTER:
-        return baseX + (mainWidth - subWidth) / 2;
-      case TOP_RIGHT:
-      case MIDDLE_RIGHT:
-      case BOTTOM_RIGHT:
-        return baseX + mainWidth - subWidth;
-      default: // LEFT anchors
-        return baseX;
-    }
+    return switch (anchor) {
+      case TOP_CENTER, MIDDLE_CENTER, BOTTOM_CENTER -> baseX + (mainWidth - subWidth) / 2;
+      case TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT -> baseX + mainWidth - subWidth;
+      default -> // LEFT anchors
+        baseX;
+    };
   }
 
   private static double calculateY(double baseY, double mainHeight, double subHeight,
     AnchorTypes anchor) {
-    switch (anchor) {
-      case MIDDLE_LEFT:
-      case MIDDLE_CENTER:
-      case MIDDLE_RIGHT:
-        return baseY + (mainHeight - subHeight) / 2;
-      case BOTTOM_LEFT:
-      case BOTTOM_CENTER:
-      case BOTTOM_RIGHT:
-        return baseY + mainHeight - subHeight;
-      default: // TOP anchors
-        return baseY;
-    }
+    return switch (anchor) {
+      case MIDDLE_LEFT, MIDDLE_CENTER, MIDDLE_RIGHT -> baseY + (mainHeight - subHeight) / 2;
+      case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> baseY + mainHeight - subHeight;
+      default -> // TOP anchors
+        baseY;
+    };
   }
 
   private static double resolveOversizedX(double baseX, double mainWidth, double subWidth,

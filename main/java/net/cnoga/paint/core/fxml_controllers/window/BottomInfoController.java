@@ -17,7 +17,7 @@ import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
  * canvas size, selected tool, cursor position, or zoom level. The panel updates reactively through
  * events published on the global {@link net.cnoga.paint.core.bus.EventBus}.</p>
  *
- * <h3>Event Handling:</h3>
+ * Event Handling:
  * <ul>
  *   <li>{@link FileOpenedEvent} → Updates the panel to show the opened file name.</li>
  * </ul>

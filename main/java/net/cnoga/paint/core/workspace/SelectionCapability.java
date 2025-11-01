@@ -36,7 +36,9 @@ public class SelectionCapability extends EventBusPublisher {
     bus.register(this);
   }
 
+
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onSelectionRequest(SelectionRequest req) {
     selectionBounds = req.bounds();
     if (selectionBounds.getWidth() <= 0 || selectionBounds.getHeight() <= 0) {
@@ -57,11 +59,13 @@ public class SelectionCapability extends EventBusPublisher {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onRotateSelectionRequest(RotateSelectionRequest req) {
     rotateSelection(req.degrees());
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onMoveSelection(MoveSelectionRequest req) {
     if (buffer == null) {
       return;
@@ -85,6 +89,7 @@ public class SelectionCapability extends EventBusPublisher {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onToolChanged(ToolChangedEvent evt) {
     if (!(evt.tool() instanceof MoveTool)) {
       bus.post(new CommitSelectionRequest());
@@ -92,6 +97,7 @@ public class SelectionCapability extends EventBusPublisher {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void onCommitSelection(CommitSelectionRequest req) {
     if (buffer == null || selectionBounds == null) {
       return;
@@ -132,7 +138,6 @@ public class SelectionCapability extends EventBusPublisher {
     WritableImage rotated = new WritableImage((int) Math.ceil(newWidth),
       (int) Math.ceil(newHeight));
 
-    GraphicsContext gc = workspace.getEffectsLayer().getGraphicsContext2D();
     SnapshotParameters params = new SnapshotParameters();
     params.setFill(Color.TRANSPARENT);
 

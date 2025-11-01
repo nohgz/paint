@@ -1,6 +1,6 @@
 package net.cnoga.paint.core.bus.events.request;
 
-// asks the controller to open a file
+/** Requests that a file be opened. */
 public record FileOpenRequest() {
 
 }

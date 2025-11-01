@@ -31,11 +31,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Background logger that writes application events to timestamped session log files.
- * <p>
- * Listens to events on the EventBus and asynchronously writes them to disk to avoid blocking the
- * JavaFX or event threads. Console logging is still handled via Log4j.
- * </p>
+ * Background file logger that asynchronously writes timestamped application events to a session log
+ * file. Log entries are queued to avoid blocking UI or event threads.
+ *
+ * <p>Console output continues through Log4j; this class only handles session file output.</p>
+ *
+ * <p>Call {@link #shutdown()} during application exit to stop the logging thread.</p>
  */
 @EventBusSubscriber
 public class LoggerBrew extends EventBusPublisher implements Runnable {
@@ -114,6 +115,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     logQueue.offer(timestamp + message);
   }
 
+  /**
+   * Logs when a file is opened.
+   *
+   * @param evt the file opened event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onFileOpened(FileOpenedEvent evt) {
@@ -122,6 +128,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when the active color changes.
+   *
+   * @param evt the color change event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onColorChanged(ColorChangedEvent evt) {
@@ -130,6 +141,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when a workspace is saved.
+   *
+   * @param evt the workspace saved event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onWorkspaceSaved(WorkspaceSavedEvent evt) {
@@ -138,6 +154,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when a workspace is saved as a new file.
+   *
+   * @param evt the workspace saved-as event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onWorkspaceSavedAs(WorkspaceSavedAsEvent evt) {
@@ -146,6 +167,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when the active tool changes.
+   *
+   * @param evt the tool change event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onToolChanged(ToolChangedEvent evt) {
@@ -154,6 +180,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when a selection is pasted.
+   *
+   * @param evt the selection paste event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onSelectionPasted(SelectionPastedEvent evt) {
@@ -162,6 +193,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when a new workspace is created.
+   *
+   * @param evt the new workspace request event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onNewWorkspace(NewWorkspaceRequest evt) {
@@ -170,6 +206,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when a workspace is cleared.
+   *
+   * @param evt the clear workspace request event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onClearWorkspace(ClearWorkspaceRequest evt) {
@@ -178,6 +219,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when the current workspace is closed.
+   *
+   * @param evt the close workspace request event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onCloseCurrentWorkspace(CloseCurrentWorkspaceRequest evt) {
@@ -186,6 +232,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when a save request is issued for the active workspace.
+   *
+   * @param evt the workspace save request event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onWorkspaceSaveRequest(WorkspaceSaveRequest evt) {
@@ -194,6 +245,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when a paste request is issued.
+   *
+   * @param evt the paste selection request event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onPasteSelection(PasteSelectionRequest evt) {
@@ -202,6 +258,11 @@ public class LoggerBrew extends EventBusPublisher implements Runnable {
     enqueue(msg);
   }
 
+  /**
+   * Logs when workspace focus changes.
+   *
+   * @param evt the focus workspace request event
+   */
   @SubscribeEvent
   @SuppressWarnings("unused")
   private void onFocusWorkspace(FocusWorkspaceRequest evt) {

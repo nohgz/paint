@@ -8,8 +8,6 @@ import javafx.scene.text.Font;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.events.response.ColorChangedEvent;
 import net.cnoga.paint.core.bus.events.response.WidthChangedEvent;
-import net.cnoga.paint.core.tool.capabilities.ColorCapability;
-import net.cnoga.paint.core.tool.capabilities.WidthCapability;
 
 /**
  * A tool for creating text on the canvas.

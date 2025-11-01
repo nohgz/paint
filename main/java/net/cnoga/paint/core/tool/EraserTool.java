@@ -4,7 +4,6 @@ import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.events.response.WidthChangedEvent;
-import net.cnoga.paint.core.tool.capabilities.WidthCapability;
 
 /**
  * A tool for erasing pixels from the canvas.
@@ -15,7 +14,11 @@ import net.cnoga.paint.core.tool.capabilities.WidthCapability;
 @EventBusSubscriber
 public class EraserTool extends Tool implements WidthCapability {
 
-  private double lastX, lastY;
+  /** The last known x position, so we can interpolate between end points for smooth erasing.*/
+  private double lastX;
+
+  /** The last known y position, so we can interpolate between end points for smooth erasing.*/
+  private double lastY;
 
   /**
    * Constructs a new Eraser tool with its icon and help text.

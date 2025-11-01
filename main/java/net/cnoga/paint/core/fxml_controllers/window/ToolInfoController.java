@@ -21,7 +21,7 @@ import net.cnoga.paint.core.bus.events.response.ShapeChangedEvent;
 import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
 import net.cnoga.paint.core.bus.events.response.WidthChangedEvent;
 import net.cnoga.paint.core.tool.ShapesTool;
-import net.cnoga.paint.core.tool.capabilities.WidthCapability;
+import net.cnoga.paint.core.tool.WidthCapability;
 import net.cnoga.paint.core.util.ShapeConfig;
 import net.cnoga.paint.core.util.ShapeType;
 
@@ -47,6 +47,7 @@ public class ToolInfoController extends EventBusPublisher {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void updateToolInformation(ToolChangedEvent evt) {
     toolInfoIcon.setImage(new Image(evt.tool().getIconPath()));
     toolSpecificThings.getChildren().clear();
@@ -138,6 +139,7 @@ public class ToolInfoController extends EventBusPublisher {
   }
 
   @SubscribeEvent
+  @SuppressWarnings("unused")
   private void updateColorPicker(ColorChangedEvent evt) {
     toolColorPicker.setValue(evt.color());
   }

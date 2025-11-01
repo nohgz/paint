@@ -19,7 +19,7 @@ import net.cnoga.paint.client.popup.WorkspaceSaveWarningPopup;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.SubscribeEvent;
-import net.cnoga.paint.core.bus.events.init.InitWorkspaceBrewRequest;
+import net.cnoga.paint.core.bus.events.request.InitWorkspaceBrewRequest;
 import net.cnoga.paint.core.bus.events.request.ClearWorkspaceRequest;
 import net.cnoga.paint.core.bus.events.request.CloseCurrentWorkspaceRequest;
 import net.cnoga.paint.core.bus.events.request.FocusWorkspaceRequest;

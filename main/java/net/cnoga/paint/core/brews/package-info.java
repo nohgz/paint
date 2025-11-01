@@ -1,7 +1,7 @@
 /**
- * Contains all "Brew" services for the Paint application.
+ * Contains all "Brews" for the Paint application.
  *
- * <p>Brew classes are application-level services that subscribe to the EventBus
+ * <p>Brews are application-level services that subscribe to the EventBus
  * and handle specific responsibilities such as:</p>
  *
  * <ul>

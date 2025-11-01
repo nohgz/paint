@@ -7,8 +7,6 @@ import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.events.response.ColorChangedEvent;
 import net.cnoga.paint.core.bus.events.response.WidthChangedEvent;
-import net.cnoga.paint.core.tool.capabilities.ColorCapability;
-import net.cnoga.paint.core.tool.capabilities.WidthCapability;
 
 /**
  * A tool for drawing straight lines between two points.
@@ -22,8 +20,14 @@ import net.cnoga.paint.core.tool.capabilities.WidthCapability;
 @EventBusSubscriber
 public class LineTool extends Tool implements ColorCapability, WidthCapability {
 
-  private double startX, startY;
+  /** Starting x-coordinate of the line while drawing. */
+  private double startX;
+  /** Starting y-coordinate of the line while drawing. */
+  private double startY;
 
+  /**
+   * Creates a new LineTool and initializes its name, help text, and icon.
+   */
   public LineTool() {
     super.name = "Line";
     super.helpInfo = "[Line] Click and hold to draw a line.";

@@ -5,8 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.SubscribeEvent;
 import net.cnoga.paint.core.bus.events.response.ShapeChangedEvent;
-import net.cnoga.paint.core.tool.capabilities.ColorCapability;
-import net.cnoga.paint.core.tool.capabilities.WidthCapability;
 import net.cnoga.paint.core.util.ShapeConfig;
 import net.cnoga.paint.core.util.ShapeType;
 import net.cnoga.paint.core.util.ShapeUtil;

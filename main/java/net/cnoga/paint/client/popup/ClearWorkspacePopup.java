@@ -8,9 +8,13 @@ import net.cnoga.paint.core.bus.events.request.SaveStateRequest;
 import net.cnoga.paint.core.bus.events.request.ShowClearWorkspacePopupRequest;
 import net.cnoga.paint.core.bus.events.request.UndoRequest;
 
+/**
+ * Popup window that confirms clearing the current workspace.
+ */
 @EventBusSubscriber
 public class ClearWorkspacePopup extends AbstractInputPopup {
 
+  /** Creates a new clear workspace confirmation popup. */
   public ClearWorkspacePopup() {
     super("Clear Canvas?");
   }

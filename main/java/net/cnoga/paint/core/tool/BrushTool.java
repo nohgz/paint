@@ -11,8 +11,6 @@ import javafx.scene.paint.Color;
 import net.cnoga.paint.core.bus.EventBusSubscriber;
 import net.cnoga.paint.core.bus.events.response.ColorChangedEvent;
 import net.cnoga.paint.core.bus.events.response.WidthChangedEvent;
-import net.cnoga.paint.core.tool.capabilities.ColorCapability;
-import net.cnoga.paint.core.tool.capabilities.WidthCapability;
 
 /**
  * A simple freehand paintbrush tool that draws continuous strokes following the mouse cursor, using

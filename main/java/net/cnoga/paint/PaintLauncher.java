@@ -9,8 +9,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.cnoga.paint.core.bus.EventBus;
 import net.cnoga.paint.core.bus.events.request.NewWorkspaceRequest;
-import net.cnoga.paint.core.bus.events.request.OpenHistoryRequest;
-import net.cnoga.paint.core.bus.events.request.OpenLayersRequest;
 import net.cnoga.paint.core.bus.events.request.OpenToolsRequest;
 import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
 import net.cnoga.paint.core.fxml_controllers.MainController;
@@ -61,8 +59,6 @@ public class PaintLauncher extends Application {
     // Initial startup state [TGC: Make this customizable by user choice.]
     bus.post(new ToolChangedEvent(PaintTools.BRUSH));
     bus.post(new NewWorkspaceRequest(800, 600));
-    bus.post(new OpenHistoryRequest());
-    bus.post(new OpenLayersRequest());
     bus.post(new OpenToolsRequest());
   }
 }

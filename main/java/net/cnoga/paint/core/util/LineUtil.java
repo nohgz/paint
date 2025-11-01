@@ -11,6 +11,9 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public final class LineUtil {
 
+  /**
+   * Utility class; not meant to be instantiated.
+   */
   private LineUtil() {
     // Prevent instantiation
   }

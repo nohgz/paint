@@ -15,11 +15,7 @@ import net.cnoga.paint.core.brews.WorkspaceBrew;
 import net.cnoga.paint.core.bus.EventBus;
 import net.cnoga.paint.core.bus.EventBusPublisher;
 import net.cnoga.paint.core.bus.events.request.CloseProgramRequest;
-import net.cnoga.paint.core.fxml_controllers.window.BottomInfoController;
-import net.cnoga.paint.core.fxml_controllers.window.LeftTopbarController;
 import net.cnoga.paint.core.fxml_controllers.window.RightTopbarController;
-import net.cnoga.paint.core.fxml_controllers.window.ShortcutBarController;
-import net.cnoga.paint.core.fxml_controllers.window.ToolInfoController;
 import net.cnoga.paint.core.fxml_controllers.window.WorkspaceController;
 import net.cnoga.paint.server.SimpleWebServer;
 
@@ -35,33 +31,27 @@ import net.cnoga.paint.server.SimpleWebServer;
  *   <li>Initializes subcontrollers injected from FXML.</li>
  *   <li>Creates and registers services such as {@link WorkspaceBrew}.</li>
  * </ul>
- *
- *
- *
  */
 public class MainController extends EventBusPublisher {
 
+  /** The settings and subwindow toggle buttons. */
   @FXML
-  private ToolInfoController toolInfoController;
-  @FXML
-  private BottomInfoController bottomInfoController;
-  @FXML
-  private ShortcutBarController shortcutBarController;
-  @FXML
-  private LeftTopbarController leftTopbarController;
-  @FXML
+  @SuppressWarnings("unused")
   private RightTopbarController rightTopbarController;
   @FXML
+  @SuppressWarnings("unused")
   private WorkspaceController workspaceController;
 
   /**
    * Initializes the main controller and wires up the application.
    * <p>
    * This method creates the event bus, sets up core services, and connects subcontrollers to their
-   * publishers. It should be called once when the application starts.
+   * publishers. It is called once and ONLY once when the application starts.
    * </p>
    *
    * @param primaryStage the primary JavaFX stage
+   * @param primaryScene the primary JavaFX scene
+   * @throws IOException for whenever the webserver blows up
    */
   public void init(Stage primaryStage, Scene primaryScene) throws IOException {
     initializeBrews(primaryStage, primaryScene);
@@ -77,15 +67,14 @@ public class MainController extends EventBusPublisher {
     });
   }
 
-  private void initializeBrews(Stage primaryStage, Scene primaryScene) throws IOException {
-    FileIOBrew fileIOBrew = new FileIOBrew(primaryStage);
-    ProgramBrew programBrew = new ProgramBrew(primaryStage);
+  private void initializeBrews(Stage primaryStage, Scene primaryScene) {
+    new FileIOBrew(primaryStage);
+    new ProgramBrew(primaryStage);
+    new SubWindowBrew(primaryStage);
+    new KeystrokeBrew(primaryScene);
+    new AutosaveBrew();
+    new LoggerBrew();
     WorkspaceBrew workspaceBrew = new WorkspaceBrew();
-    SubWindowBrew subwindowBrew = new SubWindowBrew(primaryStage);
-    KeystrokeBrew keystrokeBrew = new KeystrokeBrew(primaryScene);
-    AutosaveBrew autosaveBrew = new AutosaveBrew();
-    LoggerBrew loggerBrew = new LoggerBrew();
-    SimpleWebServerBrew simpleWebServerBrew = new SimpleWebServerBrew(
-      new SimpleWebServer(workspaceBrew));
+    new SimpleWebServerBrew(new SimpleWebServer(workspaceBrew));
   }
 }

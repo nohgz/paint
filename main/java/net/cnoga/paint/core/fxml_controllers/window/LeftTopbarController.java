@@ -16,21 +16,18 @@ import net.cnoga.paint.core.bus.events.request.WorkspaceSaveRequest;
  * Each menu item is wired via {@code fx:id} and {@code onAction} to this controller, which then
  * posts the corresponding request to the {@link net.cnoga.paint.core.bus.EventBus}.</p>
  *
- * <h3>Typical Flow:</h3>
+ * Typical Flow:
  * <ol>
  *   <li>User selects a menu item (e.g., "Open File").</li>
  *   <li>The corresponding handler posts an event such as {@link FileOpenRequest}.</li>
  *   <li>Subscribed services react to the event and perform the actual work.</li>
  * </ol>
  *
- * <h3>Responsibilities:</h3>
+ * Responsibilities:
  * <ul>
  *   <li>Listen for menu item actions.</li>
  *   <li>Post appropriate file- and app-related events.</li>
  * </ul>
- *
- *
- *   1.1
  */
 
 public class LeftTopbarController extends EventBusPublisher {

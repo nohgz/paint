@@ -21,15 +21,12 @@ import net.cnoga.paint.core.tool.Tool;
  * {@link ToolChangedEvent} to the application {@link net.cnoga.paint.core.bus.EventBus}, allowing
  * the workspace to update its interaction mode accordingly.</p>
  *
- *
- * <h3>Layout:</h3>
+ * Layout:
  * <ul>
  *   <li>Two equal-width columns.</li>
  *   <li>Six equal-height rows (for up to 12 tools).</li>
  *   <li>Each cell contains a toggle button with the tool's icon.</li>
  * </ul>
- *
- *
  *
  */
 public class ToolsController extends EventBusPublisher {

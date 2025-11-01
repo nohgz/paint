@@ -5,6 +5,10 @@ package net.cnoga.paint.core.util;
  *
  * <p>Includes fill, stroke, color, and geometric parameters for
  * consistent states across classes.</p>
+ *
+ * @param type the type of shape (e.g., TRIANGLE, N_GON, STAR)
+ * @param sides the number of sides for polygonal shapes (ignored for non-polygons)
+ * @param isRightTriangle whether the shape is a right triangle (only relevant if {@code type} is TRIANGLE)
  */
 public record ShapeConfig(ShapeType type, int sides, boolean isRightTriangle) {
 

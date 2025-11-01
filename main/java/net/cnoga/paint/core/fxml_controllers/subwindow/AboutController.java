@@ -14,9 +14,6 @@ import javafx.scene.control.TextArea;
  *
  * <p>This controller is automatically initialized by the FXML loader
  * when the "About" dialog view is created.</p>
- *
- *
- *
  */
 public class AboutController {
 
@@ -24,6 +21,9 @@ public class AboutController {
   public TextArea aboutTextArea;
 
   @FXML
+   /**
+   * The base initialize provided by JavaFX.
+   */
   public void initialize() throws IOException {
     aboutTextArea.setText(
       Files.readString(Path.of("src/main/resources/net/cnoga/paint/text/AboutText.txt"))
