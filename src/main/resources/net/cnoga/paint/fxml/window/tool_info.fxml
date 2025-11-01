@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<HBox xmlns:fx="http://javafx.com/fxml"
+  alignment="CENTER_LEFT"
+  fx:controller="net.cnoga.paint.core.fxml_controllers.window.ToolInfoController">
+
+  <Label text="Tool:"/>
+  <ImageView fitHeight="16" fitWidth="16" fx:id="toolInfoIcon"/>
+
+  <Separator orientation="VERTICAL"/>
+
+  <HBox fx:id="toolSpecificThings"/>
+
+  <!-- Spacer to push ColorPicker to the right -->
+  <Region HBox.hgrow="ALWAYS"/>
+
+
+  <ColorPicker fx:id="toolColorPicker"/>
+</HBox>

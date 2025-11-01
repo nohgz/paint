@@ -1,0 +1,47 @@
+package net.cnoga.paint.core.fxml_controllers.window;
+
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import net.cnoga.paint.core.bus.EventBusPublisher;
+import net.cnoga.paint.core.bus.EventBusSubscriber;
+import net.cnoga.paint.core.bus.SubscribeEvent;
+import net.cnoga.paint.core.bus.events.response.AutosaveTimeChangedEvent;
+import net.cnoga.paint.core.bus.events.response.FileOpenedEvent;
+import net.cnoga.paint.core.bus.events.response.ToolChangedEvent;
+
+/**
+ * Controller for the bottom information panel of the workspace UI.
+ *
+ * <p>Displays contextual information such as the current file name,
+ * canvas size, selected tool, cursor position, or zoom level. The panel updates reactively through
+ * events published on the global {@link net.cnoga.paint.core.bus.EventBus}.</p>
+ *
+ * Event Handling:
+ * <ul>
+ *   <li>{@link FileOpenedEvent} will update the panel to show the opened file name.</li>
+ * </ul>
+ */
+@EventBusSubscriber
+public class BottomInfoController extends EventBusPublisher {
+
+  public Label textStatus;
+  public Label autosaveTimer;
+
+  @FXML
+  private void initialize() {
+    bus.register(this);
+  }
+
+  @SubscribeEvent
+  @SuppressWarnings("unused")
+  private void onToolChanged(ToolChangedEvent evt) {
+    textStatus.setText(evt.tool().getHelpInfo());
+  }
+
+  @SubscribeEvent
+  @SuppressWarnings("unused")
+  private void timeChanged(AutosaveTimeChangedEvent evt) {
+    Platform.runLater(() -> autosaveTimer.setText("Time until Autosave: " + evt.seconds()));
+  }
+}

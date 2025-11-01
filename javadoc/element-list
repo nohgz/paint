@@ -1,0 +1,14 @@
+module:net.cnoga.paint
+net.cnoga.paint
+net.cnoga.paint.client.popup
+net.cnoga.paint.core.brews
+net.cnoga.paint.core.bus
+net.cnoga.paint.core.bus.events.request
+net.cnoga.paint.core.bus.events.response
+net.cnoga.paint.core.fxml_controllers
+net.cnoga.paint.core.fxml_controllers.subwindow
+net.cnoga.paint.core.fxml_controllers.window
+net.cnoga.paint.core.tool
+net.cnoga.paint.core.util
+net.cnoga.paint.core.workspace
+net.cnoga.paint.server
