@@ -2,8 +2,9 @@
 target/
 logs/
 workspace_snapshots/
+/.idea/
+/.mvn/
 
-!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
